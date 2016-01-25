@@ -4,7 +4,7 @@ En el año 2006, un grupo del Computer Lab de la Universidad de Cambridge empez�
 
 La logomarca de Raspberry Pi fue diseñada por Paul Bleech. Ganó el concurso de logos que organizó la Raspberry Pi Foundation en 2011.
 
-> **Info** Si quieres conocer más sobre la historia de Raspberry Pi y su comunidad te recomendamos que visites el sitio web de la revista  [*MagPi*](http://www.raspberrypi.org/magpi/). Se trata de  una revista de gran calidad y completamente gratuita en su versión  electrónica.
+> **Info** Si quieres conocer más sobre la historia de Raspberry Pi y su comunidad te recomendamos que visites el sitio web de la revista  [*The MagPi*](http://www.raspberrypi.org/magpi/). Se trata de  una revista de gran calidad y completamente gratuita en su versión  electrónica.
 
 Alrededor de la Raspberry Pi Foundation ha surgido una enorme
 comunidad de usuarios de todos los niveles que genera información y
