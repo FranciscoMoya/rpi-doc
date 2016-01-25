@@ -2,11 +2,11 @@
     "plugins": [
         "bibtex-citation",
         "image-captions",
-        "richquotes",
+        "-richquotes",
         "richquotesbooster"
     ],
     "pluginsConfig": {
-        "richquotes": {
+        "-richquotes": {
             "default": false,
             "Info": {
                 "alert": "info",
