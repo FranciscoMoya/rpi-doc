@@ -8,7 +8,7 @@
     "pluginsConfig": {
         "richquotes": {
             "default": false,
-            "Info": {
+            "info": {
                 "alert": "info",
                 "picto": "info-circle"
             }
