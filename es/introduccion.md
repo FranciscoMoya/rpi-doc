@@ -4,7 +4,7 @@ En el año 2006, un grupo del Computer Lab de la Universidad de Cambridge empez�
 
 La logomarca de Raspberry Pi fue diseñada por Paul Bleech. Ganó el concurso de logos que organizó la Raspberry Pi Foundation en 2011.
 
-> **Info** Si quieres conocer más sobre la historia de Raspberry Pi y su comunidad te recomendamos que visites el sitio web de la revista  \href{http://www.raspberrypi.org/magpi/}{\emph{MagPi}}. Se trata de  una revista de gran calidad y completamente gratuita en su versión  electrónica.
+> **Info** Si quieres conocer más sobre la historia de Raspberry Pi y su comunidad te recomendamos que visites el sitio web de la revista  [*MagPi*](http://www.raspberrypi.org/magpi/). Se trata de  una revista de gran calidad y completamente gratuita en su versión  electrónica.
 
 Alrededor de la Raspberry Pi Foundation ha surgido una enorme
 comunidad de usuarios de todos los niveles que genera información y
@@ -13,8 +13,8 @@ Raspberry Pi. Hay cámaras, touch panels con pantalla TFT, y multitud
 de tarjetas de interfaz con otros dispositivos.
 
 \imagenhere{img/Raspberry_Pi_Photo.jpg}{8cm}{Raspberry Pi modelo
-  B. Foto de \emph{cowjuice} disponible en
-  \href{http://commons.wikimedia.org/wiki/File:Raspberry_Pi_Photo.jpg}{Wikimedia}.}{fig:raspi-b}
+  B. Foto de *cowjuice* disponible en
+  [Wikimedia](http://commons.wikimedia.org/wiki/File:Raspberry_Pi_Photo.jpg).
 
 
 Son especialmente destacables los esfuerzos por integrar periféricos
