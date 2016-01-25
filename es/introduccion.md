@@ -1,13 +1,10 @@
 En el año 2006, un grupo del Computer Lab de la Universidad de Cambridge empezó a preocuparse por el nivel con el que llegaban los alumnos de secundaria a la Universidad.  Por alguna razón los alumnos que tenían alguna exposición previa con tecnologías informáticas acumulaban conocimientos sobre aplicaciones concretas, en lugar de conocimientos sobre las propias tecnologías.  Raspberry Pi surge como una iniciativa de bajo coste para promover la experimentación con la programación desde edades tempranas, aunque no por ello se trata de un mero juguete.  El lanzamiento oficial fue el 29 de febrero de 2012.
 
-![La logomarca de Raspberry Pi fue diseñada por Paul Bleech. Ganó el concurso de logos que organizó la Raspberry Pi Foundation en 2011.](Raspi_Colour_R.png =500x500)
+[[ Raspi_Colour_R.png | height=200 ]]
 
+La logomarca de Raspberry Pi fue diseñada por Paul Bleech. Ganó el concurso de logos que organizó la Raspberry Pi Foundation en 2011.
 
-\info{Si quieres conocer más sobre la historia de Raspberry Pi y su
-  comunidad te recomendamos que visites el sitio web de la revista
-  \href{http://www.raspberrypi.org/magpi/}{\emph{MagPi}}. Se trata de
-  una revista de gran calidad y completamente gratuita en su versión
-  electrónica. }
+> **Info** Si quieres conocer más sobre la historia de Raspberry Pi y su comunidad te recomendamos que visites el sitio web de la revista  \href{http://www.raspberrypi.org/magpi/}{\emph{MagPi}}. Se trata de  una revista de gran calidad y completamente gratuita en su versión  electrónica.
 
 Alrededor de la Raspberry Pi Foundation ha surgido una enorme
 comunidad de usuarios de todos los niveles que genera información y
