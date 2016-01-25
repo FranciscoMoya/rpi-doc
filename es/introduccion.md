@@ -1,6 +1,6 @@
 En el año 2006, un grupo del Computer Lab de la Universidad de Cambridge empezó a preocuparse por el nivel con el que llegaban los alumnos de secundaria a la Universidad.  Por alguna razón los alumnos que tenían alguna exposición previa con tecnologías informáticas acumulaban conocimientos sobre aplicaciones concretas, en lugar de conocimientos sobre las propias tecnologías.  Raspberry Pi surge como una iniciativa de bajo coste para promover la experimentación con la programación desde edades tempranas, aunque no por ello se trata de un mero juguete.  El lanzamiento oficial fue el 29 de febrero de 2012.
 
-> **Warning** Warning
+> **Info** Info
 
 ![Logo](img/Raspi_Colour_R.png)
 
