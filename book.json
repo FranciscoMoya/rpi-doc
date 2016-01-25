@@ -4,5 +4,13 @@
         "image-captions",
         "richquotes"
     ],
-    "pluginsConfig": {}
+    "pluginsConfig": {
+        "richquotes":
+        {
+            "Info": {
+                "alert": "info",
+                "picto": "info-circle"
+            }
+        }
+    }
 }
