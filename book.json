@@ -1,10 +1,9 @@
 {
     "plugins": [
-        "bibtex-citation",
+        "-bibtex-citation",
         "image-captions",
         "richquotes",
         "richquotesbooster"
     ],
-    "pluginsConfig": {
-    }
+    "pluginsConfig": {}
 }
