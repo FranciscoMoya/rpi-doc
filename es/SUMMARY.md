@@ -1,4 +1,4 @@
-# Summary
+# Tabla de contenido
 
 * [Resumen](README.md)
 * [Introducción](introduccion.md)
