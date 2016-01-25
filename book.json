@@ -1,7 +1,8 @@
 {
     "plugins": [
         "bibtex-citation",
-        "image-captions"
+        "image-captions",
+        "richquotes"
     ],
     "pluginsConfig": {}
 }
