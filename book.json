@@ -6,12 +6,5 @@
         "richquotesbooster"
     ],
     "pluginsConfig": {
-        "richquotes": {
-            "default": false,
-            "info": {
-                "alert": "info",
-                "picto": "info-circle"
-            }
-        }
     }
 }
