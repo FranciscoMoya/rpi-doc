@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.2"
+   x="0in"
+   y="0in"
+   width="52.641975"
+   height="38.901833"
+   viewBox="0 0 42.113599 31.121408"
+   id="svg2"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="gpio-rpi-b2-p5.svg">
+  <metadata
+     id="metadata1853">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs1851" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1600"
+     inkscape:window-height="834"
+     id="namedview1849"
+     showgrid="false"
+     inkscape:zoom="11.313708"
+     inkscape:cx="14.693264"
+     inkscape:cy="27.116522"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="text"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <g
+     partID="1498260"
+     id="g4"
+     transform="translate(-19.41702,-35.084233)">
+    <g
+       id="breadboardbreadboard">
+      <g
+         id="g7262"
+         transform="translate(14.086492,-20.731064)">
+        <g
+           id="g6101" />
+        <g
+           transform="translate(33.202957,34.084626)"
+           id="text3713_1_">
+          <g
+             transform="translate(-6.725,869.046)"
+             id="g290"
+             style="fill:#000000;fill-opacity:1">
+            <g
+               id="_x30_.1.0.0.0.219.0"
+               style="fill:#000000;fill-opacity:1">
+              <g
+                 id="_x30_.1.0.0.219.0"
+                 style="fill:#000000;fill-opacity:1">
+                <g
+                   transform="translate(8.4368,-845.5)"
+                   id="g294"
+                   style="fill:#000000;fill-opacity:1">
+                  <text
+                     id="tspan8664_1_"
+                     font-size="2.4903"
+                     style="font-size:2.49029994px;fill:#000000;fill-opacity:1;font-family:OCRA">1</text>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g
+           transform="matrix(0,1,-1,0,58.367128,54.197017)"
+           id="g1195">
+          <polygon
+             points="3.921,16.368 3.921,19.688 3.921,23.596 5.42,25.096 9.328,25.096 10.827,23.596 10.827,19.688 10.827,16.368 10.827,12.461 9.328,10.958 5.42,10.958 3.921,12.461 "
+             id="polygon3149_1_"
+             style="fill:#404040" />
+          <polygon
+             points="11.055,16.368 11.055,19.688 11.055,23.596 12.556,25.096 16.463,25.096 17.966,23.596 17.966,19.688 17.966,16.368 17.966,12.461 16.463,10.958 12.556,10.958 11.055,12.461 "
+             id="polygon3151_1_"
+             style="fill:#404040" />
+          <polygon
+             points="18.188,16.368 18.188,19.688 18.188,23.596 19.69,25.096 23.598,25.096 25.099,23.596 25.099,19.688 25.099,16.368 25.099,12.461 23.598,10.958 19.69,10.958 18.188,12.461 "
+             id="polygon3153_1_"
+             style="fill:#404040" />
+          <polygon
+             points="3.921,16.368 3.921,19.688 3.921,23.596 5.42,25.096 9.328,25.096 10.827,23.596 10.827,19.688 10.827,16.368 10.827,12.461 9.328,10.958 5.42,10.958 3.921,12.461 "
+             id="polygon3155_1_"
+             style="fill:#404040" />
+          <polygon
+             points="11.055,16.368 11.055,19.688 11.055,23.596 12.556,25.096 16.463,25.096 17.966,23.596 17.966,19.688 17.966,16.368 17.966,12.461 16.463,10.958 12.556,10.958 11.055,12.461 "
+             id="polygon3157_1_"
+             style="fill:#404040" />
+          <polygon
+             points="18.188,16.368 18.188,19.688 18.188,23.596 19.69,25.096 23.598,25.096 25.099,23.596 25.099,19.688 25.099,16.368 25.099,12.461 23.598,10.958 19.69,10.958 18.188,12.461 "
+             id="polygon3159_1_"
+             style="fill:#404040" />
+          <rect
+             width="2.2850001"
+             x="20.368999"
+             y="20.422001"
+             height="2.283"
+             id="connector4pin"
+             style="fill:#8d8c8c" />
+          <rect
+             width="2.2850001"
+             x="20.368999"
+             y="13.268"
+             height="2.283"
+             id="connector5pin"
+             style="fill:#8d8c8c" />
+          <rect
+             width="2.283"
+             x="13.218"
+             y="20.422001"
+             height="2.283"
+             id="connector2pin"
+             style="fill:#8d8c8c" />
+          <rect
+             width="2.283"
+             x="13.218"
+             y="13.268"
+             height="2.283"
+             id="connector27pin"
+             style="fill:#8d8c8c" />
+          <rect
+             width="2.2839999"
+             x="6.0630002"
+             y="20.422001"
+             height="2.283"
+             id="connector0pin"
+             style="fill:#8d8c8c" />
+          <rect
+             width="2.2839999"
+             x="6.0630002"
+             y="13.268"
+             height="2.283"
+             id="connector1pin"
+             style="fill:#8d8455" />
+          <rect
+             width="1.175"
+             x="6.618"
+             y="13.82"
+             height="1.174"
+             id="rect3173_1_"
+             style="fill:#8c8663" />
+          <polygon
+             points="6.618,14.994 6.618,13.824 6.063,13.267 6.063,15.549 "
+             id="polygon3175_1_"
+             style="fill:#b8af82" />
+          <polygon
+             points="6.618,13.824 6.063,13.267 8.346,13.267 7.792,13.824 "
+             id="polygon3177_1_"
+             style="fill:#80795b" />
+          <polygon
+             points="7.792,13.824 8.346,13.267 8.346,15.549 7.792,14.994 "
+             id="polygon3179_1_"
+             style="fill:#5e5b43" />
+          <polygon
+             points="7.792,14.994 8.346,15.549 6.063,15.549 6.618,14.994 "
+             id="connector1pin_1_"
+             style="fill:#9a916c" />
+          <rect
+             width="1.175"
+             x="6.618"
+             y="20.973"
+             height="1.176"
+             id="rect3183_1_"
+             style="fill:#8c8663" />
+          <polygon
+             points="6.618,22.148 6.618,20.975 6.063,20.422 6.063,22.703 "
+             id="polygon3185_1_"
+             style="fill:#b8af82" />
+          <polygon
+             points="6.618,20.975 6.063,20.422 8.346,20.422 7.792,20.975 "
+             id="polygon3187_1_"
+             style="fill:#80795b" />
+          <polygon
+             points="7.792,20.975 8.346,20.422 8.346,22.703 7.792,22.148 "
+             id="polygon3189_1_"
+             style="fill:#5e5b43" />
+          <polygon
+             points="7.792,22.148 8.346,22.703 6.063,22.703 6.618,22.148 "
+             id="connector0pin_1_"
+             style="fill:#9a916c" />
+          <rect
+             width="1.175"
+             x="13.769"
+             y="13.82"
+             height="1.174"
+             id="rect3193_1_"
+             style="fill:#8c8663" />
+          <polygon
+             points="13.769,14.994 13.769,13.824 13.218,13.267 13.218,15.549 "
+             id="polygon3195_1_"
+             style="fill:#b8af82" />
+          <polygon
+             points="13.769,13.824 13.218,13.267 15.501,13.267 14.944,13.824 "
+             id="polygon3197_1_"
+             style="fill:#80795b" />
+          <polygon
+             points="14.944,13.824 15.501,13.267 15.501,15.549 14.944,14.994 "
+             id="polygon3199_1_"
+             style="fill:#5e5b43" />
+          <polygon
+             points="15.501,15.549 13.218,15.549 13.769,14.994 14.944,14.994 "
+             id="dnc3pin_1_"
+             style="fill:#9a916c" />
+          <rect
+             width="1.175"
+             x="13.769"
+             y="20.973"
+             height="1.176"
+             id="rect3203_1_"
+             style="fill:#8c8663" />
+          <polygon
+             points="13.769,22.148 13.769,20.975 13.218,20.422 13.218,22.703 "
+             id="polygon3205_1_"
+             style="fill:#b8af82" />
+          <polygon
+             points="13.769,20.975 13.218,20.422 15.501,20.422 14.944,20.975 "
+             id="polygon3207_1_"
+             style="fill:#80795b" />
+          <polygon
+             points="14.944,20.975 15.501,20.422 15.501,22.703 14.944,22.148 "
+             id="polygon3209_1_"
+             style="fill:#5e5b43" />
+          <polygon
+             points="14.944,22.148 15.501,22.703 13.218,22.703 13.769,22.148 "
+             id="connector2pin_1_"
+             style="fill:#9a916c" />
+          <rect
+             width="1.176"
+             x="20.924"
+             y="13.82"
+             height="1.174"
+             id="rect3213_1_"
+             style="fill:#8c8663" />
+          <polygon
+             points="20.924,14.994 20.924,13.824 20.369,13.267 20.369,15.549 "
+             id="polygon3215_1_"
+             style="fill:#b8af82" />
+          <polygon
+             points="20.924,13.824 20.369,13.267 22.653,13.267 22.098,13.824 "
+             id="polygon3217_1_"
+             style="fill:#80795b" />
+          <polygon
+             points="22.098,13.824 22.653,13.267 22.653,15.549 22.098,14.994 "
+             id="polygon3219_1_"
+             style="fill:#5e5b43" />
+          <polygon
+             points="20.369,15.549 20.924,14.994 22.098,14.994 22.653,15.549 "
+             id="connector5pin_1_"
+             style="fill:#9a916c" />
+          <rect
+             width="1.176"
+             x="20.924"
+             y="20.973"
+             height="1.176"
+             id="rect3223_1_"
+             style="fill:#8c8663" />
+          <polygon
+             points="20.924,22.148 20.924,20.975 20.369,20.422 20.369,22.703 "
+             id="polygon3225_1_"
+             style="fill:#b8af82" />
+          <polygon
+             points="20.924,20.975 20.369,20.422 22.653,20.422 22.098,20.975 "
+             id="polygon3227_1_"
+             style="fill:#80795b" />
+          <polygon
+             points="22.098,20.975 22.653,20.422 22.653,22.703 22.098,22.148 "
+             id="polygon3229_1_"
+             style="fill:#5e5b43" />
+          <polygon
+             points="22.098,22.148 22.653,22.703 20.369,22.703 20.924,22.148 "
+             id="connector4pin_1_"
+             style="fill:#9a916c" />
+          <polygon
+             points="30.707,10.923 26.798,10.923 25.299,12.424 25.299,16.332 25.299,19.651 25.299,23.56 26.798,25.06 30.707,25.06 32.207,23.56 32.207,19.651 32.207,16.332 32.207,12.424 "
+             id="polygon3149-1_1_"
+             style="fill:#404040" />
+          <polygon
+             points="30.707,10.923 26.798,10.923 25.299,12.424 25.299,16.332 25.299,19.651 25.299,23.56 26.798,25.06 30.707,25.06 32.207,23.56 32.207,19.651 32.207,16.332 32.207,12.424 "
+             id="polygon3155-8_1_"
+             style="fill:#404040" />
+          <rect
+             width="2.2839999"
+             x="27.441"
+             y="20.385"
+             height="2.283"
+             id="connector6pin"
+             style="fill:#8d8c8c" />
+          <rect
+             width="2.2839999"
+             x="27.441"
+             y="13.233"
+             height="2.2809999"
+             id="connector7pin"
+             style="fill:#8d8455" />
+          <rect
+             width="1.175"
+             x="27.997"
+             y="13.784"
+             height="1.175"
+             id="rect3173-9_1_"
+             style="fill:#8c8663" />
+          <polygon
+             points="27.997,13.788 27.441,13.232 27.441,15.513 27.997,14.959 "
+             id="polygon3175-8_1_"
+             style="fill:#b8af82" />
+          <polygon
+             points="27.441,13.232 29.725,13.232 29.171,13.788 27.997,13.788 "
+             id="polygon3177-6_1_"
+             style="fill:#80795b" />
+          <polygon
+             points="29.725,13.232 29.725,15.513 29.171,14.959 29.171,13.788 "
+             id="polygon3179-5_1_"
+             style="fill:#5e5b43" />
+          <polygon
+             points="29.725,15.513 27.441,15.513 27.997,14.959 29.171,14.959 "
+             id="connector7pin_1_"
+             style="fill:#9a916c" />
+          <rect
+             width="1.175"
+             x="27.997"
+             y="20.940001"
+             height="1.175"
+             id="rect3183-2_1_"
+             style="fill:#8c8663" />
+          <polygon
+             points="27.997,20.941 27.441,20.385 27.441,22.667 27.997,22.113 "
+             id="polygon3185-8_1_"
+             style="fill:#b8af82" />
+          <polygon
+             points="27.441,20.385 29.725,20.385 29.171,20.941 27.997,20.941 "
+             id="polygon3187-6_1_"
+             style="fill:#80795b" />
+          <polygon
+             points="29.725,20.385 29.725,22.667 29.171,22.113 29.171,20.941 "
+             id="polygon3189-0_1_"
+             style="fill:#5e5b43" />
+          <polygon
+             points="29.725,22.667 27.441,22.667 27.997,22.113 29.171,22.113 "
+             id="connector6pin_1_"
+             style="fill:#9a916c" />
+        </g>
+        <g
+           transform="matrix(0,1,-1,0,58.367128,54.197017)"
+           id="text">
+          <g
+             id="g10255"
+             style="stroke:#000000;stroke-opacity:1">
+            <g
+               id="g1393"
+               transform="matrix(-2.54711e-6,-1,1,-2.54711e-6,-81.8299,1797.32)"
+               style="stroke:#000000;stroke-opacity:1">
+              <g
+                 id="_x30_.1.1.0.0.0.0"
+                 style="stroke:#000000;stroke-opacity:1">
+                <g
+                   id="_x30_.1.1.0.0.0"
+                   style="stroke:#000000;stroke-opacity:1">
+                  <g
+                     id="_x30_.1.1.0.0"
+                     style="stroke:#000000;stroke-opacity:1">
+                    <g
+                       id="g1398"
+                       transform="matrix(3.13917e-7,-1,1,3.13917e-7,1661.59,1840.35)"
+                       style="stroke:#000000;stroke-opacity:1">
+                      <rect
+                         id="rect10054"
+                         height="12.834"
+                         y="82.959"
+                         x="1747.41"
+                         width="7.1230001"
+                         style="fill:none;stroke:#000000;stroke-width:0.5;stroke-opacity:1" />
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+            <g
+               id="g1401"
+               transform="matrix(-2.54711e-6,-1,1,-2.54711e-6,-90.8298,1806.32)"
+               style="stroke:#000000;stroke-opacity:1">
+              <g
+                 id="_x30_.1.1.0.0.0.1"
+                 style="stroke:#000000;stroke-opacity:1">
+                <g
+                   id="_x30_.1.1.0.0.1"
+                   style="stroke:#000000;stroke-opacity:1">
+                  <g
+                     id="_x30_.1.1.0.1"
+                     style="stroke:#000000;stroke-opacity:1">
+                    <g
+                       id="g1406"
+                       transform="matrix(3.13917e-7,-1,1,3.13917e-7,1654.47,1865.47)"
+                       style="stroke:#000000;stroke-opacity:1">
+                      <rect
+                         id="rect10056"
+                         height="12.839"
+                         y="99.080002"
+                         x="1756.41"
+                         width="7.119"
+                         style="fill:none;stroke:#000000;stroke-width:0.5;stroke-opacity:1" />
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+            <g
+               id="g1409"
+               transform="matrix(-2.54711e-6,-1,1,-2.54711e-6,-99.8298,1815.32)"
+               style="stroke:#000000;stroke-opacity:1">
+              <g
+                 id="_x30_.1.1.0.0.0.2"
+                 style="stroke:#000000;stroke-opacity:1">
+                <g
+                   id="_x30_.1.1.0.0.2"
+                   style="stroke:#000000;stroke-opacity:1">
+                  <g
+                     id="_x30_.1.1.0.2"
+                     style="stroke:#000000;stroke-opacity:1">
+                    <g
+                       id="g1414"
+                       transform="matrix(3.13917e-7,-1,1,3.13917e-7,1647.35,1890.59)"
+                       style="stroke:#000000;stroke-opacity:1">
+                      <rect
+                         id="rect10058"
+                         height="12.834"
+                         y="115.206"
+                         x="1765.41"
+                         width="7.1230001"
+                         style="fill:none;stroke:#000000;stroke-width:0.5;stroke-opacity:1" />
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+            <g
+               id="g1417"
+               transform="matrix(-2.54711e-6,-1,1,-2.54711e-6,-108.83,1824.32)"
+               style="stroke:#000000;stroke-opacity:1">
+              <g
+                 id="_x30_.1.1.0.0.0.3"
+                 style="stroke:#000000;stroke-opacity:1">
+                <g
+                   id="_x30_.1.1.0.0.3"
+                   style="stroke:#000000;stroke-opacity:1">
+                  <g
+                     id="_x30_.1.1.0.3"
+                     style="stroke:#000000;stroke-opacity:1">
+                    <g
+                       id="g1422"
+                       transform="matrix(3.13917e-7,-1,1,3.13917e-7,1640.22,1915.72)"
+                       style="stroke:#000000;stroke-opacity:1">
+                      <rect
+                         id="rect10060"
+                         height="12.839"
+                         y="131.328"
+                         x="1774.41"
+                         width="7.1209998"
+                         style="fill:none;stroke:#000000;stroke-width:0.5;stroke-opacity:1" />
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+            <g
+               id="g1489"
+               transform="matrix(-2.54711e-6,-1,1,-2.54711e-6,-65.6182,1813.53)"
+               style="stroke:#000000;stroke-opacity:1">
+              <g
+                 id="_x30_.1.1.0.0.0.12"
+                 style="stroke:#000000;stroke-opacity:1">
+                <g
+                   id="_x30_.1.1.0.0.12"
+                   style="stroke:#000000;stroke-opacity:1">
+                  <g
+                     id="_x30_.1.1.0.12"
+                     style="stroke:#000000;stroke-opacity:1">
+                    <g
+                       id="g1494"
+                       transform="matrix(3.13917e-7,-1,1,3.13917e-7,1706.85,1853.18)"
+                       style="stroke:#000000;stroke-opacity:1">
+                      <rect
+                         id="rect10078"
+                         height="12.833"
+                         y="66.746002"
+                         x="1776.45"
+                         width="7.1220002"
+                         style="fill:none;stroke:#000000;stroke-width:0.5;stroke-opacity:1" />
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+            <g
+               id="g1497"
+               transform="matrix(-2.54711e-6,-1,1,-2.54711e-6,-74.6182,1822.53)"
+               style="stroke:#000000;stroke-opacity:1">
+              <g
+                 id="_x30_.1.1.0.0.0.13"
+                 style="stroke:#000000;stroke-opacity:1">
+                <g
+                   id="_x30_.1.1.0.0.13"
+                   style="stroke:#000000;stroke-opacity:1">
+                  <g
+                     id="_x30_.1.1.0.13"
+                     style="stroke:#000000;stroke-opacity:1">
+                    <g
+                       id="g1502"
+                       transform="matrix(3.13917e-7,-1,1,3.13917e-7,1699.72,1878.3)"
+                       style="stroke:#000000;stroke-opacity:1">
+                      <rect
+                         id="rect10080"
+                         height="12.838"
+                         y="82.870003"
+                         x="1785.45"
+                         width="7.119"
+                         style="fill:none;stroke:#000000;stroke-width:0.5;stroke-opacity:1" />
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+            <g
+               id="g1505"
+               transform="matrix(-2.54711e-6,-1,1,-2.54711e-6,-83.6181,1831.53)"
+               style="stroke:#000000;stroke-opacity:1">
+              <g
+                 id="_x30_.1.1.0.0.0.14"
+                 style="stroke:#000000;stroke-opacity:1">
+                <g
+                   id="_x30_.1.1.0.0.14"
+                   style="stroke:#000000;stroke-opacity:1">
+                  <g
+                     id="_x30_.1.1.0.14"
+                     style="stroke:#000000;stroke-opacity:1">
+                    <g
+                       id="g1510"
+                       transform="matrix(3.13917e-7,-1,1,3.13917e-7,1692.6,1903.42)"
+                       style="stroke:#000000;stroke-opacity:1">
+                      <rect
+                         id="rect10082"
+                         height="12.834"
+                         y="98.992996"
+                         x="1794.45"
+                         width="7.1230001"
+                         style="fill:none;stroke:#000000;stroke-width:0.5;stroke-opacity:1" />
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+            <g
+               id="g1513"
+               transform="matrix(-2.54711e-6,-1,1,-2.54711e-6,-92.6183,1840.53)"
+               style="stroke:#000000;stroke-opacity:1">
+              <g
+                 id="_x30_.1.1.0.0.0.15"
+                 style="stroke:#000000;stroke-opacity:1">
+                <g
+                   id="_x30_.1.1.0.0.15"
+                   style="stroke:#000000;stroke-opacity:1">
+                  <g
+                     id="_x30_.1.1.0.15"
+                     style="stroke:#000000;stroke-opacity:1">
+                    <g
+                       id="g1518"
+                       transform="matrix(3.13917e-7,-1,1,3.13917e-7,1685.48,1928.55)"
+                       style="stroke:#000000;stroke-opacity:1">
+                      <rect
+                         id="rect10084"
+                         height="12.838"
+                         y="115.114"
+                         x="1803.45"
+                         width="7.119"
+                         style="fill:none;stroke:#000000;stroke-width:0.5;stroke-opacity:1" />
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g
+             id="text10128"
+             transform="translate(-0.6577791,-13.375796)">
+            <g
+               id="g1602"
+               transform="matrix(1.0001,0,0,1.0001,852.36,941.724)"
+               style="fill:#000000;fill-opacity:1">
+              <g
+                 id="_x30_.1.1.0.0.1.0"
+                 style="fill:#000000;fill-opacity:1">
+                <g
+                   id="_x30_.1.1.0.1.0"
+                   style="fill:#000000;fill-opacity:1">
+                  <g
+                     id="g1606"
+                     transform="matrix(0,-1,0.9999,0,-843.101,-891.005)"
+                     style="fill:#000000;fill-opacity:1">
+                    <text
+                       font-size="3.9576"
+                       id="tspan10130"
+                       style="font-size:3.95760012px;fill:#000000;fill-opacity:1;font-family:OCRA">3V3</text>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g
+             id="text10135"
+             style="fill:#000000;fill-opacity:1"
+             transform="translate(-0.6840691,12.717476)">
+            <g
+               id="g1610"
+               transform="matrix(1.0001,0,0,1.0001,870.339,941.724)"
+               style="fill:#000000;fill-opacity:1">
+              <g
+                 id="_x30_.1.1.0.0.2.0"
+                 style="fill:#000000;fill-opacity:1">
+                <g
+                   id="_x30_.1.1.0.2.0"
+                   style="fill:#000000;fill-opacity:1">
+                  <g
+                     id="g1614"
+                     transform="matrix(0,-1,0.9999,0,-861.078,-905.236)"
+                     style="fill:#000000;fill-opacity:1">
+                    <text
+                       font-size="3.9576"
+                       id="tspan10137"
+                       style="font-size:3.95760012px;fill:#000000;fill-opacity:1;font-family:OCRA">5V</text>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g
+             id="text10143"
+             style="fill:#000000;fill-opacity:1"
+             transform="translate(0,-0.40643758)">
+            <g
+               id="g1618"
+               transform="matrix(1.0001,0,0,1.0001,870.339,950.722)"
+               style="fill:#000000;fill-opacity:1">
+              <g
+                 style="fill:#000000;fill-opacity:1"
+                 id="_x30_.1.1.0.4.0">
+                <g
+                   style="fill:#000000;fill-opacity:1"
+                   transform="matrix(0,-1,0.9999,0,-853.957,-914.233)"
+                   id="g1622">
+                  <text
+                     style="font-size:3.95760012px;fill:#000000;fill-opacity:1;font-family:OCRA"
+                     id="tspan10145"
+                     font-size="3.9576">18</text>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g
+             id="text10151"
+             style="fill:#000000;fill-opacity:1"
+             transform="translate(7.1176745,0.09396844)">
+            <g
+               id="g1626"
+               transform="matrix(1.0001,0,0,1.0001,868.531,959.724)"
+               style="fill:#000000;fill-opacity:1">
+              <g
+                 id="_x30_.1.1.0.0.6.0"
+                 style="fill:#000000;fill-opacity:1">
+                <g
+                   id="_x30_.1.1.0.6.0"
+                   style="fill:#000000;fill-opacity:1">
+                  <g
+                     id="g1630"
+                     transform="matrix(0,-1,0.9999,0,-845.025,-921.803)"
+                     style="fill:#000000;fill-opacity:1">
+                    <text
+                       font-size="3.9576"
+                       id="tspan10153"
+                       style="font-size:3.95760012px;fill:#000000;fill-opacity:1;font-family:OCRA">GND</text>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g
+             id="text10155"
+             style="fill:#000000;fill-opacity:1"
+             transform="translate(-7.3468248,-11.846383)">
+            <g
+               id="g1634"
+               transform="matrix(1.0001,0,0,1.0001,855.976,968.722)"
+               style="fill:#000000;fill-opacity:1">
+              <g
+                 id="_x30_.1.1.0.0.7.0"
+                 style="fill:#000000;fill-opacity:1">
+                <g
+                   id="_x30_.1.1.0.7.0"
+                   style="fill:#000000;fill-opacity:1">
+                  <g
+                     id="g1638"
+                     transform="matrix(0,-1,0.9999,0,-825.351,-920.861)"
+                     style="fill:#000000;fill-opacity:1">
+                    <text
+                       font-size="3.9576"
+                       id="tspan10157"
+                       style="font-size:3.95760012px;fill:#000000;fill-opacity:1;font-family:OCRA">20</text>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g
+             id="text10151-8"
+             style="fill:#000000;fill-opacity:1"
+             transform="translate(7.1176745,13.06897)">
+            <g
+               id="g1626-6"
+               transform="matrix(1.0001,0,0,1.0001,868.531,959.724)"
+               style="fill:#000000;fill-opacity:1">
+              <g
+                 id="_x30_.1.1.0.0.6.0-4"
+                 style="fill:#000000;fill-opacity:1">
+                <g
+                   id="_x30_.1.1.0.6.0-5"
+                   style="fill:#000000;fill-opacity:1">
+                  <g
+                     id="g1630-5"
+                     transform="matrix(0,-1,0.9999,0,-845.025,-921.803)"
+                     style="fill:#000000;fill-opacity:1">
+                    <text
+                       font-size="3.9576"
+                       id="tspan10153-7"
+                       style="font-size:3.95760012px;fill:#000000;fill-opacity:1;font-family:OCRA">GND</text>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g
+             transform="translate(0.00193242,12.534743)"
+             id="text10143-3"
+             style="fill:#000000;fill-opacity:1">
+            <g
+               id="g1618-1"
+               transform="matrix(1.0001,0,0,1.0001,870.339,950.722)"
+               style="fill:#000000;fill-opacity:1">
+              <g
+                 style="fill:#000000;fill-opacity:1"
+                 id="_x30_.1.1.0.4.0-8">
+                <g
+                   style="fill:#000000;fill-opacity:1"
+                   transform="matrix(0,-1,0.9999,0,-853.957,-914.233)"
+                   id="g1622-3">
+                  <text
+                     style="font-size:3.95760012px;fill:#000000;fill-opacity:1;font-family:OCRA"
+                     id="tspan10145-1"
+                     font-size="3.9576">17</text>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g
+             transform="translate(6.8990358,12.564699)"
+             id="text10143-5"
+             style="fill:#000000;fill-opacity:1">
+            <g
+               id="g1618-0"
+               transform="matrix(1.0001,0,0,1.0001,870.339,950.722)"
+               style="fill:#000000;fill-opacity:1">
+              <g
+                 style="fill:#000000;fill-opacity:1"
+                 id="_x30_.1.1.0.4.0-84">
+                <g
+                   style="fill:#000000;fill-opacity:1"
+                   transform="matrix(0,-1,0.9999,0,-853.957,-914.233)"
+                   id="g1622-31">
+                  <text
+                     style="font-size:3.95760012px;fill:#000000;fill-opacity:1;font-family:OCRA"
+                     id="tspan10145-3"
+                     font-size="3.9576">19</text>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

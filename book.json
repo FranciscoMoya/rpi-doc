@@ -1,6 +1,8 @@
 {
     "plugins": [
-        "richquotes"
+        "richquotes",
+        "include-codeblock",
+        "bibtex-citation"
     ],
     "pluginsConfig": {}
 }
