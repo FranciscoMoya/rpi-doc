@@ -1,8 +1,13 @@
 {
     "plugins": [
         "richquotes",
+        "addcssjs",
         "include-codeblock",
         "bibtex-citation"
     ],
-    "pluginsConfig": {}
+    "pluginsConfig": {
+        "addcssjs": {
+            "css": ["css/custom.css"]
+        }
+    }
 }
