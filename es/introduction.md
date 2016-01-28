@@ -1,3 +1,4 @@
+[//]: # (-*- markdown -*-)
 # Introducción
 
 <figure style="float:right;padding:10px">
@@ -346,7 +347,7 @@ para eso.
 >  Simplemente hay que conectar un cable de uno de los puertos del hub
 >  al puerto microUSB de alimentación. Ocupamos un puerto más pero
 >  estaremos seguros de que el circuito está protegido contra
->  sobrecorrientes.}
+>  sobrecorrientes.
 
 Los modelos A+ y B+ ya tienen un *hub* USB incorporado y el
 fusible de protección tiene una corriente nominal sensiblemente
@@ -457,10 +458,9 @@ memoria cache entre GPU y CPU, la posibilidad de deshabilitar la
 memoria cache de nivel 2, la posibilidad de elevar la frecuencia de
 diversos componentes por encima de las especificaciones del fabricante
 (*overclocking*), los códigos de activación de los codecs no libres, o
-los parámetros de arranque del sistema operativo.
-
-Una detallada explicación de la mayoría de estos parámetros puede
-encontrarse en [elinux.org](http://elinux.org/RPiconfig).
+los parámetros de arranque del sistema operativo.  Una detallada
+explicación de la mayoría de estos parámetros puede encontrarse en
+[elinux.org](http://elinux.org/RPiconfig).
 
 Actualmente la distribución de software *Raspbian*, que es la que
 vamos a usar en el taller, ya dispone de una herramienta de
