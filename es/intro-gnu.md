@@ -1,15 +1,8 @@
 [//]: # (-*- markdown -*-)
 # Familiarización con GNU
 
-La Raspberry Pi cuenta con un completo sistema operativo, con entorno
-gráfico y herramientas de programación de diverso tipo.  Vamos a
-utilizar este entorno para realizar la mayor parte del taller.  Sin
-embargo debemos precisar que la forma de trabajo habitual en
-desarrollo de sistemas empotrados es que se utilice un PC y
-programemos la Raspberry Pi remotamente.
-
 <figure style="float:right; padding:10px">
-  <img src="img/raspbian1.png" width="500">
+  <img src="img/raspbian1.png" width="400">
 
   <figcaption style="font-size:smaller; font-style:italic">
   <div style="width:350px">
@@ -19,35 +12,15 @@ programemos la Raspberry Pi remotamente.
 </figure>
 
 
-Nada más conectar la Raspberry Pi a la alimentación arrancará en un
-entorno gráfico como el que se muestra en la figura. En la parte
-superior aparecen los siguientes elementos.
-
-* ![Menú](img/raspbian1-menu.png) Menú de aplicaciones.
-* ![Terminal](img/raspbian1-term.png) Terminal de línea de órdenes.
-* ![Configuración](img/raspbian1-rpicfg.png) Herramienta de configuración de Raspberry Pi.
-* ![Archivos](img/raspbian1-file.png) Herramienta de administración de archivos.
-* ![IDLE](img/raspbian1-idle.png) Entorno integrado de desarrollo en Python (IDLE).
-* ![Editor](img/raspbian1-edit.png) Editor de textos.
-* ![Navegador](img/raspbian1-web.png) Navegador básico de web.
-
-Desde el menú es posible ejecutar la mayoría de las aplicaciones
-instaladas.  No obstante con los botones de lanzamiento rápido de
-apliaciones tendremos suficiente para la mayoría de las actividades
-del taller.
-
-
-
-Nada más arrancar la Ras
-
-
-
-Este capítulo pretende fundamentalmente familiarizar al alumno con el
-entorno de la línea de órdenes de Raspberry Pi, incluidas las
-herramientas básicas de compilación y depuración.
+La Raspberry Pi cuenta con un completo sistema operativo, con entorno
+gráfico y herramientas de programación de diverso tipo.  Vamos a
+utilizar este entorno para realizar la mayor parte del taller.  Sin
+embargo debemos precisar que la forma de trabajo habitual en
+desarrollo de sistemas empotrados es que se utilice un PC y
+programemos la Raspberry Pi remotamente.
 
 *GNU/Linux* es el nombre habitual del sistema operativo que lleva
-la Raspberry Pi. *Raspbian* y *Debian* no son más que
+la Raspberry Pi.  *Raspbian* y *Debian* no son más que
 distribuciones de este sistema operativo.  Es decir, *Raspbian*
 es una seleccion de paquetes de GNU/Linux, compilados para una
 arquitectura concreta, y empaquetados con ayuda de herramientas
@@ -62,15 +35,157 @@ recursivo.  Hace referencia a que no contiene ni una sola línea de
 Unix, el sistema operativo privativo de AT&T, que luego vendió a SCO
 y licenció a IBM, Sun, HP, Silicon Graphics, Fujitsu, Microsoft, etc.
 El sufijo *Linux* se refiere al kernel (núcleo) del sistema
-operativo. *GNU* tiene su propio kernel, el *HURD*, pero
+operativo.  *GNU* tiene su propio kernel, el *HURD*, pero
 todavía no está listo para su uso general. Por eso la mayoría de las
 distribuciones añaden a GNU alguno de los kernels libres que hay por
 ahí (Linux, FreeBSD, NetBSD, etc.)
 
+> **Info**
+
+> <img src="img/rms.jpg" height="200" style="float:right;margin:10px"/>
+> En 1983 Richard M. Stallman, que trabajaba como
+> investigador en el AI Lab del MIT, decidió empezar el proyecto GNU
+> con el objetivo de hacer innecesario el uso de cualquiero otro
+> software no libre. Todavía está lejos de alcanzar su objetivo pero
+> GNU ya se utiliza en multitud de equipos electrónicos.
+> Puedes leer más sobre el objetivo inicial del proyecto en el
+> [El manifiesto de GNU](http://www.gnu.org/gnu/manifesto.html)
+> {{ "Stallman:1985:GM" | cite }}.
+
+> En 1985 crea la *Free Software Foundation* con el objetivo de
+> difundir el *movimiento del software libre* y de ayudar al
+> desarrollo del sistema GNU.  Escucha al propio Richard Stallman
+> [explicando la filosofía del
+> movimiento](http://audio-video.gnu.org/video/short--2008--rms--free-software-and-beyond-part-1--spanish.ogv).
+
+
+Nada más conectar la Raspberry Pi a la alimentación arrancará en un
+entorno gráfico como el que se muestra en la figura al comienzo del
+capítulo.  En la parte superior aparecen los siguientes elementos.
+
+* ![Menú](img/raspbian1-menu.png) Menú de aplicaciones.
+* ![Terminal](img/raspbian1-term.png) Terminal de línea de órdenes.
+* ![Configuración](img/raspbian1-rpicfg.png) Herramienta de configuración de Raspberry Pi.
+* ![Archivos](img/raspbian1-file.png) Herramienta de administración de archivos.
+* ![IDLE](img/raspbian1-idle.png) Entorno integrado de desarrollo en Python (IDLE).
+* ![Editor](img/raspbian1-edit.png) Editor de textos.
+* ![Navegador](img/raspbian1-web.png) Navegador básico de web.
+
+Desde el menú es posible ejecutar la mayoría de las aplicaciones
+instaladas.  No obstante con los botones de lanzamiento rápido de
+aplicaciones tendremos suficiente para la mayoría de las actividades
+del taller.
+
+## El sistema de archivos
+
+<figure style="float:right; padding:10px">
+  <img src="img/raspbian2.png" width="400">
+
+  <figcaption style="font-size:smaller; font-style:italic">
+  <div style="width:350px">
+  Administrador de archivos.
+  </div>
+  </figcaption>
+</figure>
+
+Vamos primero a familiarizarnos con la estructura de carpetas y
+archivos del sistema.  Para ello pincha sobre el botón de lanzamiento
+rápido del administrador de archivos. La situación será similar a la
+figura adjunta.
+
+La caja de texto en la parte superior indica `/home/pi` que es la
+carpeta actual.  Las rutas de los archivos y las carpetas utilizan el
+caracter `/` como separador.  No es posible tener una carpeta con ese
+carácter en el nombre porque el sistema no podría diferenciarlo de una
+ruta de dos componentes.  La carpeta `/` sin más es la carpeta *raíz*,
+de donde cuelga todo.  Aquí no hay nombres de unidades, todas las
+unidades se ven en algún punto del arbol de carpetas que nace en la
+carpeta raiz.  La ruta `/home/pi` hace referencia a que se encuentra
+en la carpeta `pi` de la carpeta `home`.  Como puedes imaginar se
+trata de la carpeta personal.  El nombre `home` se refiere a que
+contiene todas las carpetas personales (casa en inglés). Y dentro de
+esa carpeta, la carpeta `pi` es la del usuario `pi`.  Efectivamente,
+`pi` es el nombre del usuario creado por defecto en el sistema cuando
+se instala.  En el taller usaremos este usuario en exclusiva, pero te
+animamos a que te hagas su propio usuario.  Verás que en esta carpeta
+ya hay algunos archivos. Son ejemplos de programas en varios lenguajes
+de programación, que usaremos en el curso.
+
+Aunque el sistema no lo requiere, las distintas variantes de GNU
+tienden a mantener una estructura común de carpetas.  Por ejemplo, los
+siguientes suelen estar presentes en la práctica totalidad de los
+sistemas GNU:
+
+* `/home/` Carpetas personales de los usuarios.
+* `/root/` Carpeta personal del administrador (usuario `root`).
+* `/etc/` Archivos de configuración del sistema.
+* `/boot/` Archivos necesarios para el arranque del sistema.
+* `/bin/` Órdenes básicas (ejecutables del sistema).
+* `/usr/bin/` Resto de órdenes del sistema (ejecutables).
+* `/lib/` Bibliotecas básicas del sistema (biblioteca en inglés es *library*).
+* `/usr/lib/` Resto de bibliotecas del sistema.
+* `/usr/local/` Software instalado de forma manual, no perteneciente al sistema.
+* `/tmp/` Carpeta temporal.
+* `/dev/` Dispositivos del sistema. En GNU todos los dispositivs se ven como archivos especiales.
+
+Usa el administrador de archivos para navegar por el sistema y
+familiarizarte con él.  No te preocupes, como usuario `pi` no puedes
+destruir nada esencial para el sistema. Te proponemos los siguientes
+ejercicios:
+
+* Encuentra el archivo `wpa_supplicant.conf`. Se trata del archivo
+  donde podrás *configurar* la red WiFi para que la Raspberry Pi se
+  conecte automáticamente a tu punto de acceso.
+
+* Encuentra el archivo `parpadeo.py` que es un programa de ejemplo
+  escrito en Python que usaremos en el curso.
+
+* Encuentra el programa `gcc`. Se trata del compilador de C.
+
+* Encuentra el programa `idle`. Se trata del entorno integrado de
+  programación con Python.
+
+> **Warning**
+
+> Tradicionalmente en sistemas operativos se utiliza el
+> término *directorio* para referirse a una carpeta.  Del mismo modo
+> muchos textos en español hablan de *ficheros* para referirse a
+> archivos.  Nosotros intentaremos utilizar el término *carpeta*
+> (*folder* en ingles) que encaja mejor en la metáfora del escritorio.
+
+> *File* es archivo en inglés.  Un *file* es una de esas carpetas de
+> cartón que se meten en los archivadores de oficina.  El problema es
+> que no se puede llamar carpeta también a los archivos.  Por eso se
+> buscaron traducciones más neutras.  Fichero es realmente el
+> archivador, más que el contenido del archivador. Así que *archivo*
+> nos parece una traducción más correcta.
+
+> Pero te avisamos porque en la documentación que leas por ahí es
+> fácil que aparezcan.  **Directorio es lo mismo que carpeta y fichero
+> es lo mismo que archivo**.
+
 ## El entorno de línea de órdenes
 
-Sería conveniente que el alumno manejara al menos unas
-nociones básicas que le permitieran desenvolverse con soltura en
+Ejecuta la terminal de línea de órdenes pulsando sobre el icono
+correspondiente ![Terminal](img/raspbian1-term.png).  Aunque
+aparentemente se trata de una interfaz primitiva ésta es una de las
+formas más flexibles para comunicarse con el sistema operativo.
+
+Al pulsar el icono veremos que se abre una nueva ventana. Esa ventana
+corresponde al programa simulador de terminal.  Se comporta como una
+consola antigua con teclado y pantalla alfanumérica.  A su vez el
+programa terminal ejecuta otro programa que se encarga de interpretar
+las órdenes textuales, la *shell*.  La *shell* es el intermediario
+entre el usuario y el sistema operativo.
+
+En GNU/Linux la *shell* que se utiliza normalmente se llama `bash`
+(*Bourne Again SHell*).  Tiene multitud de características que la
+convierten en un completo lenguaje de programación por sí misma.
+Nosotros no veremos las características avanzadas, sino unas nociones
+básicas que te permitirán desenvolverte con soltura durante el curso.
+
+
+
 sistemas GNU/Linux, sobre todo en cuanto al uso de la consola o
 terminal del sistema se refiere.  Con esta intención, proponemos este
 capítulo como guía práctica para aquéllos que nunca han trabajado
@@ -90,24 +205,7 @@ directorios cuelga de un directorio raíz, el '/'.  El resto de
 directorios y ficheros del sistema cuelgan de este punto, organizados
 a su vez en una jerarquía de directorios.
 
-La mayoría de las distribuciones GNU/Linux mantienen una serie de
-directorios comunes, así como unas reglas que determinan la
-información que éstos deben contener.  Por lo tanto, no será una buena
-idea mezclar los archivos del usuario con los que se encuentran en los
-directorios del sistema o viceversa, ya que esto podría provocar que
-el sistema dejara de funcionar correctamente. A continuación se
-comentan los directorios más relevantes, así como su contenido:
 
-
-* `/bin/` Órdenes básicas.
-* `/boot/` Archivos para el arranque del sistema.
-* `/dev/` Dispositivos del sistema.
-* `/etc/` Archivos de configuración.
-* `/home/` Directorios personales de los usuarios.
-* `/lib/` Librerías del sistema.
-* `/mnt/` Punto de montaje temporal de dispositivos.
-* `/root/` Directorio personal del administrador.
-* `/tmp/` Directorio temporal.
 
 
 Aunque desde el entorno del escritorio se pueden realizar

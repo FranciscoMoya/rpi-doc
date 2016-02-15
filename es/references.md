@@ -1,0 +1,5 @@
+[//]: # (-*- markdown -*-)
+
+# Referencias
+
+{% references %} {% endreferences %}
