@@ -2,7 +2,7 @@
 # Introducción
 
 <figure style="float:right;padding:10px">
-  <img src="img/Raspberry_Pi_Photo.jpg" width="350">
+  <img src="img/Raspberry_Pi_Photo.jpg" width="350"/>
 
   <figcaption style="font-size:smaller; font-style:italic">Raspberry
   Pi modelo B. Foto de <em>cowjuice</em> disponible en <a
@@ -70,7 +70,7 @@ también pueden emplearse directamente mediante
 una *base shield* especialmente concebida para Raspberry Pi.
 
 <figure style="float:right; padding:10px">
-  <img src="img/brcm2835plusmemory.jpg" width="350">
+  <img src="img/brcm2835plusmemory.jpg" width="350"/>
 
   <figcaption style="font-size:smaller; font-style:italic">
   <div style="width:350px">
@@ -97,7 +97,7 @@ Broadcom, el
 [BCM2836](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2836/).
 
 <figure style="float:right; padding:10px">
-  <img src="img/bcm2835sideview.jpg" width="350">
+  <img src="img/bcm2835sideview.jpg" width="350"/>
 
   <figcaption style="font-size:smaller; font-style:italic">
   <div style="width:350px">
@@ -132,7 +132,7 @@ Además del procesador y la GPU, el SoC de la Raspberry Pi
 incorpora un amplio conjunto de periféricos:
 
 <figure style="float:right; padding:10px">
-  <img src="img/Package_on_Package.png" width="350">
+  <img src="img/Package_on_Package.png" width="350"/>
 
   <figcaption style="font-size:smaller; font-style:italic">
   <div style="width:350px">
@@ -167,7 +167,7 @@ Pi que se acomodan a distintos requisitos.  En la corta historia de la
 Raspberry Pi ya se han diseñado un buen número de modelos:
 
 <figure style="float:right; padding:10px">
-  <img src="img/CM_and_pi.jpg" width="350">
+  <img src="img/CM_and_pi.jpg" width="350"/>
 
   <figcaption style="font-size:smaller; font-style:italic">
   <div style="width:350px">
@@ -227,7 +227,7 @@ Raspberry Pi ya se han diseñado un buen número de modelos:
     Cam ports | 1 | 1 | 2 | 1 | 1 | 0
 
 <figure style="float:right; padding:10px">
-  <img src="img/cm-io.jpg" width="350">
+  <img src="img/cm-io.jpg" width="350"/>
 
   <figcaption style="font-size:smaller; font-style:italic">
   <div style="width:350px">
@@ -268,7 +268,7 @@ cabeceras de pines o soldadura.  Todo esto está ya en la Raspberry Pi
 modelo B+.
 
 <figure style="float:right; padding:10px">
-  <img src="img/rpi-b-plus-pcb-overview.svg" width="350">
+  <img src="img/rpi-b-plus-pcb-overview.svg" width="350"/>
 
   <figcaption style="font-size:smaller; font-style:italic">
   <div style="width:350px">
@@ -280,7 +280,7 @@ modelo B+.
 </figure>
 
 <figure style="float:right; padding:10px">
-  <img src="img/rpi-zero-pcb-overview.svg" width="250">
+  <img src="img/rpi-zero-pcb-overview.svg" width="250"/>
 
   <figcaption style="font-size:smaller; font-style:italic">
   <div style="width:350px">
