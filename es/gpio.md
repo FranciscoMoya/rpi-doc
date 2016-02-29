@@ -100,8 +100,8 @@ cualquier tipo hay que poner mucho cuidado para no dañar la propia
 Raspberry Pi.  Es muy importante comprobar los niveles de tensión y la
 corriente solicitada.  Los pines de GPIO pueden generar y consumir
 tensiones compatibles con los circuitos de 3.3V (no son tolerantes a
-5V) y
-[pueden sacar hasta 16mA siempre que toda la corriente drenada por los pines de GPIO no supere los 51mA](http://www.thebox.myzen.co.uk/Raspberry/Understanding_Outputs.html).
+5V) y pueden sacar hasta 16mA siempre que
+[toda la corriente drenada por los pines de GPIO no supere los 51mA](http://www.thebox.myzen.co.uk/Raspberry/Understanding_Outputs.html).
 
 > **Warning**
 
@@ -128,43 +128,44 @@ tutorial de `elinux.org` titulado
 
 La referencia definitiva para programar cualquiera de los periféricos
 del BCM2835 es
-\href{http://www.raspberrypi.org/wp-content/uploads/2012/02/BCM2835-ARM-Peripherals.pdf}{la
-  hoja de datos del fabricante}, aunque se trata de un documento
-denso, árido y poco claro.
+[la hoja de datos del fabricante](http://www.raspberrypi.org/wp-content/uploads/2012/02/BCM2835-ARM-Peripherals.pdf),
+aunque se trata de un documento denso, árido y poco claro.
 
 Para empezar probablemente el mejor tutorial es el de
-\url{http://elinux.org}, que lleva por título
-\href{http://elinux.org/RPi_Tutorial_Easy_GPIO_Hardware_&_Software}{\emph{RPi
-    Tutorial: Easy GPIO Hardware \& Software}} y especialmente los
-\href{http://elinux.org/RPi_Low-level_peripherals#Code_examples}{ejemplos
-  de programación utilizando diversos lenguajes y mecanismos}.  El
-\href{http://www.element14.com/community/servlet/JiveServlet/previewBody/51727-102-1-265829/Gertboard_UM_with_python.pdf}{manual
-  de la Gertboard} también tiene abundante información pero el
-software es difícil de encontrar.
+[elinux.org](http://elinux.org), que lleva por título
+[RPi Tutorial: Easy GPIO Hardware \& Software](http://elinux.org/RPi_Tutorial_Easy_GPIO_Hardware_&_Software)
+y especialmente los
+[ejemplos de programación utilizando diversos lenguajes y mecanismos](http://elinux.org/RPi_Low-level_peripherals#Code_examples).
+El
+[manual de la Gertboard](http://www.element14.com/community/servlet/JiveServlet/previewBody/51727-102-1-265829/Gertboard_UM_with_python.pdf)
+también tiene abundante información pero el software es difícil de
+encontrar.
 
 Para los intereses de este taller los dos procedimientos más
-relevantes son el uso de la biblioteca \emph{wiringPi} y el uso de la
-interfaz del sistema \emph{sysfs}.  El primero tiene dependencias que
+relevantes son el uso de la biblioteca *wiringPi* y el uso de la
+interfaz del sistema *sysfs*.  El primero tiene dependencias que
 hay que instalar y configurar.  El segundo no tiene dependencias, pero
 hay que programar más.
 
-La biblioteca \emph{wiringPi} está pensada para ser compilada en la
+La biblioteca *wiringPi* está pensada para ser compilada en la
 propia Raspberry Pi y ya la hemos instalado como un paquete más del
 sistema.
 
 ## Compilación manual de wiringPi
 
-\warning{Para el taller ya debes haber instalado la biblioteca
-  \emph{wiringPi}.  Puedes saltarte esta sección.}
+> **Warning**
 
-La biblioteca \emph{wiringPi} está ya disponible en el sistema y se
+> La tarjeta microSD incluída con tu Raspberry Pi ya tiene instalada
+> la biblioteca *wiringPi*.  Puedes saltarte esta sección.
+
+La biblioteca *wiringPi* está ya disponible en el sistema y se
 trata de una versión razonablemente moderna.  Sin embargo la evolución
-de \emph{wiringPi} es con frecuencia más rápida que la actualización
-de los paquetes de \emph{Raspbian}.  Por este motivo conviene explicar
+de *wiringPi* es con frecuencia más rápida que la actualización
+de los paquetes de *Raspbian*.  Por este motivo conviene explicar
 el proceso de instalación manual.  Nos vendrá bien si la última
 versión incorpora soporte para dispositivos que necesitemos emplear.
 
-La verdad es que \emph{wiringPi} no es un buen ejemplo de programación
+La verdad es que *wiringPi* no es un buen ejemplo de programación
 empotrada.  Su programador no se ha molestado en permitir su
 compilación cruzada.  Por tanto vamos a trabajar con la Raspberry Pi
 directamente para construir esta biblioteca. Entra en tu Raspberry Pi
@@ -179,31 +180,30 @@ $ cd wiringPi
 \info{GIT es el sistema de control de versiones distribuido más
   eficiente de la actualidad. Fue inicialmente creado por los
   desarrolladores del kernel Linux y hoy en día es utilizado por
-  \href{http://github.com}{GitHub}, o
-  \href{http://bitbucket.org}{BitBucket}.  Nuestro Raspbian por defecto
-  viene con \emph{git} instalado, pero si no lo estuviera bastaría ejecutar
-  \texttt{sudo apt-get install git-core}.}
+  [GitHub](http://github.com), o
+  [BitBucket](http://bitbucket.org).  Nuestro Raspbian por defecto
+  viene con *git* instalado, pero si no lo estuviera bastaría ejecutar
+  `sudo apt-get install git-core`.}
 
-Esto se trae la última versión del repositorio GIT de \emph{wiringPi}
-en el directorio \texttt{wiringPi}.  A continuación solo tenemos que
+Esto se trae la última versión del repositorio GIT de *wiringPi*
+en el directorio `wiringPi`.  A continuación solo tenemos que
 compilar. En este caso el programador sigue un convenio muy atípico,
 utiliza un pequeño script.
 
 
-\begin{term}
+``` console
 $ ./build
-\end{term} %$
+```
 
 ### Programando salidas digitales
-\label{sec:prog-gpio}
 
 Echa un vistazo al
-\href{http://wiringpi.com/reference/}{manual de referencia de
-  \emph{wiringPi}} y muy especialmente a las
-\href{http://wiringpi.com/reference/core-functions/}{funciones
-  principales}.  Explica qué hace el siguiente programa:
+[manual de referencia de `wiringPi`](http://wiringpi.com/reference/)
+y muy especialmente a las
+[funciones principales](http://wiringpi.com/reference/core-functions/).
+Explica qué hace el siguiente programa:
 
-\begin{lstlisting}[language=C]
+``` C
 #include <wiringPi.h>
 #include <unistd.h>
 
@@ -216,105 +216,104 @@ int main() {
         delay(1000);
     }
 }
-\end{lstlisting}
+```
 
 Compílalo en la Raspberry Pi y demuestra que funciona usando un LED en la pata J8-12, la
 correspondiente a GPIO 18. Si intentas ejecutarlo verás que no funciona, porque el usuario
-\emph{pi} no tiene suficientes privilegios. Hay que ejecutarlo con \texttt{sudo}. Esto va
+*pi* no tiene suficientes privilegios. Hay que ejecutarlo con `sudo`. Esto va
 a ser bastante frecuente en software que manipula dispositivos físicos. Ningún sistema
 operativo serio puede permitir que un usuario normal manipule directamente los
 dispositivos, podría comprometer incluso la integridad física del sistema.
 
 Esto es especialmente problemático en el momento en que intentamos depurar el programa con
 Eclipse. Eclipse ejecuta automáticamente el programa por nosotros y no utiliza
-\texttt{sudo}.  Es más, ni siquiera se ejecuta automáticamente, sino a través de una
-utilidad del depurador llamada \texttt{gdbserver}. Es decir, para poder depurar un
+`sudo`.  Es más, ni siquiera se ejecuta automáticamente, sino a través de una
+utilidad del depurador llamada `gdbserver`. Es decir, para poder depurar un
 programa y que éste se ejecute con permisos de superusuario, hay que ejecutar
-\texttt{gdbserver} con permiso de superusuario.  Pero Eclipse carece de opciones para
+`gdbserver` con permiso de superusuario.  Pero Eclipse carece de opciones para
 poder hacer esto.  La única alternativa que nos queda es hacer nuestro propio
-\texttt{gdbserver} y cambiar la ruta en Eclipse para que utilice nuestra versión. Veamos
+`gdbserver` y cambiar la ruta en Eclipse para que utilice nuestra versión. Veamos
 esto con un pequeño ejemplo.
 
-Edita un archivo de texto llamado \texttt{/usr/local/bin/gdbserver-root} en la Raspberry
-Pi utilizando el editor \texttt{nano} y después otorga permiso de ejecución para todos.
+Edita un archivo de texto llamado `/usr/local/bin/gdbserver-root` en la Raspberry
+Pi utilizando el editor `nano` y después otorga permiso de ejecución para todos.
 
-\begin{term}
+``` console
 $ sudo nano /usr/local/bin/gdbserver-root
 $ sudo chmod a+x /usr/local/bin/gdbserver-root
-\end{term}
+```
 
-Como puede verse utilizamos \texttt{sudo} para editar el archivo. Esto se debe a que el
-usuario \emph{pi} no puede crear archivos en el directorio \texttt{/usr/local/bin} y por
+Como puede verse utilizamos `sudo` para editar el archivo. Esto se debe a que el
+usuario *pi* no puede crear archivos en el directorio `/usr/local/bin` y por
 eso editamos como administrador. El contenido del archivo debe ser el siguiente:
 
-\begin{lstlisting}[language=]
-#!/bin/sh
-exec sudo gdbserver "$@"
-\end{lstlisting}%$
+``` console
+ #!/bin/sh
+ exec sudo gdbserver "$@"
+```
 
-\imagenmargen{img/dennis-ritchie.png}{fig:shebang}{La pareja de caracteres \texttt{\#!} se
-  denomina \emph{shebang} como contracción de \emph{SHArp BANG} (los nombres de los
-  caracteres en inglés vulgar). Este convenio para identificar los \emph{scripts} se debe
+\imagenmargen{img/dennis-ritchie.png}{fig:shebang}{La pareja de caracteres `\#!` se
+  denomina *shebang* como contracción de *SHArp BANG* (los nombres de los
+  caracteres en inglés vulgar). Este convenio para identificar los *scripts* se debe
   a Dennis Ritchie, inventor del lenguaje C y uno de los creadores de Unix. }
 
-La primera línea lo identifica como un \emph{shell script} que interpreta el programa
-\texttt{/bin/sh}. Este programa es la Bourne shell, el intérprete de órdenes estándar en
+La primera línea lo identifica como un *shell script* que interpreta el programa
+`/bin/sh`. Este programa es la Bourne shell, el intérprete de órdenes estándar en
 todos los Unix y variantes. Cuando entramos con SSH en una Raspberry Pi también estamos
 utilizando la Bourne shell, de forma interactiva.
 
-La segunda línea utiliza \texttt{exec}, que termina el intérprete de órdenes ejecutando lo
-que viene a continuación.  Si no apareciera \texttt{exec} el programa funcionaría igual
+La segunda línea utiliza `exec`, que termina el intérprete de órdenes ejecutando lo
+que viene a continuación.  Si no apareciera `exec` el programa funcionaría igual
 pero sería algo más ineficiente porque el intérprete de órdenes no terminaría hasta que
-terminara el programa.  A continuación usamos \texttt{sudo} para ejecutar con privilegios
-de administrador \texttt{gdbserver}, y por último pasamos a \texttt{gdbserver} los mismos
+terminara el programa.  A continuación usamos `sudo` para ejecutar con privilegios
+de administrador `gdbserver`, y por último pasamos a `gdbserver` los mismos
 parámetros que le hayan llegado a nuestro propio programa. La sintaxis \verb+"$@"+ sirve
 para preservar correctamente los argumentos con espacios, si los hubiera.%$
 
-Con esta nueva versión de \emph{gdbserver} podemos depurar igual que como se describió en
+Con esta nueva versión de *gdbserver* podemos depurar igual que como se describió en
 la sección~\ref{sec:debug}.  El único cambio necesario es que hay que especificar el nuevo
-\emph{gdbserver} en la subpestaña \emph{Gdbserver Settings} de la pestaña \emph{Debugger}
+*gdbserver* en la subpestaña *Gdbserver Settings* de la pestaña *Debugger*
 cuando se define la configuración de depuración, tal y como muestra la
 figura~\ref{fig:eclipse-gdbserver-root}.
 
 \imagenhere{img/eclipse-gdbserver-root.png}{12cm}{Configuración de
-  los ajustes de \emph{gdbserver}.}{fig:eclipse-gdbserver-root}
+  los ajustes de *gdbserver*.}{fig:eclipse-gdbserver-root}
 
-### Programando con \emph{wiringPi} en Eclipse
-\label{sec:wiringpi-eclipse}
+### Programando con *wiringPi* en Eclipse
 
 El programa anterior vamos a hacerlo empleando el entorno Eclipse en un PC
-convencional. Para ello hay que tener en cuenta que tanto la biblioteca \emph{wiringPi}
+convencional. Para ello hay que tener en cuenta que tanto la biblioteca *wiringPi*
 como sus archivos de cabecera están ahora en la Raspberry Pi.  Esto es una constante en el
 desarrollo de sistemas empotrados.  Habrá bibliotecas y componentes suministrados por el
 fabricante o por terceros que se instalan directamente sobre el sistema empotrado.  Pero
 como desarrolladores tenemos que ser capaces de ponerlos a disposición de nuestras
 herramientas.
 
-La biblioteca \emph{wiringPi} y todos sus componentes se instalan durante el proceso de
-compilación en el directorio correspondient de \texttt{/usr/local} en la Raspberry Pi. Es
-decir, la biblioteca \texttt{libwiringPi.so} estará disponible en \texttt{/usr/local/lib}
-y las cabeceras (tales como \texttt{wiringPi.h}) estarán disponibles en
-\texttt{/usr/local/include}.  Para darlos a conocer al entorno Eclipse vamos a proceder
+La biblioteca *wiringPi* y todos sus componentes se instalan durante el proceso de
+compilación en el directorio correspondient de `/usr/local` en la Raspberry Pi. Es
+decir, la biblioteca `libwiringPi.so` estará disponible en `/usr/local/lib`
+y las cabeceras (tales como `wiringPi.h`) estarán disponibles en
+`/usr/local/include`.  Para darlos a conocer al entorno Eclipse vamos a proceder
 como se indicó en la sección~\ref{sec:detalles}.
 
 En primer lugar actualizaremos la copia de las bibliotecas de la Raspberry Pi empleando la
-utilidad \emph{UpdateSysRoot}. El uso de la herramienta es muy intuitivo. Basta indicar en
+utilidad *UpdateSysRoot*. El uso de la herramienta es muy intuitivo. Basta indicar en
 la configuración de la conexión la dirección IP de la Raspberry Pi o su nombre completo
-(e.g. \texttt{rpiXX.local}) si tienes soporte de Bonjour.
+(e.g. `rpiXX.local`) si tienes soporte de Bonjour.
 
 Una vez actualizado la biblioteca y los archivos de cabecera quedarán en los siguientes
 directorios:
 
-\begin{term}
+``` console
 C:\RPi\tools\sysprogs\arm-linux-gnueabihf\sysroot\usr\local\include
 C:\RPi\tools\sysprogs\arm-linux-gnueabihf\sysroot\usr\local\lib
-\end{term}
+```
 
 Cada uno de ellos hay que añadirlo a la sección correspondiente de la configuración del
 proyecto. Con el botón derecho del ratón sobre el proyecto a configurar seleccionamos
-\emph{Properties} para abrir el diálogo de configuración.  En la sección \emph{C/C++
-  General} y dentro de ésta en la subsección \emph{Paths and Symbols} se dispone de todas
-las pestañas para la configuración de la nueva biblioteca. La pestaña \emph{Includes} se
+*Properties* para abrir el diálogo de configuración.  En la sección *C/C++
+  General* y dentro de ésta en la subsección *Paths and Symbols* se dispone de todas
+las pestañas para la configuración de la nueva biblioteca. La pestaña *Includes* se
 configura como muestra la figura~ref{fig:wiringpi-include}, añadiendo el directorio donde
 están los nuevos archivos de cabecera.
 
@@ -322,50 +321,48 @@ están los nuevos archivos de cabecera.
   proyecto.}{fig:wiringpi-include}
 
 A continuación añadimos la nueva ruta de las bibliotecas dinámicas en la pestaña
-\emph{Library Paths} como muestra la figura~\ref{fig:wiringpi-ldflags}.
+*Library Paths* como muestra la figura~\ref{fig:wiringpi-ldflags}.
 
 \imagenhere{img/wiringpi-ldflags.png}{11cm}{Añadir la ruta de las bibliotecas al
   proyecto.}{fig:wiringpi-ldflags}
 
-Por último añadimos la biblioteca (basta indicar \emph{wiringPi} en la pestaña
-\emph{Libraries} como muestra la figura~\ref{fig:wiringpi-ldlibs}.
+Por último añadimos la biblioteca (basta indicar *wiringPi* en la pestaña
+*Libraries* como muestra la figura~\ref{fig:wiringpi-ldlibs}.
 
-\imagenhere{img/wiringpi-ldlibs.png}{11cm}{Añadir la biblioteca \emph{wiringPi} al
+\imagenhere{img/wiringpi-ldlibs.png}{11cm}{Añadir la biblioteca *wiringPi* al
   proyecto.}{fig:wiringpi-ldlibs}
 
 ### Uso de PWM
-\label{sec:pwm}
 
-\emph{Pulse Width Modulation} (PWM) es una técnica que consiste en la variación del
-\emph{duty cycle} de una señal digital periódica, fundamentalmente con dos posibles
+*Pulse Width Modulation* (PWM) es una técnica que consiste en la variación del
+*duty cycle* de una señal digital periódica, fundamentalmente con dos posibles
 objetivos:
-\begin{itemize}
-\item Por un lado se puede utilizar como mecanismo para transmitir información.  Por
+
+* Por un lado se puede utilizar como mecanismo para transmitir información.  Por
   ejemplo, los servo-motores tienen una entrada digital por la que se transmite el ángulo
   deseado codificado en PWM.
-\item Por otro lado se puede utilizar para regular la cantidad de potencia suministrada a
+* Por otro lado se puede utilizar para regular la cantidad de potencia suministrada a
   la carga.  Por ejemplo, las luminarias LED frecuentemente utilizan reguladores PWM para
   permitir el control de intensidad.
-\end{itemize}
 
 La Raspberry Pi tiene una sola pata de GPIO (GPIO 18) que puede configurarse como salida
 PWM. El propio BCM2835 se encarga de gestionar la generación de la señal, liberando
 completamente al procesador principal. El usuario puede configurar el rango de valores
 disponible (hasta 1024) y posteriormente sacar un valor determinado, de forma que el
-módulo PWM se encarga de mantener el \emph{duty cycle} en la relación valor/rango.
+módulo PWM se encarga de mantener el *duty cycle* en la relación valor/rango.
 
 También podemos programar la generación de señales PWM con la ayuda de la biblioteca
-\emph{wiringPi}. La frecuencia base para PWM en Raspberry Pi es de 19.2Mhz. Esta
+*wiringPi*. La frecuencia base para PWM en Raspberry Pi es de 19.2Mhz. Esta
 frecuencia puede ser dividida mediante el uso de un divisor indicado con
-\texttt{pwmSetClock}, hasta un máximo de 4095.  A esta frecuencia funciona el algoritmo
+`pwmSetClock`, hasta un máximo de 4095.  A esta frecuencia funciona el algoritmo
 interno que genera la secuencia de pulsos, pero en el caso del BCM2835 se dispone de dos
-modos de funcionamiento, un modo equilibrado (\emph{balanced}) en el que es difícil
+modos de funcionamiento, un modo equilibrado (*balanced*) en el que es difícil
 controlar la anchura de los pulsos, pero permite un control PWM de muy alta frecuencia, y
-un modo \emph{mark and space} que es mucho más intuitivo y más apropiado para controlar
-servos.  El modo \emph{balanced} es apropiado para controlar la potencia suministrada a la
+un modo *mark and space* que es mucho más intuitivo y más apropiado para controlar
+servos.  El modo *balanced* es apropiado para controlar la potencia suministrada a la
 carga o para transmisión de información.
 
-En el modo \emph{mark and space} el módulo PWM incrementará un contador interno hasta
+En el modo *mark and space* el módulo PWM incrementará un contador interno hasta
 llegar a un límite configurable, el rango de PWM, que puede ser de como máximo 1024. Al
 comienzo del ciclo el pin se pondrá a 1 lógico, y se mantendrá hasta que el contador
 interno llegue al valor puesto por el usuario.  En ese momento el pin se pondrá a 0 lógico
@@ -385,10 +382,19 @@ El montaje es tal como muestra la figura~\ref{fig:servo-gpio18}. El cable rojo d
 cable amarillo, naranja o blanco (signal) a GPIO18 en P1-12. No se necesita ningún otro
 componente.
 
-\imagenhere{img/servo-gpio18.pdf}{11cm}{Montaje de un microservo para ser controlado
-  directamente desde GPIO 18 configurado como salida PWM.}{fig:servo-gpio18}
+<figure style="padding:10px">
+  <img src="img/servo-gpio18.svg" width="400"/>
 
-\begin{lstlisting}[language=C]
+  <figcaption style="font-size:smaller; font-style:italic">
+  <div style="width:500px">
+  Montaje de un microservo para ser controlado
+  directamente desde GPIO18 configurado como salida PWM.
+  </div>
+  </figcaption>
+</figure>
+
+
+``` C
 #include <wiringPi.h>
 #include <stdlib.h>
 
@@ -418,13 +424,14 @@ int main(int argc, char* argv[])
     delay(1000);
   }
 }
-\end{lstlisting}
+```
 
 Para tener máximo control de la posición del servo probaremos con el rango máximo, de
 1024.  En ese caso el divisor tiene que ser tal que la frecuencia del pulso PWM sea:
-\[
+
+$$
 f = \frac{f_{base}}{rango \times div} = \frac{19.2\times 10^6Hz}{1024 \times div} = \frac{1}{20ms} = 50Hz
-\]
+$$
 
 Es decir, el divisor habría que configurarlo a 390.  El rango completo
 del servo depende del modelo concreto.  Teóricamente debería ser entre
@@ -433,31 +440,24 @@ habrá que probar el servo concreto, nuestros experimentos dan un rango
 útil entre 29 y 123 para el microservo de TowerPro disponible en el
 laboratorio.
 
-\section{Ejercicios}
-\label{sec:gpio-ej}
+## GPIO Zero
 
-\begin{enumerate}
-\item Configura y programa el hardware y el software necesario para
+## Ejercicios
+
+
+1. Configura y programa el hardware y el software necesario para
   tener dos LEDs parpadeando al mismo ritmo pero manteniendo solo uno
   de ellos encendido a la vez.
-\item Modifica el ejemplo anterior para que la conmutación se produzca
+1. Modifica el ejemplo anterior para que la conmutación se produzca
   solamente cuando se aprieta un pulsador.  Uno de los LEDs estará
   encendido cuando el pulsador no esté apretado, el otro estará
   encendido solamente cuando el pulsador esté apretado.
-\end{enumerate}
 
-\section{Retos para la semana}
-\label{sec:gpio-retos}
+## Retos para la semana
 
-\begin{enumerate}
-\item[\textbf{Fácil}] Compila la biblioteca \emph{wiringPi} como un proyecto Eclipse y
+1. **Fácil** Compila la biblioteca *wiringPi* como un proyecto Eclipse y
   configura tus ejemplos para que usen este proyecto como dependencia.
-\item[\textbf{Fácil}] Diseña un mecanismo para poder controlar tiras
+1. **Fácil** Diseña un mecanismo para poder controlar tiras
   de LEDs empleando la interfaz SPI.
-\item[\textbf{Fácil}] Diseña un mecanismo para poder controlar una matriz de LEDs de como
+1. **Fácil** Diseña un mecanismo para poder controlar una matriz de LEDs de como
   mínimo 16x32 con la Raspberry Pi.
-\end{enumerate}
-
-
-
-## GPIO Zero

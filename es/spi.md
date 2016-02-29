@@ -9,15 +9,15 @@ implementan tanto I2C como SPI y en ese caso probablemente es mejor
 decantarse por I2C porque utiliza menos pines.
 
 Al igual que con I2C, el primer paso para realizar programas que
-utilizan la interfaz SPI es activarlo con \texttt{raspi-config} en el
+utilizan la interfaz SPI es activarlo con `raspi-config` en el
 apartado \emph{Advanced Configuration}.  Al igual que en el caso de
 I2C el programa ofrece la opción de cargar automáticamente los drivers
 en el arranque, aunque siempre se puede hacer con la utilidad
-\texttt{gpio} de \emph{wiringPi}.
+`gpio` de \emph{wiringPi}.
 
-\begin{term}
+``` console
 $ gpio load spi
-\end{term}%$
+```
 
 La programación es sencilla en cuanto que solo utiliza dos funciones,
 pero puede ser realmente enrevesada de entender la comunicación con
@@ -28,7 +28,7 @@ transacciones que se descartan por completo.
 
 Este ejemplo escribe en una memoria EEPROM 25LC010A de Microchip.
 
-\begin{lstlisting}[language=C]
+``` C
 #include <stdio.h>
 #include <wiringPiSPI.h>
 #include "25LC010A.h"
@@ -47,13 +47,13 @@ int main (void) {
 
     return 0;
 }
-\end{lstlisting}
+```
 
-La función \texttt{wiringPiSPISetup} inicializa la comunicación para
+La función `wiringPiSPISetup` inicializa la comunicación para
 el canal 0 a 10Mz. Hay dos canales disponibles en el modelo B+ (0 y
 1).
 
-Las llamadas a \texttt{wiringPiSPIDataRW} realizan una transacción SPI
+Las llamadas a `wiringPiSPIDataRW` realizan una transacción SPI
 donde se escribe y se lee de manera concurrente un conjunto de bytes.
 El significado preciso de lo que se lee y se escribe depende del
 dispositivo y en algunos casos puede requerir descartar parte o toda
@@ -72,19 +72,19 @@ defecto \emph{Raspbian} utiliza estos pines para una consola serie.
 Es posible conectar un cable USB a estos pines para conectarse a la
 \emph{Raspberry Pi} sin necesidad de ningún tipo de configuración de
 red.  El
-\href{https://learn.adafruit.com/adafruits-raspberry-pi-lesson-5-using-a-console-cable/}{tutorial
-  5 de Adafruit} explica cómo conectar el cable USB y cómo emplear un
+[tutorial
+  5 de Adafruit](https://learn.adafruit.com/adafruits-raspberry-pi-lesson-5-using-a-console-cable/) explica cómo conectar el cable USB y cómo emplear un
 software emulador de terminal para hablar con la Raspberry Pi.
 
 Pero claro, eso significa que la UART está ocupada en la consola. Es
 necesario quitar la consola para poder emplear la UART en otros fines.
 Para desactivar la consola hay que editar el archivo
-\texttt{/boot/cmdline.txt}, eliminar el fragmento que dice
-\texttt{console=ttyAMA0,115200}, y reiniciar la Raspberry Pi.
+`/boot/cmdline.txt`, eliminar el fragmento que dice
+`console=ttyAMA0,115200`, y reiniciar la Raspberry Pi.
 
-La programación de la UART puede realizarse también con \emph{wiringPi}.
+La programación de la UART puede realizarse también con *wiringPi*.
 
-\begin{lstlisting}[language=C]
+``` C
 #include <wiringSerial.h>
 
 int main(int argc, char* argv[])
@@ -95,9 +95,9 @@ int main(int argc, char* argv[])
     serialClose(fd);
     return 0;
 }
-\end{lstlisting}
+```
 
 Más información sobre las funciones disponibles puede encontrarse en
-la \href{http://wiringpi.com/reference/serial-library/}{página de
+la [página de
   documentación de referencia para la biblioteca de puerto serie de
-  wiringPi}.
+  wiringPi](http://wiringpi.com/reference/serial-library/).
