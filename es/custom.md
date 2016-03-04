@@ -17,14 +17,14 @@ han realizado en la tarjeta microSD que se distribuye en el taller.
   aplicaciones de manera que tengamos acceso rápido a la aplicación de
   configuración de la Raspberry Pi, un terminal, un navegador, un
   editor de textos y el entorno de programación IDLE.
-* Configurar el fondo de escritorio al archivo `UCLM-EII-bg.png`.
+* Configurar el fondo de escritorio al archivo [`UCLM-EII-bg.png`](img/UCLM-EII-bg.png).
 * Configurar la disposición (*layout*) de teclado en
   castellano por defecto.
 * Ejecutar la aplicación de configuración y en la pestaña de
   *Interfaces* habilitar SPI e I2C.  También en la pestaña de
   *Localisation* seleccionar *Locale* `es/ES`.  Además seleccionar la
-  *zona horaria `Europe/Madrid` y finalmente configurar el teclado
-  *como `Spain/Spanish`.
+  zona horaria (*Timezone*) `Europe/Madrid` y finalmente configurar el teclado
+  como `Spain/Spanish`.
 * Instalar algunos paquetes adicionales: `tmux`, `i2c-tools`,
   `python-smbus`, `ipython`, `zile`, `python-dev`, `python-gpiozero`.
 * Añadir el usuario `pi` al grupo `staff` para que funcione `pip install`.

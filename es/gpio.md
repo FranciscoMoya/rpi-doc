@@ -133,7 +133,7 @@ aunque se trata de un documento denso, árido y poco claro.
 
 Para empezar probablemente el mejor tutorial es el de
 [elinux.org](http://elinux.org), que lleva por título
-[RPi Tutorial: Easy GPIO Hardware \& Software](http://elinux.org/RPi_Tutorial_Easy_GPIO_Hardware_&_Software)
+[RPi Tutorial: Easy GPIO Hardware & Software](http://elinux.org/RPi_Tutorial_Easy_GPIO_Hardware_&_Software)
 y especialmente los
 [ejemplos de programación utilizando diversos lenguajes y mecanismos](http://elinux.org/RPi_Low-level_peripherals#Code_examples).
 El
@@ -177,13 +177,14 @@ $ git clone --depth 1 git://git.drogon.net/wiringPi
 $ cd wiringPi
 ```
 
-\info{GIT es el sistema de control de versiones distribuido más
-  eficiente de la actualidad. Fue inicialmente creado por los
-  desarrolladores del kernel Linux y hoy en día es utilizado por
-  [GitHub](http://github.com), o
-  [BitBucket](http://bitbucket.org).  Nuestro Raspbian por defecto
-  viene con *git* instalado, pero si no lo estuviera bastaría ejecutar
-  `sudo apt-get install git-core`.}
+> **Info**
+
+> GIT es el sistema de control de versiones distribuido más
+> eficiente de la actualidad. Fue inicialmente creado por los
+> desarrolladores del kernel Linux y hoy en día es utilizado por
+> [GitHub](http://github.com), o [BitBucket](http://bitbucket.org).
+> Nuestro Raspbian por defecto viene con *git* instalado, pero si no
+> lo estuviera bastaría ejecutar `sudo apt-get install git-core`.
 
 Esto se trae la última versión del repositorio GIT de *wiringPi*
 en el directorio `wiringPi`.  A continuación solo tenemos que

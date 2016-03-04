@@ -133,16 +133,16 @@ familiarizarte con él.  No te preocupes, como usuario `pi` no puedes
 destruir nada esencial para el sistema. Te proponemos los siguientes
 ejercicios:
 
-* Encuentra el archivo `wpa_supplicant.conf`. Se trata del archivo
+1. Encuentra el archivo `wpa_supplicant.conf`. Se trata del archivo
   donde podrás *configurar* la red WiFi para que la Raspberry Pi se
   conecte automáticamente a tu punto de acceso.
 
-* Encuentra el archivo `parpadeo.py` que es un programa de ejemplo
+1. Encuentra el archivo `parpadeo.py` que es un programa de ejemplo
   escrito en Python que usaremos en el curso.
 
-* Encuentra el programa `gcc`. Se trata del compilador de C.
+1. Encuentra el programa `gcc`. Se trata del compilador de C.
 
-* Encuentra el programa `idle`. Se trata del entorno integrado de
+1. Encuentra el programa `idle`. Se trata del entorno integrado de
   programación con Python.
 
 > **Warning**
