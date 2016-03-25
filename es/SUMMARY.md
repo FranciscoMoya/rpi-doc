@@ -1,3 +1,4 @@
+[//]: -*- coding: utf-8 -*-
 # Tabla de contenido
 
 * [Resumen](README.md)
