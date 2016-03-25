@@ -1,65 +1,65 @@
 [//]: # (-*- markdown -*-)
 
-# Arquitectura software (versiÛn en C)
+# Arquitectura software (versi√≥n en C)
 
-Una de las principales diferencias de esta ediciÛn del taller es que
+Una de las principales diferencias de esta edici√≥n del taller es que
 vamos a dedicar una buena parte del tiempo a hablar de arquitectura
 software.
 
-Este capÌtulo tiene dos objetivos:
+Este cap√≠tulo tiene dos objetivos:
 
-* Ofrecer unas pinceladas de los patrones de diseÒo que consideramos
-  m·s importantes para el desarrollo con Raspberry Pi. Documentar
-  brevemente los fundamentos y cÛmo se aplican.
+* Ofrecer unas pinceladas de los patrones de dise√±o que consideramos
+  m√°s importantes para el desarrollo con Raspberry Pi. Documentar
+  brevemente los fundamentos y c√≥mo se aplican.
 
-* Proporcionar plantillas de aplicaciÛn totalmente funcionales y
+* Proporcionar plantillas de aplicaci√≥n totalmente funcionales y
   extensibles para aplicarlas en cualquier proyecto. Esto incluye el
-  estudio de diversos casos de estudio, incluyendo la interacciÛn a
-  travÈs de la red, la interacciÛn con programas externos, etc.
+  estudio de diversos casos de estudio, incluyendo la interacci√≥n a
+  trav√©s de la red, la interacci√≥n con programas externos, etc.
 
 ## Manejo de errores
 
 Antes de empezar a escribir programas relativamente complejos en C
-conviene hacer una pequeÒa reflexiÛn sobre la gestiÛn de errores en C.
-La forma habitual de manejar errores es devolver un cÛdigo de error en
+conviene hacer una peque√±a reflexi√≥n sobre la gesti√≥n de errores en C.
+La forma habitual de manejar errores es devolver un c√≥digo de error en
 las funciones y, dependiendo de su valor actuar de una forma u otra.
 
-Pero øquÈ pasa si no sabemos cÛmo actuar ante una situaciÛn errÛnea?
+Pero ¬øqu√© pasa si no sabemos c√≥mo actuar ante una situaci√≥n err√≥nea?
 Es muy frecuente que en el momento que se produce el error no tengamos
-toda la informaciÛn necesaria para tratarlo debidamente.  Es habitual
-devolver otro cÛdigo de error al llamador, pero esto empieza a
-oscurecer el cÛdigo porque cada llamada a funciÛn tiene que ir en una
-cla˙sula `if`.
+toda la informaci√≥n necesaria para tratarlo debidamente.  Es habitual
+devolver otro c√≥digo de error al llamador, pero esto empieza a
+oscurecer el c√≥digo porque cada llamada a funci√≥n tiene que ir en una
+cla√∫sula `if`.
 
 Lo correcto es emplear un mecanismo soportado por todos los lenguajes
-de programaciÛn modernos, que se denomina *excepciones*.  Pero C no
+de programaci√≥n modernos, que se denomina *excepciones*.  Pero C no
 tiene excepciones. Afortunadamente hay un conjunto de bibliotecas que
 implementan el mecanismo utilizando macros del preprocesador y dos
-funciones de la biblioteca est·ndar de C que no suelen ser muy
+funciones de la biblioteca est√°ndar de C que no suelen ser muy
 conocidas, `setjmp` y `longjmp`.  
 
-No es propÛsito de este taller explicar el funcionamiento de estas
-funciones, mira la p·gina de manual para entender su funcionamiento.
+No es prop√≥sito de este taller explicar el funcionamiento de estas
+funciones, mira la p√°gina de manual para entender su funcionamiento.
 Son esenciales para implementar corrutinas, o cualquier otra forma de
-interrumpir el flujo normal de ejecuciÛn de un programa.
+interrumpir el flujo normal de ejecuci√≥n de un programa.
 
 En nuestros ejemplos vamos a optar por
 [`cexcept`](http://cexcept.sf.net/) por su extrema simplicidad.  Tiene
-un ˙nico archivo de cabecera (`cexcept.h`) y su uso es muy simple.
+un √∫nico archivo de cabecera (`cexcept.h`) y su uso es muy simple.
 
-Cuando el programa tiene suficiente informaciÛn para manejar posibles
-errores debe utilizar una construcciÛn de este estilo:
+Cuando el programa tiene suficiente informaci√≥n para manejar posibles
+errores debe utilizar una construcci√≥n de este estilo:
 
 ```
 Try {
-    /* CÛdigo de usuario, sin ¥manejo de errores */ 
+    /* C√≥digo de usuario, sin ¬¥manejo de errores */ 
 }
 Catch (ex) {
-    /* CÛdigo para tratar el error notificado en ex */
+    /* C√≥digo para tratar el error notificado en ex */
 }
 ```
 
-En el momento en que se puede producir una situaciÛn excepcional o un
+En el momento en que se puede producir una situaci√≥n excepcional o un
 error debe notificarse de esta forma:
 
 ```
@@ -67,12 +67,12 @@ if (funcion_tradicional() < 0)
    Throw ex;
 ```
 
-Donde `ex` es una excepciÛn, una estructura de datos que recoge toda
-la informaciÛn del error para ser manejada cuando esto sea posible.
+Donde `ex` es una excepci√≥n, una estructura de datos que recoge toda
+la informaci√≥n del error para ser manejada cuando esto sea posible.
 
 El tipo de datos de `ex` es definible por el usuario.  En nuestros
 ejemplos utilizaremos una biblioteca auxiliar en la que definimos la
-excepciÛn como una estructura similar a esta:
+excepci√≥n como una estructura similar a esta:
 
 ```
 typedef struct {
@@ -83,7 +83,7 @@ typedef struct {
 define_exception_type(exception);
 ```
 
-AsÌ que si necesitas una descripciÛn textual del error puedes usar el
+As√≠ que si necesitas una descripci√≥n textual del error puedes usar el
 campo `what` de la estructura.  Por ejemplo:
 
 ```
@@ -96,9 +96,9 @@ Catch (ex) {
 }
 ```
 
-Para notificar una situaciÛn excepcional se dice que se eleva una
-excepciÛn.  Es decir, se usa una sentencia `Throw` con los valores
-apropiados de la excepciÛn.  Por ejemplo:
+Para notificar una situaci√≥n excepcional se dice que se eleva una
+excepci√≥n.  Es decir, se usa una sentencia `Throw` con los valores
+apropiados de la excepci√≥n.  Por ejemplo:
 
 ```
 f = fopen(fname, "r");
@@ -107,30 +107,30 @@ if (f == NULL)
 ```
 
 Cuando se ejecuta la sentencia `Throw` el programa pasa el control a
-la cla˙sula `Catch` del ˙ltimo `Try` ejecutado, aunque estÈ en otra
-funciÛn.  Es un mecanismo muy poderoso para desacoplar la lÛgica del
-programa y la lÛgica de manejo de errores.
+la cla√∫sula `Catch` del √∫ltimo `Try` ejecutado, aunque est√© en otra
+funci√≥n.  Es un mecanismo muy poderoso para desacoplar la l√≥gica del
+programa y la l√≥gica de manejo de errores.
 
-No te quedes en esta breve explicaciÛn, mira tranquilamente los
+No te quedes en esta breve explicaci√≥n, mira tranquilamente los
 ejemplos que te proporcionamos en el taller, especialmente la
 biblioteca `reactor`.  Puede que las siguientes secciones te ayuden
-tambiÈn a comprender el cÛdigo.
+tambi√©n a comprender el c√≥digo.
 
-## Fundamentos de programaciÛn orientada a objetos
+## Fundamentos de programaci√≥n orientada a objetos
 
-Puede que te haya extraÒado el tÌtulo de esta secciÛn. øProgramaciÛn
-orientada a objetos? øEn C?  La programaciÛn orientada a objetos (POO)
-no es m·s que una tÈcnica de programaciÛn.  Cuando se dice que un
-lenguaje *soporta* POO significa que incorpora mecanismos especÌficos
-para hacer m·s f·cil la POO. Pero en cualquier lenguaje actual se
+Puede que te haya extra√±ado el t√≠tulo de esta secci√≥n. ¬øProgramaci√≥n
+orientada a objetos? ¬øEn C?  La programaci√≥n orientada a objetos (POO)
+no es m√°s que una t√©cnica de programaci√≥n.  Cuando se dice que un
+lenguaje *soporta* POO significa que incorpora mecanismos espec√≠ficos
+para hacer m√°s f√°cil la POO. Pero en cualquier lenguaje actual se
 puede programar orientado a objetos.
 
-Un objeto no es m·s que una zona de memoria con sem·ntica asociada.
+Un objeto no es m√°s que una zona de memoria con sem√°ntica asociada.
 Es decir, que tienen significado y hay un conjunto de operaciones que
 tiene sentido realizar sobre ellos.  Un entero, por ejemplo, es un
-objeto en C. Tiene significado matem·tico y se pueden realizar las
-operaciones de suma, resta, etc. øCÛmo hacemos objetos arbitrarios en
-C?  Por ejemplo, øcÛmo hacemos un objeto que represente un `empleado`
+objeto en C. Tiene significado matem√°tico y se pueden realizar las
+operaciones de suma, resta, etc. ¬øC√≥mo hacemos objetos arbitrarios en
+C?  Por ejemplo, ¬øc√≥mo hacemos un objeto que represente un `empleado`
 en un registro de personal?
 
 La respuesta es con ayuda de una estructura, por ejemplo:
@@ -148,10 +148,10 @@ Los distintos elementos de la estructura se denominan *atributos del
 objeto*.  Es todo aquello que le da significado a cada uno de los
 objetos.
 
-Pero todavÌa no hemos hecho objetos, solo hemos definido la forma que
-tendr·n esos objetos, es lo que se denomina *clase*.  Para construir
-objetos se definen funciones que reciben los par·metros necesarios y
-devuelven un puntero a una estructura de Èstas, los constructores.
+Pero todav√≠a no hemos hecho objetos, solo hemos definido la forma que
+tendr√°n esos objetos, es lo que se denomina *clase*.  Para construir
+objetos se definen funciones que reciben los par√°metros necesarios y
+devuelven un puntero a una estructura de √©stas, los constructores.
 Por ejemplo:
 
 ```
@@ -176,10 +176,10 @@ void empleado_init(empleado* e,
 ```
 
 Los constructores en C suelen dividirse en dos partes, un `XXX_new` y
-un `XXX_init`.  El primero reserva espacio en memoria din·mica,
-mientras que el segundo solo rellena los datos.  Esto resulta ˙til
-para poder definir empleados en memoria din·mica o en variables
-autom·ticas:
+un `XXX_init`.  El primero reserva espacio en memoria din√°mica,
+mientras que el segundo solo rellena los datos.  Esto resulta √∫til
+para poder definir empleados en memoria din√°mica o en variables
+autom√°ticas:
 
 ```
 empleado* ed = empleado_new("Paco", "Jefe", 1800.);
@@ -187,26 +187,26 @@ empleado ea;
 empleado_init(&ea, "Pepe", "Currito", 1000.);
 ```
 
-El empleado `ed` es un objeto en memoria din·mica, que debe ser
+El empleado `ed` es un objeto en memoria din√°mica, que debe ser
 liberado llamando a `free`.  Sin embargo el empleado `ea` es un objeto
-en la pila, que se libera autom·ticamente cuando termine el ·mbito de
-declaraciÛn.  La segunda forma es tambiÈn muy ˙til para construir
+en la pila, que se libera autom√°ticamente cuando termine el √°mbito de
+declaraci√≥n.  La segunda forma es tambi√©n muy √∫til para construir
 vectores de `empleado`.
 
-Algunos de vosotros os habrÈis dado cuenta de que aquÌ falla algo.  Si
+Algunos de vosotros os habr√©is dado cuenta de que aqu√≠ falla algo.  Si
 el objeto `ea` se libera no vamos a poder liberar las cadenas
-correspondientes a `nombre` o `puesto`.  La soluciÛn es utilizar una
-funciÛn especial para liberar todo lo reservado en el constructor, el
+correspondientes a `nombre` o `puesto`.  La soluci√≥n es utilizar una
+funci√≥n especial para liberar todo lo reservado en el constructor, el
 destructor.  Pero lo que hay que liberar es diferente si se ha
-utilizado `XXX_new` o `XXX_init`. øCÛmo conseguimos que se comporte de
-forma diferente dependiendo de dÛnde haya sido construido?
+utilizado `XXX_new` o `XXX_init`. ¬øC√≥mo conseguimos que se comporte de
+forma diferente dependiendo de d√≥nde haya sido construido?
 
-La tÈcnica para resolver este problema se denomina *funciones
+La t√©cnica para resolver este problema se denomina *funciones
 virtuales*.  Hay varias formas de implementarlo, lo haremos de la
-forma m·s simple posible.  En lugar de usar una funciÛn para liberar
-el objeto vamos a usar un puntero a funciÛn y ese puntero cambiar·
+forma m√°s simple posible.  En lugar de usar una funci√≥n para liberar
+el objeto vamos a usar un puntero a funci√≥n y ese puntero cambiar√°
 dependiendo del modo en que se ha construido el objeto.  El decir, el
-propio objeto lleva no solo datos sino tambiÈn punteros a funciones
+propio objeto lleva no solo datos sino tambi√©n punteros a funciones
 que pueden cambiar dependiendo del caso.
 
 ```
@@ -220,7 +220,7 @@ struct empleado_ {
 };
 ```
 
-Y el destructor puede ser una funciÛn tan simple como:
+Y el destructor puede ser una funci√≥n tan simple como:
 
 ```
 void empleado_destroy(empleado* e)
@@ -229,16 +229,16 @@ void empleado_destroy(empleado* e)
 }
 ```
 
-Evidentemente el trabajo no est· en esa funciÛn sino en aquella a la
-que apunta `e->destroy`.  Y adem·s es preciso garantizar que siempre
-apunta a una funciÛn v·lida, porque de otro modo al llamar al
-destructor se producirÌa un error catastrÛfico.  …sta y cualquier otra
-garantÌa que sea preciso mantener para que el estado sea siempre
+Evidentemente el trabajo no est√° en esa funci√≥n sino en aquella a la
+que apunta `e->destroy`.  Y adem√°s es preciso garantizar que siempre
+apunta a una funci√≥n v√°lida, porque de otro modo al llamar al
+destructor se producir√≠a un error catastr√≥fico.  √âsta y cualquier otra
+garant√≠a que sea preciso mantener para que el estado sea siempre
 consistente se denominan *invariantes de clase*.
 
 El constructor es responsable de *establecer* los invariantes de
-clase. Todas las dem·s operaciones son responsables de *mantener* los
-invariantes de clase.  Veamos cÛmo quedarÌa la funciÛn
+clase. Todas las dem√°s operaciones son responsables de *mantener* los
+invariantes de clase.  Veamos c√≥mo quedar√≠a la funci√≥n
 `empleado_init`.
 
 ```
@@ -263,7 +263,7 @@ static void empleado_free_members(empleado* e)
 ```
 
 Pero esto no libera la estructura de `empleado` cuando se construye
-con `empleado_new`.  AsÌ que en ese caso habr· que cambiar el
+con `empleado_new`.  As√≠ que en ese caso habr√° que cambiar el
 destructor:
 
 ```
@@ -286,22 +286,22 @@ static void empleado_free(empleado* e)
 }
 ```
 
-La funciÛn `empleado_destroy` es un ejemplo de operaciÛn que se puede
+La funci√≥n `empleado_destroy` es un ejemplo de operaci√≥n que se puede
 realizar sobre un `empleado`.  Estas operaciones se llaman de forma
-general *mÈtodos* del objeto, y por tratarse de la operaciÛn que
-libera los recursos del `empleado` se llamarÌa de forma m·s especÌfica
-*destructor*.  Adem·s es un mÈtodo que se comporta de forma diferente
-seg˙n el tipo de `empleado` sobre el que se llame.  Este tipo de
-*mÈtodos* se llaman en general *mÈtodos virtuales*, y al tratarse de un
-destructor serÌa tambiÈn de forma m·s especÌfica *destructor virtual*.
+general *m√©todos* del objeto, y por tratarse de la operaci√≥n que
+libera los recursos del `empleado` se llamar√≠a de forma m√°s espec√≠fica
+*destructor*.  Adem√°s es un m√©todo que se comporta de forma diferente
+seg√∫n el tipo de `empleado` sobre el que se llame.  Este tipo de
+*m√©todos* se llaman en general *m√©todos virtuales*, y al tratarse de un
+destructor ser√≠a tambi√©n de forma m√°s espec√≠fica *destructor virtual*.
 
-Los *mÈtodos virtuales* se utilizan en combinaciÛn con otra
-caracterÌstica muy importante de la POO, la herencia. En el ejemplo de
-`empleado` podemos considerar el caso de un `gerente` que b·sicamente
-funciona igual que un `empleado`, pero tiene otras caracterÌsticas,
-como por ejemplo bonus por productividad.  Por tanto el c·lculo de las
-retribuciones anuales ser· diferente seg˙n se trate de un empleado
-normal o de un gerente.  Eso se puede conseguir aÒadiendo otra funciÛn
+Los *m√©todos virtuales* se utilizan en combinaci√≥n con otra
+caracter√≠stica muy importante de la POO, la herencia. En el ejemplo de
+`empleado` podemos considerar el caso de un `gerente` que b√°sicamente
+funciona igual que un `empleado`, pero tiene otras caracter√≠sticas,
+como por ejemplo bonus por productividad.  Por tanto el c√°lculo de las
+retribuciones anuales ser√° diferente seg√∫n se trate de un empleado
+normal o de un gerente.  Eso se puede conseguir a√±adiendo otra funci√≥n
 virtual para ello.
 
 ```
@@ -318,7 +318,7 @@ struct empleado_ {
 ```
 
 El campo `retribuciones` se inicializa en el constructor, de forma
-similar a `destroy` utilizando la siguiente funciÛn:
+similar a `destroy` utilizando la siguiente funci√≥n:
 
 ```
 static double empleado_retribuciones_14pagas(empleado* e)
@@ -327,7 +327,7 @@ static double empleado_retribuciones_14pagas(empleado* e)
 }
 ```
 
-Con lo que el mÈtodo quedarÌa tan simple como:
+Con lo que el m√©todo quedar√≠a tan simple como:
 
 ```
 double empleado_retribuciones(empleado* e)
@@ -336,7 +336,7 @@ double empleado_retribuciones(empleado* e)
 }
 ```
 
-Sin embargo, en el caso del gerente tendrÌamos un objeto con m·s
+Sin embargo, en el caso del gerente tendr√≠amos un objeto con m√°s
 atributos:
 
 ```
@@ -350,12 +350,12 @@ struct gerente_ {
 
 Hemos colocado como primer elemento de la estructura un `empleado`.
 Esto hace que la primera parte de un `gerente` sea la que corresponde
-a un `empleado`.  Por tanto los mÈtodos de `empleado` siguen
+a un `empleado`.  Por tanto los m√©todos de `empleado` siguen
 funcionando sobre un objeto de la clase `gerente`, porque solo acceden
 a esa primera parte.
 
-Por otro lado, la clase `gerente` debe *redefinir* el mÈtodo de
-c·lculo de retribuciones:
+Por otro lado, la clase `gerente` debe *redefinir* el m√©todo de
+c√°lculo de retribuciones:
 
 ```
 static double gerente_retribuciones(empleado* e)
@@ -379,9 +379,9 @@ void gerente_init(gerente* g,
 }
 ```
 
-Observa cÛmo la nueva implementaciÛn del mÈtodo retribuciones
+Observa c√≥mo la nueva implementaci√≥n del m√©todo retribuciones
 convierte su argumento en un `gerente`.  Si se ha llamado a este
-mÈtodo es seguro que se trata de un gerente.  Ahora podemos calcular
+m√©todo es seguro que se trata de un gerente.  Ahora podemos calcular
 las retribuciones de cualquier empleado sea o no gerente:
 
 ```
@@ -398,15 +398,15 @@ for (int i=0; i<NELEMS(equipo); ++i)
 ```
 
 La herencia es un mecanismo muy efectivo para tratar de forma
-homogÈnea a objetos, pero introduce muchÌsimo acoplamiento.  Intenta
-minimizarla lo m·s posible.
+homog√©nea a objetos, pero introduce much√≠simo acoplamiento.  Intenta
+minimizarla lo m√°s posible.
 
-Esta implementaciÛn de POO en C es primitiva pero para los fines del
-taller nos bastar·.  En proyectos reales convendrÌa echar un vistazo a
+Esta implementaci√≥n de POO en C es primitiva pero para los fines del
+taller nos bastar√°.  En proyectos reales convendr√≠a echar un vistazo a
 las bibliotecas que ya existen.  En particular merece la pena destacar
 [GObject](https://developer.gnome.org/gobject/stable/) y
 [COS](https://sourceforge.net/projects/cos/). Cada una tiene sus
-ventajas y sus inconvenientes que habr· que valorar.
+ventajas y sus inconvenientes que habr√° que valorar.
 
 ## Reactor
 
