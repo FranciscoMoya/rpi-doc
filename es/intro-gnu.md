@@ -931,3 +931,7 @@ En este caso le decimos a *make* que por defecto debe hacer
 *hello.o*. Además hemos definido una variable que contiene
 opciones del compilador.  Éstas permiten tener todas las advertencias
 posibles (`-Wall`) y optimizar al máximo (`-O3`).
+
+TODO: procesos, redirecciones
+
+depuracion, compilacion
