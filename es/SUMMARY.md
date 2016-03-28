@@ -1,4 +1,4 @@
-[//]: -*- coding: utf-8 -*-
+[//]: (-*- mode: markdown; coding: utf-8 -*-)
 # Tabla de contenido
 
 * [Resumen](README.md)
@@ -9,6 +9,7 @@
 * [SPI](spi.md)
 * [Vídeo](cam.md)
 * [Sonido](snd.md)
+* [Red](net.md)
 * [Arquitectura software](sw.md)
 * [Nuestra personalización de Raspbian](custom.md)
 * [Referencias](references.md)

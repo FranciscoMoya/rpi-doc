@@ -116,6 +116,8 @@ ejemplos que te proporcionamos en el taller, especialmente la
 biblioteca `reactor`.  Puede que las siguientes secciones te ayuden
 también a comprender el código.
 
+
+
 ## Fundamentos de programación orientada a objetos
 
 Puede que te haya extrañado el título de esta sección. ¿Programación
@@ -638,14 +640,12 @@ manejadores.  Algo de este estilo:
 int main()
 {
     void* state = console_set_raw_mode(0);
-
     for(;;) {
         char buf[1];
         if (read(0, buf, 1) < 0 || buf[0] == 'q')
             break;
         printf("Pulsado %c\n", buf[0]);
     }
-
     console_restore(0, state);
 }
 ```
@@ -654,7 +654,8 @@ Funciona exactamente igual, es mucho más corto y hasta se entiende
 mejor. ¿Por qué complicarlo?  Pues porque la vida es compleja, no es
 así de simple.  No hay una fuente de eventos, hay decenas.  No hay que
 procesar un evento, sino varios.  No son eventos independientes, sino
-relacionados, etc.  Te proponemos un ejercicio, empieza con este
+relacionados, hay eventos periódicos, hay fuentes que aparecen y
+desaparecen, etc.  Te proponemos un ejercicio, empieza con este
 ejemplo y sigue con él haciendo en paralelo todos los ejemplos que te
 mostramos.  Después si lo consigues comparamos.
 
@@ -662,18 +663,129 @@ Si te frustra escribir tanto cambia de lenguaje.  El problema no está
 en el programa, sino en el lenguaje, que es demasiado primitivo.  Usa
 C++ o Python.
 
+### Eventos disparados por tiempo
+
+Además de los eventos que ocurren en el entorno, hay otra magnitud de
+importancia capital en los sistemas reactivos, el tiempo.  Hay
+multitud de características que dependen del tiempo.  Por ejemplo, un
+simple LED puede parpadear durante unos segundos.  Esto exige contar
+el tiempo en que el LED se enciende o se apaga y también el tiempo
+total de parpadeo.
+
+Nuestra implementación del *reactor* procesa este tipo de eventos de
+manera especial a través de los *timeout handlers*.
+
 ## Programación en red (patrón *acceptor-connector*)
 
-Tanto los modelos B+ como la 2B y la 3B incluyen interfaz Ethernet.
-La Raspberry Pi 3 modelo B que utilizamos en este taller incluye WiFi
-pero cualquiera de las otras puede tener también WiFi por un precio de
-unos 4€ empleando una interfaz WiFi USB.  Por tanto 
+Ya hemos visto la interfaz de programación *socket* que ofrece
+GNU/Linux para programar comunicaciones en red.  Solo nos falta
+organizarlo de manera razonable.  Hemos visto que en las
+comunicaciones se pueden identificar dos roles, el rol del *servidor*
+y el rol del *cliente*.  El rol del *servidor* es pasivo, espera hasta
+que ocurra un evento (la conexión) y entonces reacciona.
+
+Acceptor-Connector es un patrón de diseño propuesto por Douglas
+C. Schmidt~\cite{schmidt97:_accep} y utilizado extensivamente en ACE
+(*Adaptive Communications Engine*), su biblioteca de comunicaciones.
+Se ocupa de la primera parte de la comunicación, desacopla el
+establecimiento de conexión y la inicialización del servicio del
+procesamiento que se realiza una vez que el servicio está
+inicializado.  Para ello intervienen tres componentes: *acceptors*,
+*connectors* y manejadores de servicio *service handlers*.  Un
+*connector* representa el rol activo, y solicita una conexión a un
+*acceptor*, que representa el rol pasivo. Cuando la conexión se
+establece ambos crean un manejador de servicio que procesa los datos
+intercambiados en la conexión.
+
+Veamos un ejemplo sencillo, un servidor de *echo*.  Se trata de un
+programa que devuelve lo mismo que se le envía por cualquier conexión.
+
+```
+#include "reactor.h"
+
+void handle_echo(service_handler* h)
+{
+    char buf[1024];
+    int n = service_handler_recv (h, buf, sizeof(buf));
+    if (n <= 0) {
+        service_handler_close (h);
+        Throw Exception(n, "Connection closed");
+    }
+    buf[n] =  '\0';
+    printf("server: [%s]\n", buf);
+    service_handler_send (h, buf, n);
+}
+
+int main()
+{
+    reactor* r = reactor_new();
+    reactor_add(r, acceptor_new ("10000", "tcp", handle_echo));
+    reactor_run(r);
+    return 0;
+}
+```
+
+El `acceptor` se encargará de llamar a *listen* y *accept* cuando sea
+preciso.  En el momento en que se establezca una nueva conexión se
+creará un `service_handler` con el *socket* esclavo y con la función
+de procesamiento que se le indica.  Cuando se llama a
+`service_handler_close` se elimina automáticamente ese manejador del
+`reactor`.
+
+El conector es similar, salvo por el hecho de que el complementario
+del `acceptor`, el `connector`, no es un `event_handler` en nuestra
+implementación.
+
+```
+#include "reactor.h"
+
+void handle_echo(service_handler* h)
+{
+    char buf[1024];
+    int n = service_handler_recv (h, buf, sizeof(buf));
+    if (n <= 0) {
+        service_handler_close (h);
+        Throw Exception(n, "Connection closed");
+    }
+    buf[n] =  '\0';
+    printf("client: [%s]\n", buf);
+}
+
+int main()
+{
+    reactor* r = reactor_new();
+    connector* c = connector_new ("localhost", "10000", "tcp");
+    service_handler* h = connector_connect(c, echo_handler);
+    service_handler_send(h, "Hello, World!", 13);
+    reactor_add(r, &h->parent);
+    reactor_run(r);
+    connector_destroy(c);
+    return 0;
+}
+```
+
+El `connector` crea el *service handler* para atender la conexión.
+Podemos usarlo directamente con `service_handler_send` y
+`service_handler_recv` o bien añadirlo a un `reactor` para responder
+de forma automática.  En este ejemplo lo usamos primero directamente y
+posteriormente lo añadimos a un `reactor` para que escriba las
+respuestas.
 
 ## Casos de estudio
 
+Vamos a explicar someramente algunos de los ejemplos incluídos en el
+software que acompaña al taller.  Se trata de ejemplos ligeramente más
+complejos que los ejemplos triviales, de forma que pueda apreciarse la
+ventaja de una arquitectura software sólida.
+
 ### Dispositivo MP3
 
+El primer ejemplo consiste en el desarrollo de un player MP3 con una
+Raspberry Pi.  
+
 ### Control de accesos
+
+### Control de aparcamiento
 
 ### Vehículo autónomo
 
