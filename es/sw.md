@@ -17,105 +17,6 @@ Este capítulo tiene dos objetivos:
   estudio de diversos casos de estudio, incluyendo la interacción a
   través de la red, la interacción con programas externos, etc.
 
-## Manejo de errores
-
-Antes de empezar a escribir programas relativamente complejos en C
-conviene hacer una pequeña reflexión sobre la gestión de errores en C.
-La forma habitual de manejar errores es devolver un código de error en
-las funciones y, dependiendo de su valor actuar de una forma u otra.
-
-Pero ¿qué pasa si no sabemos cómo actuar ante una situación errónea?
-Es muy frecuente que en el momento que se produce el error no tengamos
-toda la información necesaria para tratarlo debidamente.  Es habitual
-devolver otro código de error al llamador, pero esto empieza a
-oscurecer el código porque cada llamada a función tiene que ir en una
-claúsula `if`.
-
-Lo correcto es emplear un mecanismo soportado por todos los lenguajes
-de programación modernos, que se denomina *excepciones*.  Pero C no
-tiene excepciones. Afortunadamente hay un conjunto de bibliotecas que
-implementan el mecanismo utilizando macros del preprocesador y dos
-funciones de la biblioteca estándar de C que no suelen ser muy
-conocidas, `setjmp` y `longjmp`.  
-
-No es propósito de este taller explicar el funcionamiento de estas
-funciones, mira la página de manual para entender su funcionamiento.
-Son esenciales para implementar corrutinas, o cualquier otra forma de
-interrumpir el flujo normal de ejecución de un programa.
-
-En nuestros ejemplos vamos a optar por
-[`cexcept`](http://cexcept.sf.net/) por su extrema simplicidad.  Tiene
-un único archivo de cabecera (`cexcept.h`) y su uso es muy simple.
-
-Cuando el programa tiene suficiente información para manejar posibles
-errores debe utilizar una construcción de este estilo:
-
-```
-Try {
-    /* Código de usuario, sin ´manejo de errores */ 
-}
-Catch (ex) {
-    /* Código para tratar el error notificado en ex */
-}
-```
-
-En el momento en que se puede producir una situación excepcional o un
-error debe notificarse de esta forma:
-
-```
-if (funcion_tradicional() < 0)
-   Throw ex;
-```
-
-Donde `ex` es una excepción, una estructura de datos que recoge toda
-la información del error para ser manejada cuando esto sea posible.
-
-El tipo de datos de `ex` es definible por el usuario.  En nuestros
-ejemplos utilizaremos una biblioteca auxiliar en la que definimos la
-excepción como una estructura similar a esta:
-
-```
-typedef struct {
-    int error_code;
-    const char* what;
-} exception;
-
-define_exception_type(exception);
-```
-
-Así que si necesitas una descripción textual del error puedes usar el
-campo `what` de la estructura.  Por ejemplo:
-
-```
-Try {
-    guardar_datos(db);
-}
-Catch (ex) {
-    printf("No pudo grabar los datos.\n"
-           "Motivo: %s\n", ex.what);
-}
-```
-
-Para notificar una situación excepcional se dice que se eleva una
-excepción.  Es decir, se usa una sentencia `Throw` con los valores
-apropiados de la excepción.  Por ejemplo:
-
-```
-f = fopen(fname, "r");
-if (f == NULL)
-    Throw Exception(errno, "")
-```
-
-Cuando se ejecuta la sentencia `Throw` el programa pasa el control a
-la claúsula `Catch` del último `Try` ejecutado, aunque esté en otra
-función.  Es un mecanismo muy poderoso para desacoplar la lógica del
-programa y la lógica de manejo de errores.
-
-No te quedes en esta breve explicación, mira tranquilamente los
-ejemplos que te proporcionamos en el taller, especialmente la
-biblioteca `reactor`.  Puede que las siguientes secciones te ayuden
-también a comprender el código.
-
 
 
 ## Fundamentos de programación orientada a objetos
@@ -769,7 +670,18 @@ Podemos usarlo directamente con `service_handler_send` y
 `service_handler_recv` o bien añadirlo a un `reactor` para responder
 de forma automática.  En este ejemplo lo usamos primero directamente y
 posteriormente lo añadimos a un `reactor` para que escriba las
-respuestas.
+respuestas cuando lleguen.
+
+Los sistemas en los que un componente actúa fundamentalmente con el
+rol de servidor, mientras que los otros componentes actúan como
+clientes siguen la *arquitectura cliente-servidor*.  Es la típica en
+la *World-Wide-Web*.
+
+Otras aplicaciones no tienen una división tan marcada.  En un momento
+dado una aplicación que normalmente se comporta como servidora puede
+comportarse como cliente y al revés.  Este tipo de sistemas en que
+todos los componentes toman rol de cliente o de servidor
+indistintamente se denominan arquitecturas *peer-to-peer*.
 
 ## Casos de estudio
 

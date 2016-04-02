@@ -10,6 +10,7 @@
 * [Vídeo](cam.md)
 * [Sonido](snd.md)
 * [Red](net.md)
+* [Tratamiento de errores](except.md)
 * [Arquitectura software](sw.md)
 * [Nuestra personalización de Raspbian](custom.md)
 * [Referencias](references.md)

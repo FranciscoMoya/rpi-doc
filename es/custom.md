@@ -1,4 +1,4 @@
-[//]: # (-*- markdown -*-)
+[//]: # (-*- mode: markdown ; coding: utf-8 -*-)
 # Nuestra personalización de Raspbian
 
 Este capítulo describe todas las acciones de personalización que se
@@ -6,7 +6,7 @@ han realizado en la tarjeta microSD que se distribuye en el taller.
 
 * Las tarjetas están ya formateadas en VFAT por el fabricante. No
   se ha realizado ningún formateo adicional.
-* Partimos de la versión de NOOBS 1.5.0 descargada del
+* Partimos de la versión de NOOBS 1.9.0 descargada del
   [sitio oficial](https://www.raspberrypi.org/downloads/noobs/).
   El archivo `zip` se ha descomprimido íntegramente en la
   tarjeta vacía.
@@ -23,10 +23,11 @@ han realizado en la tarjeta microSD que se distribuye en el taller.
 * Ejecutar la aplicación de configuración y en la pestaña de
   *Interfaces* habilitar SPI e I2C.  También en la pestaña de
   *Localisation* seleccionar *Locale* `es/ES`.  Además seleccionar la
-  zona horaria (*Timezone*) `Europe/Madrid` y finalmente configurar el teclado
-  como `Spain/Spanish`.
+  zona horaria (*Timezone*) `Europe/Madrid`, el teclado
+  como `Spain/Spanish` y finalmente la zona WiFi como `ES/Spain`.
 * Instalar algunos paquetes adicionales: `tmux`, `i2c-tools`,
-  `python-smbus`, `ipython`, `zile`, `python-dev`, `python-gpiozero`.
+  `python-smbus`, `ipython`, `zile`, `python-dev`, `python-gpiozero`, 
+  `mpg123`.
 * Añadir el usuario `pi` al grupo `staff` para que funcione `pip install`.
 * Instalar la biblioteca *wiringPi* para Python con `pip install wiringpi2`.
 * Descargar las pruebas del sistema del repositorio GitHub del taller.
