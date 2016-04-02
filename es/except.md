@@ -268,6 +268,44 @@ ejemplos que te proporcionamos en el taller, especialmente la
 biblioteca `reactor`.  Puede que las siguientes secciones te ayuden
 también a comprender el código.
 
+## Simplificar con excepciones
+
+Separar el flujo de control del programa del flujo de control de
+errores tiene una consecuencia clara a la hora de escribir programas.
+Se fortalecen las abstracciones y es más fácil escribirlos.  Veamos un
+ejemplo sencillo para ver esto.
+
+Una función muy frecuente en los programas de Raspberry Pi es `write`.
+Se trata de una llamada al sistema operativo que escribe un conjunto
+de datos en un archivo identificado por un descriptor de archivo.  Ese
+archivo puede representar un puerto serie, un canal de comunicaciones
+WiFi con otra Raspberry Pi, o incluso una salida digital.  La esencia
+de Unix y todos sus derivados e imitaciones es que todo en el sistema
+se vea como un archivo desde el punto de vista del sistema operativo.
+
+```
+ssize_t write(int fd, const void* buf, size_t size);
+```
+
+La llamada al sistema `write` devuelve un valor que normalmente
+corresponde al número de bytes escritos.  En general no tiene por qué
+coincidir con el número de bytes totales y no por ello implica error.
+Para poder mandar todo hay que volver a llamar a `write` con el resto.
+Por tanto este uso es típico:
+
+```
+int escribir_datos(int fd, const tipo_datos* datos)
+{
+    const void* buf = datos;
+    int size = sizeof(tipo_datos);
+    while (size > 0) {
+        int n = write(fd, buf, size);
+        if (n < 0)
+            return -1;
+        
+    }
+}
+
 ## Otros contextos de excepción
 
 En `reactor` no nos hemos preocupado demasiado del manejo de
