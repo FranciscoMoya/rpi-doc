@@ -1,4 +1,4 @@
-[//]: # (-*- markdown -*-)
+[//]: # (-*- markdown; coding: utf-8 -*-)
 # Familiarización con GNU
 
 <figure style="float:right; padding:10px">
@@ -10,7 +10,6 @@
   </div>
   </figcaption>
 </figure>
-
 
 La Raspberry Pi cuenta con un completo sistema operativo, con entorno
 gráfico y herramientas de programación de diverso tipo.  Vamos a

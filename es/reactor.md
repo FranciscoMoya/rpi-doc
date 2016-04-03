@@ -103,16 +103,15 @@ demultiplexación de eventos (*dispatching*).  Cuando ocurre cierto
 evento busca al manejador correspondiente para invocar su método
 `handle_events`.
 
-Cada vez que incorporemos una nueva fuente de eventos es necesario
-crear un manejador de eventos asociado y registrarlo en el `reactor`.
-También puede considerarse el tiempo como una fuente de eventos, pero
-se tratan de forma especial, porque hay que indicar un tiempo de
-disparo o frecuencia de invocación.
-
 En el taller utilizaremos una implementación propia de este patrón que
 se incluye en la carpeta `reactor`.  Incluye numerosas
 implementaciones de diferentes `event_handler` para eventos de
 interés.  Tómate tu tiempo para analizarlos en detalle.
+
+Cada vez que incorporemos una nueva fuente de eventos es necesario
+crear un manejador de eventos asociado y registrarlo en el `reactor`.
+También puede considerarse el tiempo como una fuente de eventos que se
+tratan con diversos manejadores especializados.
 
 El `reactor` tiene un método `reactor_run` que implementa el
 denominado *bucle de eventos*.  Es el bucle en el que se detecta si
@@ -121,6 +120,18 @@ usando su manejador correspondiente.
 
 Vamos a hacer un breve recorrido por los manejadores de eventos
 incluídos en la biblioteca `reactor` del taller.
+
+<figure style="float:right; padding:10px">
+  <img src="img/reactor_handlers.svg" width="100%">
+
+  <figcaption style="font-size:smaller; font-style:italic">
+  <div style="width:350px">
+  Jerarquía de manejadores incluidos actualmente en la biblioteca
+  <em>reactor</em>.
+  </div>
+  </figcaption>
+</figure>
+
 
 ## Eventos de teclado
 
@@ -282,8 +293,8 @@ GPIO.
 
 Para tratar estos eventos en cualquier conjunto de entradas incluimos
 el `input_handler`.  Se configuran automáticamente como entradas con
-*pull down* y se detectan tanto las transiciones de nivel alto a bajo
-como de nivel bajo a alto.
+*pull down* y se detectan tanto las transiciones de nivel bajo a alto
+(*press*) como de nivel alto a bajo (*release*).
 
 ```
 #include <reactor/reactor.h>
@@ -352,7 +363,7 @@ int main()
 ```
 
 Este ejemplo imprime un mensaje cada 1000 milisegundos, es decir, cada
-segundo.
+segundo. El tiempo no es absolutamente preciso.  En GNU/Linux no es posible 
 
 Los manejadores de eventos se desinstalan automáticamente cuando
 ocurre una excepción, así que si queremos ejecutar un evento cierto
@@ -362,9 +373,9 @@ número de veces podemos hacerlo contando el número de disparos.
 void handler(event_handler* ev)
 {
     static int i = 0;
-    if (++i > 5)
-	    Throw Exception(0,"");
 	puts("Tick");
+    if (++i >= 5)
+	    Throw Exception(0,"");
 }
 
 int main()
@@ -455,8 +466,8 @@ en ACE (*Adaptive Communications Engine*), su biblioteca de
 comunicaciones.  Se ocupa de la primera parte de la comunicación,
 desacopla el establecimiento de conexión y la inicialización del
 servicio del procesamiento que se realiza una vez que el servicio está
-inicializado.  Para ello intervienen tres componentes: *acceptors*,
-*connectors* y manejadores de servicio *service handlers*.  Un
+inicializado.  Para ello intervienen tres componentes: *acceptor*,
+*connector* y manejadores de servicio o *service handlers*.  Un
 *connector* representa el rol activo, y solicita una conexión a un
 *acceptor*, que representa el rol pasivo. Cuando la conexión se
 establece ambos crean un manejador de servicio que procesa los datos
@@ -484,7 +495,6 @@ int main()
     return 0;
 }
 ```
-
 
 El `acceptor` se encargará de llamar a *listen* y *accept* cuando sea
 preciso.  En el momento en que se establezca una nueva conexión se
@@ -560,18 +570,137 @@ comportarse como cliente y al revés.  Este tipo de sistemas en que
 todos los componentes toman rol de cliente o de servidor
 indistintamente se denominan arquitecturas *peer-to-peer*.
 
-## Un *media player* como manejador
+## Un *music player* como manejador
+
+Un sistema electrónico puede necesitar emitir sonidos. Con la
+Raspberry Pi, y especialmente con las últimas versiones, tenemos
+capacidades de sonido bastante sofisticadas y sería una pena si nos
+quedamos en simples *beeps*.
+
+Actualmente la forma más habitual de guardar sonido o música de
+calidad es emplear el formato MP3, que es relativamente complejo.
+Pero no hay necesidad de decodificar los archivos en nuestros
+programas.  Tenemos decenas de programas que hacen precisamente eso.
+Solo hay que usarlos, desde nuestros propios programas.
+
+Una forma de usar otro programa desde nuestro programa es emplear un
+manejador especial denominado `process_handler`.  Hablaremos de esto
+más adelante.  Otra forma es utilizar un manejador a medida para
+controlarlo.  Es este último método el que ilustra el `music_player`
+de la biblioteca *reactor*.  Se trata de un manejador de eventos que
+funciona como un *music player* empleando para ello el programa
+`mpg123`.  Para no interferir en el hilo principal la mayor parte del
+trabajo se deja en un hilo auxiliar que se encarga de ejecutar
+`mpg123` cuando es necesario, pero todo eso es invisible para el
+usuario.  Veamos un ejemplo:
+
+```
+#include <reactor/reactor.h>
+#include <reactor/console.h>
+#include <reactor/music_player.h>
+#include <unistd.h>
+
+static int read_key(int fd);
+
+int main(int argc, char* argv[])
+{
+    const char* carpeta = "/usr/share/scratch/Media/Sounds/Music Loops";
+    void* state = console_set_raw_mode(0);
+    reactor* r = reactor_new();
+    music_player* mp = music_player_new(carpeta);
+
+    void keyboard(event_handler* ev) {
+        int key = read_key(ev->fd);
+        if ('q' == key)
+            reactor_quit(r);
+        else if (' ' == key)
+            music_player_stop(mp);
+        else if (key >= '0' && key <= '9')
+            music_player_play(mp, key - '0');
+    }
+
+    reactor_add(r, (event_handler*)mp);
+    reactor_add(r, event_handler_new(0, keyboard));
+    reactor_run(r);
+    reactor_destroy(r);
+    console_restore(0, state);
+}
+
+static int read_key(int fd)
+{
+    char buf[2];
+    if (0 < read(fd, buf, 1))
+        return buf[0];
+    return -1;
+}
+```
+
+En este ejemplo combinamos un manejador para el teclado con un
+manejador `music_player`.  Al pulsar alguno de los números de 0 a 9
+interrumpirá la canción en curso y sonará la canción correspondiente,
+al pulsar espacio parará y al pulsar `q` saldrá del programa.
+
+> **Info**
+> Debes acostumbrarte a combinar manejadores.  Te proponemos el
+> siguiente ejercicio: construir un *music player* tipo iPod con la
+> Raspberry Pi.  Usa botones para ir a la siguiente canción o la
+> anterior, pausar, etc.  Se trata de combinar un `input_handler` con
+> el `music_player`.
 
 ## Otros manejadores
+
+La biblioteca *reactor* evoluciona. Examina el código porque muy
+probablemente verás manejadores nuevos que no hemos descrito.
+Experimenta con ellos y no tengas miedo de definir tus propios
+manejadores cada vez que surja una necesidad.  
+
+En esta sección describiremos algunos manejadores incluídos en
+*reactor* que no están pensados para ser usados por el usuario final,
+sino por otros manejadores.
 
 ### *Pipe handler*
 
 Cuando queremos traducir eventos de otro tipo para que sean
-demultiplexados por el *reactor*.
+demultiplexados por el *reactor* se puede utilizar un `pipe_handler`.
+Una *pipe* es un objeto especial del sistema operativo que relaciona
+una pareja de descriptores de archivo.  Todo lo que se escribe en un
+descriptor (el extremo de escritura) se puede leer por el otro
+(extremo de lectura).
+
+Por ejemplo, imagina que quieres traducir determinadas interrupciones
+en eventos del *reactor*.  Basta escribir desde la propia rutina de
+servicio a interrupción con `pipe_handler_write`.  Si estás en un hilo
+que no tiene contexto de excepciones propio te interesará utilizar en
+su lugar `pipe_handler_write_ne`, que no eleva excepciones sino que
+devuelve un código de error.
+
+Otro ejemplo podría ser un dispositivo I2C o SPI.  Puede que el
+dispositivo interrumpa directamente o puede que haya que hacer
+consultas periódicas.  En cualquier caso el mecanismo para detectar
+los eventos es distinto a un archivo Unix, por lo que necesitaremos un
+`pipe_handler` para adaptar.
+
+Muchos de los manejadores que hemos visto están hechos con un
+`pipe_handler`.  Los `input_handler`, `music_handler`,
+`timeout_handler`, `delayed_handler` o `blink_handler` son ejemplos de
+manejadores basados en `pipe_handler`.
 
 ### *Thread handler*
 
-Si además se necesita un hilo.
+En muchas ocasiones un `pipe_handler` necesita de la cooperación de un
+hilo de ejecución independiente, que muestrea el dispositivo o realiza
+algún otro tipo de acción para traducir eventos como el tiempo a
+escrituras en una *pipe*.
+
+Manejar hilos distintos no es complicado pero tiene sus detalles,
+especialmente en cuanto a la terminación de hilos que no se comportan
+adecuadamente.  Para simplificarlo se proporciona un `thread_handler`
+que deriva de `pipe_handler`.  Todos los manejadores que actualmente
+derivan de `pipe_handler` son también `thread_handler`.  Esto parece
+sugerir que `pipe_handler` no es realmente necesaria.  Sin embargo
+creemos que es interesante para cualquier manejador que traduce
+directamente interrupciones a eventos del *reactor*.
+
 
 ### *Process handler*
 
