@@ -1,47 +1,48 @@
+[//]: (-*- mode: markdown; coding: utf-8 -*-)
 # Manejo de errores
 
 Antes de empezar a escribir programas relativamente complejos en C
-conviene hacer una pequeña reflexión sobre la gestión de errores en C.
-La forma habitual de manejar errores es devolver un código de error en
+conviene hacer una pequeÃ±a reflexiÃ³n sobre la gestiÃ³n de errores en C.
+La forma habitual de manejar errores es devolver un cÃ³digo de error en
 las funciones y, dependiendo de su valor actuar de una forma u otra.
 
-Pero ¿qué pasa si no sabemos cómo actuar ante una situación errónea?
+Pero Â¿quÃ© pasa si no sabemos cÃ³mo actuar ante una situaciÃ³n errÃ³nea?
 Es muy frecuente que en el momento que se produce el error no tengamos
-toda la información necesaria para tratarlo debidamente.  Es habitual
-devolver otro código de error al llamador, pero esto empieza a
-oscurecer el código porque cada llamada a función tiene que ir en una
-claúsula `if`.
+toda la informaciÃ³n necesaria para tratarlo debidamente.  Es habitual
+devolver otro cÃ³digo de error al llamador, pero esto empieza a
+oscurecer el cÃ³digo porque cada llamada a funciÃ³n tiene que ir en una
+claÃºsula `if`.
 
-Lo correcto hoy en día es emplear un mecanismo soportado por todos los
-lenguajes de programación modernos, que se denomina *excepciones*.
+Lo correcto hoy en dÃ­a es emplear un mecanismo soportado por todos los
+lenguajes de programaciÃ³n modernos, que se denomina *excepciones*.
 Pero C no tiene excepciones. Afortunadamente hay un conjunto de
 bibliotecas que implementan el mecanismo utilizando macros del
-preprocesador y dos funciones de la biblioteca estándar de C que no
+preprocesador y dos funciones de la biblioteca estÃ¡ndar de C que no
 suelen ser muy conocidas, `setjmp` y `longjmp`.
 
-No es propósito de este taller explicar el funcionamiento de estas
-funciones.  Si tienes curiosidad mira la página de manual para
+No es propÃ³sito de este taller explicar el funcionamiento de estas
+funciones.  Si tienes curiosidad mira la pÃ¡gina de manual para
 entender su funcionamiento.  Son esenciales para implementar
 corrutinas, o cualquier otra forma de interrumpir el flujo normal de
-ejecución de un programa.
+ejecuciÃ³n de un programa.
 
 En nuestros ejemplos vamos a optar por
 [`cexcept`](http://cexcept.sf.net/) por su extrema simplicidad.  Tiene
-un único archivo de cabecera (`cexcept.h`) y su uso es muy simple.
+un Ãºnico archivo de cabecera (`cexcept.h`) y su uso es muy simple.
 
-Cuando el programa tiene suficiente información para manejar posibles
-errores debe utilizar una construcción de este estilo:
+Cuando el programa tiene suficiente informaciÃ³n para manejar posibles
+errores debe utilizar una construcciÃ³n de este estilo:
 
 ```
 Try {
-    /* Código de usuario, sin ´manejo de errores */ 
+    /* CÃ³digo de usuario, sin Â´manejo de errores */ 
 }
 Catch (ex) {
-    /* Código para tratar el error notificado en ex */
+    /* CÃ³digo para tratar el error notificado en ex */
 }
 ```
 
-En el momento en que se puede producir una situación excepcional o un
+En el momento en que se puede producir una situaciÃ³n excepcional o un
 error debe notificarse de esta forma:
 
 ```
@@ -49,12 +50,12 @@ if (funcion_tradicional() < 0)
    Throw ex;
 ```
 
-Donde `ex` es una excepción, una estructura de datos que recoge toda
-la información del error para ser manejada cuando esto sea posible.
+Donde `ex` es una excepciÃ³n, una estructura de datos que recoge toda
+la informaciÃ³n del error para ser manejada cuando esto sea posible.
 El tipo de datos de `ex` es definible por el usuario.
 
 En nuestros ejemplos utilizaremos `reactor/exception.h`, una
-biblioteca auxiliar en la que definimos la excepción como una
+biblioteca auxiliar en la que definimos la excepciÃ³n como una
 estructura similar a esta:
 
 ```
@@ -66,7 +67,7 @@ typedef struct {
 define_exception_type(exception);
 ```
 
-Así que si necesitas una descripción textual del error puedes usar el
+AsÃ­ que si necesitas una descripciÃ³n textual del error puedes usar el
 campo `what` de la estructura.  Por ejemplo:
 
 ```
@@ -80,9 +81,9 @@ Catch (ex) {
 }
 ```
 
-Para notificar una situación excepcional se dice que se eleva una
-excepción.  Es decir, se usa una sentencia `Throw` con los valores
-apropiados de la excepción.  Por ejemplo:
+Para notificar una situaciÃ³n excepcional se dice que se eleva una
+excepciÃ³n.  Es decir, se usa una sentencia `Throw` con los valores
+apropiados de la excepciÃ³n.  Por ejemplo:
 
 ```
 f = fopen(fname, "r");
@@ -91,15 +92,15 @@ if (f == NULL)
 ```
 
 Cuando se ejecuta la sentencia `Throw` el programa pasa el control a
-la claúsula `Catch` del último `Try` ejecutado, aunque esté en otra
-función.  Es un mecanismo muy poderoso para desacoplar la lógica del
-programa y la lógica de manejo de errores.
+la claÃºsula `Catch` del Ãºltimo `Try` abierto, aunque estÃ© en otra
+funciÃ³n.  Es un mecanismo muy poderoso para desacoplar la lÃ³gica del
+programa y la lÃ³gica de manejo de errores.
 
 ## Anidamiento de `Try/Catch`
 
-En algunos casos se sabe cómo manejar algunos errores, pero no todos.
-En esos casos puede ser útil capturar la posible excepción y volverla
-a lanzar si no se sabe qué hacer con ella.  Por ejemplo:
+En algunos casos se sabe cÃ³mo manejar algunos errores, pero no todos.
+En esos casos puede ser Ãºtil capturar la posible excepciÃ³n y volverla
+a lanzar si no se sabe quÃ© hacer con ella.  Por ejemplo:
 
 ```
 void f() {
@@ -125,28 +126,28 @@ void g() {
 }
 ```
 
-La función `f` realiza el procesamiento complejo y captura la
-excepción `ERROR_NO_MAS_DATOS` porque entiende que es una situación
+La funciÃ³n `f` realiza el procesamiento complejo y captura la
+excepciÃ³n `ERROR_NO_MAS_DATOS` porque entiende que es una situaciÃ³n
 normal, que no necesita ser tratada de ninguna forma especial.  Sin
-embargo en cualquier otro caso relanza la excepción para que se trate
-más arriba en la cadena de llamadas.
+embargo en cualquier otro caso relanza la excepciÃ³n para que se trate
+mÃ¡s arriba en la cadena de llamadas.
 
-La función `g`, que es de mayor nivel de abstracción, utiliza `f` pero
+La funciÃ³n `g`, que es de mayor nivel de abstracciÃ³n, utiliza `f` pero
 en caso de fallo lo notifica al usuario por la salida de error
-estándar.  Fíjate cómo se reparte la responsabilidad de emitir el
+estÃ¡ndar.  FÃ­jate cÃ³mo se reparte la responsabilidad de emitir el
 error (e.g. en `procesamiento_complejo`) y de tratarlo en el punto
-donde se sabe cómo tratarlo (`f` o `g`).  No es necesario devolver
-códigos de error en todas las funciones, ni añadir `if` cuando no se
-sabe cómo actuar con el error.
+donde se sabe cÃ³mo tratarlo (`f` o `g`).  No es necesario devolver
+cÃ³digos de error en todas las funciones, ni aÃ±adir `if` cuando no se
+sabe cÃ³mo actuar con el error.
 
 ## Prevenir *leaks*
 
 Las excepciones pueden ser un mecanismo muy efectivo para evitar que
-algunos recursos se queden sin liberar (memoria dinámica reservada con
+algunos recursos se queden sin liberar (memoria dinÃ¡mica reservada con
 `malloc` que no se libera con `free`, archivos abiertos con `fopen`
 que no se cierran con `fclose`, archivos abiertos con `open` que no se
-cierran con `close`, etc.).  Por ejemplo, considera esta función para
-contar el número de líneas de un archivo:
+cierran con `close`, etc.).  Por ejemplo, considera esta funciÃ³n para
+contar el nÃºmero de lÃ­neas de un archivo:
 
 ```
 int contar_lineas(const char* nombre)
@@ -164,10 +165,10 @@ int contar_lineas(const char* nombre)
 }
 ```
 
-Esta función cuenta correctamente el número de líneas de un archivo
-contando los caracteres terminador de línea `'\n'` que aparecen y
-corrigiendo la cuenta si la última línea no tiene terminador de línea
-y no está vacía.  Pero ¿qué pasa si hay error?
+Esta funciÃ³n cuenta correctamente el nÃºmero de lÃ­neas de un archivo
+contando los caracteres terminador de lÃ­nea `'\n'` que aparecen y
+corrigiendo la cuenta si la Ãºltima lÃ­nea no tiene terminador de lÃ­nea
+y no estÃ¡ vacÃ­a.  Pero Â¿quÃ© pasa si hay error?
 
 Podemos aprovechar lo que ahora sabemos para notificar errores:
 
@@ -192,8 +193,8 @@ int contar_lineas(const char* nombre)
 ```
 
 El problema es que en caso de error de lectura el archivo `f` no se
-cierra nunca.  Nadie llama a `fclose`.  La solución es poner la
-excepción pero no lanzarla hasta el final.
+cierra nunca.  Nadie llama a `fclose`.  La soluciÃ³n es poner la
+excepciÃ³n pero no lanzarla hasta el final.
 
 ```
 int contar_lineas(const char* nombre)
@@ -219,11 +220,11 @@ int contar_lineas(const char* nombre)
 ```
 
 Para mayor generalidad, para el caso de que haya funciones anidadas
-que usan excepciones, o si el flujo en caso de error no está claro, es
-mejor meter el código en un `Try/Catch`.  Por ejemplo, en el siguiente
-fragmento separamos el código en dos funciones, la función
+que usan excepciones, o si el flujo en caso de error no estÃ¡ claro, es
+mejor meter el cÃ³digo en un `Try/Catch`.  Por ejemplo, en el siguiente
+fragmento separamos el cÃ³digo en dos funciones, la funciÃ³n
 `contar_lineas_en_file` ni siquiera sabe que se tenga que liberar
-ningún recurso.
+ningÃºn recurso.
 
 ```
 int contar_lineas_en_file(FILE* f)
@@ -259,23 +260,58 @@ int contar_lineas(const char* nombre)
 }
 ```
 
-Esta construcción es equivalente a lo que en Java se denomina
-*claúsula `finally`*.  No importa lo que haga el programa dentro del
-`Try`, en cualquier caso se llamará a `close`.
+Esta construcciÃ³n es equivalente a lo que en Java se denomina
+*claÃºsula `finally`*.  No importa lo que haga el programa dentro del
+`Try`, en cualquier caso se llamarÃ¡ a `close`.
 
-No te quedes en esta breve explicación, mira tranquilamente los
-ejemplos que te proporcionamos en el taller, especialmente la
-biblioteca `reactor`.  Puede que las siguientes secciones te ayuden
-también a comprender el código.
+## Excepciones no capturadas
+
+En una situaciÃ³n normal si una excepciÃ³n de *cexcept* no es capturada
+con una sentencia `Try/Catch` se producirÃ­a un fallo de segmentaciÃ³n.
+En `reactor` hemos proporcionado un mecanismo para que las excepciones
+no capturadas desemboquen en un mensaje de informaciÃ³n sobre el error
+y un volcado de la traza de llamada.  Por ejemplo:
+
+```
+Uncaught exception (error_code 111) at socket_handler.c:167
+Error en connect: Connection refused
+Current call trace (last 5):
+./rpi-src/c/reactor/test/test_connector(connector_init+0x28)[0x12d1c]
+./rpi-src/c/reactor/test/test_connector(connector_new+0x3c)[0x12cd4]
+./rpi-src/c/reactor/test/test_connector(main__+0x5c)[0x11b0c]
+./rpi-src/c/reactor/test/test_connector(main+0xa0)[0x13870]
+/lib/arm-linux-gnueabihf/libc.so.6(__libc_start_main+0x114)[0x76d4b294]
+```
+
+Informa de que la excepciÃ³n se ha producido en la lÃ­nea 167 del
+archivo `socket_handler.c`.  Para mayor informaciÃ³n se notifica la
+lista de llamadas no terminadas en el momento de la excepciÃ³n.  En
+este ejemplo la excepciÃ³n se produjo en la funciÃ³n `connector_init`
+que fue llamada desde `connector_new` y Ã©sta desde `main__`.  Nota que
+el nombre de `main` aparece algo extraÃ±o.  Eso es por el mecanismo
+incorporado para tratar las excepciones no capturadas.
+
+## Uso en tus programas
+
+Para usar excepciones en tus programas solo tienes que tener en cuenta
+algunos detalles.
+
+* Incluye el archivo de cabecera `reactor/exception.h`.
+* Compila con las opciones `-fasynchronous-unwind-tables` y `-pthread`.
+* AÃ±ade al montador las opciones `-pthread` y `-rdynamic`.
+
+Realmente solo el primer punto es estrictamente necesario, pero los
+demÃ¡s consejos permiten tener informaciÃ³n completa de la traza de
+llamadas, una gran ayuda para depurar.
 
 ## Simplificar con excepciones
 
 Separar el flujo de control del programa del flujo de control de
 errores tiene una consecuencia clara a la hora de escribir programas.
-Se fortalecen las abstracciones y es más fácil escribirlos.  Veamos un
+Se fortalecen las abstracciones y es mÃ¡s fÃ¡cil escribirlos.  Veamos un
 ejemplo sencillo para ver esto.
 
-Una función muy frecuente en los programas de Raspberry Pi es `write`.
+Una funciÃ³n muy frecuente en los programas de Raspberry Pi es `write`.
 Se trata de una llamada al sistema operativo que escribe un conjunto
 de datos en un archivo identificado por un descriptor de archivo.  Ese
 archivo puede representar un puerto serie, un canal de comunicaciones
@@ -288,10 +324,10 @@ ssize_t write(int fd, const void* buf, size_t size);
 ```
 
 La llamada al sistema `write` devuelve un valor que normalmente
-corresponde al número de bytes escritos.  En general no tiene por qué
-coincidir con el número de bytes totales y no por ello implica error.
+corresponde al nÃºmero de bytes escritos.  En general no tiene por quÃ©
+coincidir con el nÃºmero de bytes totales y no por ello implica error.
 Para poder mandar todo hay que volver a llamar a `write` con el resto.
-Por tanto este uso es típico:
+Por tanto este uso es tÃ­pico:
 
 ```
 int escribir_datos(int fd, const tipo_datos* datos)
@@ -302,25 +338,66 @@ int escribir_datos(int fd, const tipo_datos* datos)
         int n = write(fd, buf, size);
         if (n < 0)
             return -1;
-        
-    }
+		buf += n;
+		size -= n;	
+	}
+	return 0;	
 }
+```
 
-## Otros contextos de excepción
+Es innecesariamente largo debido a que `write` no devuelve los bytes
+escritos, sino que tiene dos posibles significados.  Con excepciones
+esto no pasa, vamos a envolver `write` en una funciÃ³n mÃ¡s amigable:
+
+```
+int write_ex(int fd, const void* buf, size_t size)
+{
+    if (0 > write(fd, buf, size))
+        Throw Exception(errno, "write error");
+}
+```
+
+No ha sido muy complicado pero hemos eliminado la fuente de la
+confusiÃ³n.  Ahora si devuelve algo es el nÃºmero de bytes escritos, no
+devuelve ningÃºn error.  Si hay errores se trata aparte, en el
+`Try/Catch` correspondiente.  Ahora se puede simplificar
+considerablemente:
+
+```
+void escribir_datos(int fd, const tipo_datos* datos)
+{
+    const void *buf = datos, *end = buf + sizeof(tipo_datos);
+    while ((buf += write_ex(fd, buf, end - buf)) < end)
+	    ;
+}
+```
+
+No hace falta devolver otro cÃ³digo de error, si hay excepciÃ³n ya se
+propagarÃ¡ adecuadamente.
+
+No te quedes en esta breve explicaciÃ³n, mira tranquilamente los
+ejemplos que te proporcionamos en el taller, especialmente la
+biblioteca `reactor`.  Aunque las excepciones te parezcan algo
+completamente nuevo empieza a usarlas desde ya.  Tu cÃ³digo ganarÃ¡
+mucho en legibilidad y en robustez, aunque no tengas muy claro cÃ³mo
+funciona.
+
+
+## Otros contextos de excepciÃ³n
 
 En `reactor` no nos hemos preocupado demasiado del manejo de
-excepciones en los hilos que no son el hilo principal.  En la práctica
-esta limitación no es tan importante, porque los hilos auxiliares son
+excepciones en los hilos que no son el hilo principal.  En la prÃ¡ctica
+esta limitaciÃ³n no es tan importante, porque los hilos auxiliares son
 habitualmente muy simples.  Cuando la cosa se complica suele usarse un
 *proceso* diferente, por ejemplo con un `process_handler`.
 
 Sin embargo hemos habilitado un proceso para permitir el uso de
-excepciones en múltiples hilos de ejecución cambiando el denominado
-*contexto de excepción*.  Por ejemplo, imagina que tenemos dos hilos
+excepciones en mÃºltiples hilos de ejecuciÃ³n cambiando el denominado
+*contexto de excepciÃ³n*.  Por ejemplo, imagina que tenemos dos hilos
 que realizan un trabajo importante.  Por ejemplo, cada uno con su
-reactor.  El hilo principal tiene el contexto de ejecución 0 (cero).
+reactor.  El hilo principal tiene el contexto de ejecuciÃ³n 0 (cero).
 Si queremos tener excepciones en el otro hilo basta asignarle un
-contexto de excepción diferente al principio del hilo:
+contexto de excepciÃ³n diferente al principio del hilo:
 
 ```
 void* thread(thread_handler* t)
@@ -330,8 +407,8 @@ void* thread(thread_handler* t)
 }
 ```
 
-Es así de simple, pero hay que tener cuidado de que todos los hilos
-con excepciones tengan un `current_exception_context diferente.  El
-número de contextos disponible es reducido, pero puede cambiarse
-fácilmente en `reactor/exception.c` editando el valor de la constante
+Es asÃ­ de simple, pero hay que tener cuidado de que todos los hilos
+con excepciones tengan un `current_exception_context` diferente.  El
+nÃºmero de contextos disponible es reducido, pero puede cambiarse
+fÃ¡cilmente en `reactor/exception.c` editando el valor de la constante
 `NUM_EXCEPTION_CONTEXTS` y recompilando.

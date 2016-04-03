@@ -1,6 +1,6 @@
 [//]: # (-*- markdown -*-)
 
-# Arquitectura software (versión en C)
+# La biblioteca `reactor`
 
 Una de las principales diferencias de esta edición del taller es que
 vamos a dedicar una buena parte del tiempo a hablar de arquitectura
@@ -13,320 +13,39 @@ Este capítulo tiene dos objetivos:
   brevemente los fundamentos y cómo se aplican.
 
 * Proporcionar plantillas de aplicación totalmente funcionales y
-  extensibles para aplicarlas en cualquier proyecto. Esto incluye el
-  estudio de diversos casos de estudio, incluyendo la interacción a
-  través de la red, la interacción con programas externos, etc.
+  extensibles para aplicarlas en cualquier proyecto. En un capítulo
+  posterior se desarrollarán en diversos casos de estudio, incluyendo
+  la interacción a través de la red, la interacción con programas
+  externos, etc.
 
-
-
-## Fundamentos de programación orientada a objetos
-
-Puede que te haya extrañado el título de esta sección. ¿Programación
-orientada a objetos? ¿En C?  La programación orientada a objetos (POO)
-no es más que una técnica de programación.  Cuando se dice que un
-lenguaje *soporta* POO significa que incorpora mecanismos específicos
-para hacer más fácil la POO. Pero en cualquier lenguaje actual se
-puede programar orientado a objetos.
-
-Un objeto no es más que una zona de memoria con semántica asociada.
-Es decir, que tienen significado y hay un conjunto de operaciones que
-tiene sentido realizar sobre ellos.  Un entero, por ejemplo, es un
-objeto en C. Tiene significado matemático y se pueden realizar las
-operaciones de suma, resta, etc. ¿Cómo hacemos objetos arbitrarios en
-C?  Por ejemplo, ¿cómo hacemos un objeto que represente un `empleado`
-en un registro de personal?
-
-La respuesta es con ayuda de una estructura, por ejemplo:
-
-```
-typedef struct empleado_ empleado;
-struct empleado_ {
-    const char* nombre;
-    const char* puesto;
-    double sueldo;
-};
-```
-
-Los distintos elementos de la estructura se denominan *atributos del
-objeto*.  Es todo aquello que le da significado a cada uno de los
-objetos.
-
-Pero todavía no hemos hecho objetos, solo hemos definido la forma que
-tendrán esos objetos, es lo que se denomina *clase*.  Para construir
-objetos se definen funciones que reciben los parámetros necesarios y
-devuelven un puntero a una estructura de éstas, los constructores.
-Por ejemplo:
-
-```
-empleado* empleado_new(const char* nombre, 
-                       const char* puesto,
-                       double sueldo)
-{
-    empleado* this = (empleado*)malloc(sizeof(empleado));
-    empleado_init(this, nombre, puesto, sueldo);
-    return this;
-}
-
-void empleado_init(empleado* this,
-                   const char* nombre, 
-                   const char* puesto,
-                   double sueldo)
-{
-    this->nombre = strdup(nombre);
-    this->puesto = strdup(puesto);
-    this->sueldo = sueldo;
-}
-```
-
-Los constructores en C suelen dividirse en dos partes, un `XXX_new` y
-un `XXX_init`.  El primero reserva espacio en memoria dinámica,
-mientras que el segundo solo rellena los datos.  Esto resulta útil
-para poder definir empleados en memoria dinámica o en variables
-automáticas:
-
-```
-empleado* ed = empleado_new("Paco", "Jefe", 1800.);
-empleado ea;
-empleado_init(&ea, "Pepe", "Currito", 1000.);
-```
-
-El empleado `ed` es un objeto en memoria dinámica, que debe ser
-liberado llamando a `free`.  Sin embargo el empleado `ea` es un objeto
-en la pila, que se libera automáticamente cuando termine el ámbito de
-declaración.  La segunda forma es también muy útil para construir
-vectores de `empleado`.
-
-Algunos de vosotros os habréis dado cuenta de que aquí falla algo.  Si
-el objeto `ea` se libera no vamos a poder liberar las cadenas
-correspondientes a `nombre` o `puesto`.  La solución es utilizar una
-función especial para liberar todo lo reservado en el constructor, el
-destructor.  Pero lo que hay que liberar es diferente si se ha
-utilizado `XXX_new` o `XXX_init`. ¿Cómo conseguimos que se comporte de
-forma diferente dependiendo de dónde haya sido construido?
-
-La técnica para resolver este problema se denomina *funciones
-virtuales*.  Hay varias formas de implementarlo, lo haremos de la
-forma más simple posible.  En lugar de usar una función para liberar
-el objeto vamos a usar un puntero a función y ese puntero cambiará
-dependiendo del modo en que se ha construido el objeto.  El decir, el
-propio objeto lleva no solo datos sino también punteros a funciones
-que pueden cambiar dependiendo del caso.
-
-```
-typedef struct empleado_ empleado;
-typedef void (*empleado_func)(empleado*);
-struct empleado_ {
-    const char* nombre;
-    const char* puesto;
-    double sueldo;
-    empleado_func destroy;
-};
-```
-
-Y el destructor puede ser una función tan simple como:
-
-```
-void empleado_destroy(empleado* this)
-{
-    this->destroy(this);
-}
-```
-
-Evidentemente el trabajo no está en esa función sino en aquella a la
-que apunta `e->destroy`.  Y además es preciso garantizar que siempre
-apunta a una función válida, porque de otro modo al llamar al
-destructor se produciría un error catastrófico.  Ésta y cualquier otra
-garantía que sea preciso mantener para que el estado sea siempre
-consistente se denominan *invariantes de clase*.
-
-El constructor es responsable de *establecer* los invariantes de
-clase. Todas las demás operaciones son responsables de *mantener* los
-invariantes de clase.  Veamos cómo quedaría la función
-`empleado_init`.
-
-```
-static void empleado_free_members(empleado*);
-
-void empleado_init(empleado* this,
-                   const char* nombre, 
-                   const char* puesto,
-                   double sueldo)
-{
-    this->nombre = strdup(nombre);
-    this->puesto = strdup(puesto);
-    this->sueldo = sueldo;
-    this->destroy = empleado_free_members;
-}
-
-static void empleado_free_members(empleado* this) 
-{ 
-    free(this->nombre);
-    free(this->puesto);
-}
-```
-
-Pero esto no libera la estructura de `empleado` cuando se construye
-con `empleado_new`.  Así que en ese caso habrá que cambiar el
-destructor:
-
-```
-static void empleado_free(empleado*);
-
-empleado* empleado_new(const char* nombre, 
-                       const char* puesto,
-                       double sueldo)
-{
-    empleado* this = (empleado*)malloc(sizeof(empleado));
-    empleado_init(this, nombre, puesto, sueldo);
-    this->destroy = empleado_free;
-    return this;
-}
-
-static void empleado_free(empleado* this)
-{
-    empleado_free_members(this);
-    free(this);
-}
-```
-
-La función `empleado_destroy` es un ejemplo de operación que se puede
-realizar sobre un `empleado`.  Estas operaciones se llaman de forma
-general *métodos* del objeto, y por tratarse de la operación que
-libera los recursos del `empleado` se llamaría de forma más específica
-*destructor*.  Además es un método que se comporta de forma diferente
-según el tipo de `empleado` sobre el que se llame.  Este tipo de
-*métodos* se llaman en general *métodos virtuales*, y al tratarse de un
-destructor sería también de forma más específica *destructor virtual*.
-
-Los *métodos virtuales* se utilizan en combinación con otra
-característica muy importante de la POO, la herencia. En el ejemplo de
-`empleado` podemos considerar el caso de un `gerente` que básicamente
-funciona igual que un `empleado`, pero tiene otras características,
-como por ejemplo bonus por productividad.  Por tanto el cálculo de las
-retribuciones anuales será diferente según se trate de un empleado
-normal o de un gerente.  Eso se puede conseguir añadiendo otra función
-virtual para ello.
-
-```
-typedef struct empleado_ empleado;
-typedef void (*empleado_func)(empleado*);
-typedef double (*empleado_func_double)(empleado*);
-struct empleado_ {
-    const char* nombre;
-    const char* puesto;
-    double sueldo;
-    empleado_func destroy;
-    empleado_func_double retribuciones;
-};
-```
-
-El campo `retribuciones` se inicializa en el constructor, de forma
-similar a `destroy` utilizando la siguiente función:
-
-```
-static double empleado_retribuciones_14pagas(empleado* this)
-{
-    return 14.*this->sueldo;
-}
-```
-
-Con lo que el método quedaría tan simple como:
-
-```
-double empleado_retribuciones(empleado* this)
-{
-    return this->retribuciones(this);
-}
-```
-
-Sin embargo, en el caso del gerente tendríamos un objeto con más
-atributos:
-
-```
-typedef struct gerente_ gerente;
-typedef void (*gerente_func)(gerente*);
-struct gerente_ {
-    empleado parent;
-    double bonus;
-};
-```
-
-Hemos colocado como primer elemento de la estructura un `empleado`.
-Esto hace que la primera parte de un `gerente` sea la que corresponde
-a un `empleado`.  Por tanto los métodos de `empleado` siguen
-funcionando sobre un objeto de la clase `gerente`, porque solo acceden
-a esa primera parte.
-
-Por otro lado, la clase `gerente` debe *redefinir* el método de
-cálculo de retribuciones:
-
-```
-static double gerente_retribuciones(empleado* this)
-{
-    gerente* g = (gerente*) this;
-    double r = 14. * this->sueldo;
-    if (gerente_objetivos_conseguidos(g))
-        r += g->bonus;
-    return r;
-}
-
-void gerente_init(gerente* this,
-                  const char* nombre, 
-                  const char* puesto,
-                  double sueldo,
-                  double bonus)
-{
-    empleado* parent = &this->parent;
-    empleado_init(parent, nombre, puesto, sueldo);
-    parent->retribuciones = gerente_retribuciones;
-}
-```
-
-Observa cómo la nueva implementación del método retribuciones
-convierte su argumento en un `gerente`.  Si se ha llamado a este
-método es seguro que se trata de un gerente.  Ahora podemos calcular
-las retribuciones de cualquier empleado sea o no gerente:
-
-```
-empleado* equipo[] = {
-    (empleado*) gerente_new("Paco", "Jefe", 1800., 4000.),
-    empleado_new("Pepe", "Currito", 1000.),
-    empleado_new("Juan", "Currito", 1000.),
-};
-
-#define NELEMS(a) (sizeof(a)/sizeof(a[0]))
-double coste_personal = 0.;
-for (int i=0; i<NELEMS(equipo); ++i)
-    coste_personal += empleado_retribuciones(equipo[i]);
-```
-
-La herencia es un mecanismo muy efectivo para tratar de forma
-homogénea a objetos, pero introduce muchísimo acoplamiento.  Intenta
-minimizarla lo más posible.
-
-Esta implementación de POO en C es primitiva pero para los fines del
-taller nos bastará.  En proyectos reales convendría echar un vistazo a
-las bibliotecas que ya existen.  En particular merece la pena destacar
-[GObject](https://developer.gnome.org/gobject/stable/) y
-[COS](https://sourceforge.net/projects/cos/). Cada una tiene sus
-ventajas y sus inconvenientes que habrá que valorar.
 
 ## El patrón *reactor*
 
-Uno de los mayores beneficios de utilizar POO es que nos abre la
-posibilidad de utilizar directamente la mayor parte del catálogo de
-*patrones de diseño* disponibles en la actualidad.  Un *patrón de
-diseño* es una solución de diseño bien probada a un problema o
-conjuntos de problemas y suele describirse de una manera semiformal en
-términos de objetos y relaciones entre ellos.
+Uno de los mayores beneficios de utilizar programación orientada a
+objetos es que nos abre la posibilidad de utilizar directamente la
+mayor parte del catálogo de *patrones de diseño* disponibles en la
+actualidad.  Un *patrón de diseño* es una solución de diseño bien
+probada a un problema o conjuntos de problemas y suele describirse de
+una manera semiformal en términos de objetos y relaciones entre ellos.
+El primer libro publicado sobre este tema (se conoce popularmente como
+*Gang of Four*, GOF) sigue siendo una referencia fundamental {{
+"gamma95:_desig_patter" | cite }} pero ya no es la única.  Cabe
+destacar la serie de volúmenes de *Pattern-Oriented Software
+Architecture* (POSA)
+{{ "buschmann96:_patter_orien_softw_archit_vol1" | cite }}
+{{ "schmidt00:_patter_orien_softw_archit_vol2" | cite }}
+{{ "kircher04:_patter_orien_softw_archit_vol3" | cite }}
+{{ "buschmann07:_patter_orien_softw_archit_vol4" | cite }}
+{{ "buschmann07:_patter_orien_softw_archit_vol5" | cite }}.
 
 Para este taller es especialmente importante el patrón
-[*reactor*](https://es.wikipedia.org/wiki/Reactor_(patr%C3%B3n_de_dise%C3%B1o)).
-Se trata de un patrón arquitectural, en el sentido de que determina la
-estructura de la aplicación en términos de componentes y cómo se
-relacionan.  Nos ayuda a organizar el programa cuando se trata de un
-*sistema reactivo*.  Es decir, cuando el sistema debe responder lo más
-rápidamente posible a *eventos* externos o internos.
+[*reactor*](https://es.wikipedia.org/wiki/Reactor_(patr%C3%B3n_de_dise%C3%B1o))
+que se encuentra descrito en el volumen 2 de POSA.  Se trata de un
+patrón arquitectural, en el sentido de que determina la estructura de
+la aplicación en términos de componentes y cómo se relacionan.  Nos
+ayuda a organizar el programa cuando se trata de un *sistema
+reactivo*.  Es decir, cuando el sistema responde lo más rápidamente
+posible a *eventos* externos o internos.
 
 Un sistema electrónico es muy frecuentemente un sistema reactivo.
 Reacciona cuando se pulsan botones, o se detecta luz, o se detecta
@@ -356,7 +75,7 @@ imposible hacer funcionar.  La gama de aberraciones es muy amplia:
   parece que funciona de maravilla.  Luego va creciendo y empiezan los
   problemas.  Primero fallos catastróficos inexplicables, que terminan
   en maldiciones contra los punteros de C.  Luego, cuando se es
-  consciente de la necesidad de *exception safety* se empiezan a
+  consciente de la necesidad de *async-safety* se empiezan a
   utilizar primitivas de sincronización y aparecen los interbloqueos.
 
 No hay nada que podamos hacer para arreglar esto, la única solución
@@ -394,20 +113,20 @@ También puede considerarse el tiempo como una fuente de eventos, pero
 se tratan de forma especial, porque hay que indicar un tiempo de
 disparo o frecuencia de invocación.
 
-El `reactor` tiene un método `reactor_run` que implementa el
-denominado *bucle de eventos*.  Es el bucle en el que se detecta si
-hay eventos disponibles y en caso de que los hubiera se *despachan*
-usando su manejador correspondiente.
-
 En el taller utilizaremos una implementación propia de este patrón que
 se incluye en la carpeta `reactor`.  Incluye numerosas
 implementaciones de diferentes `event_handler` para eventos de
 interés.  Tómate tu tiempo para analizarlos en detalle.
 
+El `reactor` tiene un método `reactor_run` que implementa el
+denominado *bucle de eventos*.  Es el bucle en el que se detecta si
+hay eventos disponibles y en caso de que los hubiera se *despachan*
+usando su manejador correspondiente.
+
 Vamos a hacer un breve recorrido por los manejadores de eventos
 incluídos en la biblioteca `reactor` del taller.
 
-### Eventos de teclado
+## Eventos de teclado
 
 El teclado en C suele leerse con funciones como `getchar`.  Pero ésta,
 como todas las demás funciones de `stdio`, no produce un valor
@@ -431,11 +150,11 @@ inmediata al pulsar una tecla.
 Tenemos que mirar por tanto a la interfaz del *sistema operativo*, lo
 que usa `stdio` en su implementación.  Y aquí estamos de enhorabuena,
 porque GNU replica el modelo de Unix que se caracteriza por su
-simplicidad.  
+simplicidad.
 
 * En Unix todo son archivos o dispositivos que se comportan como
   archivos (teclado, ratón, terminales, puertos serie, discos,
-  micrófono, etc.)
+  micrófono, red, gráficos, etc.)
 
 * Todos los archivos y dispositivos se manejan con cuatro operaciones
   básicas: `open`, `read`, `write`, `close` y excepcionalmente con una
@@ -474,29 +193,20 @@ Siguiendo el patrón *reactor* encapsulamos la interacción con
 cualquier fuente de eventos como un *event handler*:
 
 ```
-typedef struct {
-    event_handler ev;
-    reactor* r;
-} keyboard_handler;
+#include <reactor/reactor.h>
 
 static void keyboard(event_handler* ev);
 
-event_handler* keyboard_handler_new(reactor* r)
+event_handler* keyboard_handler_new()
 {
-    keyboard_handler* kb = malloc(sizeof(keyboard_handler));
-    event_handler_init(&kb->ev, 0, keyboard);
-    kb->ev.destroy = (event_handler_func) free;
-    kb->r = r;
-    return &kb->ev;
+    return event_handler_new(0, keyboard);
 }
 
 static void keyboard(event_handler* ev)
 {
-    keyboard_handler* kb = (keyboard_handler*)ev;
-
     char buf[1];
     if (read(ev->fd, buf, 1) < 0 || buf[0] == 'q')
-        reactor_quit(kb->r);
+        reactor_quit(ev->r);
 
     printf("Pulsado %c\n", buf[0]);
 }
@@ -504,25 +214,26 @@ static void keyboard(event_handler* ev)
 
 Este manejador de ejemplo utiliza al `reactor` porque invoca a su
 método `reactor_quit` (salir del bucle de eventos del *reactor*)
-cuando detecta una condición de terminación.  Por tanto para hacerlo
-visible tenemos que añadirlo a los atributos del *event handler*.
-Osea, hacemos un *event handler* ampliado, heredamos de él.  Fíjate en
-la llamada a `event_handler_init`.  Delegamos en `event_handler` todo
-lo que podemos (la inicialización de la primera parte) y le pasamos el
-descriptor de archivo 0 y la función de manejo de eventos.  El
-descriptor 0 corresponde a la entrada estándar.
+cuando detecta una condición de terminación.  Para ello utiliza uno de
+los atributos del *event handler*.  Fíjate en la llamada a
+`event_handler_new`.  Delegamos en `event_handler` todo lo que podemos
+y le pasamos el descriptor de archivo 0 y la función de manejo de
+eventos.  El descriptor 0 corresponde a la entrada estándar.
 
 El programa principal es sencillo:
 
 ```
+#include <reactor/reactor.h>
+#include <reactor/console.h>
+
 int main()
 {
     void* state = console_set_raw_mode(0);
     reactor* r = reactor_new();
-    event_handler* kb = keyboard_handler_new(r);
-    reactor_add(r, kb);
+    reactor_add(r, keyboard_handler_new());
     reactor_run(r);
     console_restore(0, state);
+	return 0;
 }
 ```
 
@@ -564,7 +275,47 @@ Si te frustra escribir tanto cambia de lenguaje.  El problema no está
 en el programa, sino en el lenguaje, que es demasiado primitivo.  Usa
 C++ o Python.
 
-### Eventos disparados por tiempo
+
+## Eventos en una entrada digital
+
+Las patas de GPIO configuradas como entradas son una fuente frecuente
+de eventos para el sistema.  De hecho en un sistema empotrado será
+mucho más frecuente que eventos de un teclado USB.  Los teclados de
+los sistemas empotrados se implementan frecuentemente con patas de
+GPIO.
+
+Para tratar estos eventos en cualquier conjunto de entradas incluimos
+el `input_handler`.  Se configuran automáticamente como entradas con
+*pull down* y se detectan tanto las transiciones de nivel alto a bajo
+como de nivel bajo a alto.
+
+```
+#include <reactor/reactor.h>
+#include <reactor/input_handler.h>
+#include <wiringPi.h>
+#include <stdio.h>
+
+static void press(input_handler* ev, int key) { printf("Press %d\n", key); }
+static void release(input_handler* ev, int key) { printf("Release %d\n", key); }
+
+int main()
+{
+    int buttons[] = { 18, 23, 24, 25 };
+
+    wiringPiSetupGpio();
+    reactor* r = reactor_new();
+    reactor_add(r, (event_handler*) input_handler_new(buttons, 4,
+						      press, release));
+    reactor_run(r);
+}
+```
+
+Este ejemplo muestra cómo configuraríamos un conjunto de cuatro
+botones en la Raspberry Pi. Se detectarían tanto las pulsaciones como
+las liberaciones de cada botón.
+
+
+## Eventos disparados por tiempo
 
 Además de los eventos que ocurren en el entorno, hay otra magnitud de
 importancia capital en los sistemas reactivos, el tiempo.  Hay
@@ -573,8 +324,125 @@ simple LED puede parpadear durante unos segundos.  Esto exige contar
 el tiempo en que el LED se enciende o se apaga y también el tiempo
 total de parpadeo.
 
-Nuestra implementación del *reactor* procesa este tipo de eventos de
-manera especial a través de los *timeout handlers*.
+### Eventos periódicos
+
+Nuestra implementación del *reactor* implementa *periodic handlers*.
+Un *periodic handler* crea un nuevo hilo que va generando eventos cada
+cierto número de milisegundos en un descriptor especial denominado
+*pipe* (tubería).  Realmente los detalles no es necesario conocerlos,
+pero conviene saber que aunque aparentemente el tiempo no está
+relacionado con un archivo nuestra implementación lo traduce a eventos
+en un archivo especial.
+
+Usar *periodic handlers* es igual de sencillo que cualquier otro:
+
+```
+#include <reactor/reactor.h>
+#include <reactor/periodic_handler.h>
+#include <stdio.h>
+
+void handler(event_handler* ev)
+{
+    puts("Tick");
+}
+
+int main()
+{
+    reactor* r = reactor_new();
+    reactor_add(r, (event_handler*)periodic_handler_new(1000, handler));
+    reactor_run(r);
+    return 0;
+}
+```
+
+Este ejemplo imprime un mensaje cada 1000 milisegundos, es decir, cada
+segundo.
+
+Los manejadores de eventos se desinstalan automáticamente cuando
+ocurre una excepción, así que si queremos ejecutar un evento cierto
+número de veces podemos hacerlo contando el número de disparos.
+
+```
+void handler(event_handler* ev)
+{
+    static int i = 0;
+    if (++i > 5)
+	    Throw Exception(0,"");
+	puts("Tick");
+}
+
+int main()
+{
+    reactor* r = reactor_new();
+    reactor_add(r, (event_handler*)periodic_handler_new(100, handler));
+    reactor_run(r);
+    return 0;
+}
+```
+
+> **Warning**
+> Este ejemplo dispara el periodic cinco veces. ¿Qué pasaría si pasado
+> cierto tiempo añadimos otra vez al reactor otro *periodic handler*
+> igual?  ¿Funcionaría?  Propón una solución y discútela con tus
+> compañeros.
+
+### Eventos retardados
+
+Otro tipo de eventos disparados por tiempo es el caso de los eventos
+retardados.  Por ejemplo, pasado cierto tiempo si no se cumple cierta
+condición salir del programa.
+
+```
+#include <reactor/reactor.h>
+#include <reactor/delayed_handler.h>
+
+void timeout(event_handler* ev)
+{
+    if (condicion_de_salida(ev))
+        reactor_quit(ev->r);
+}
+
+int main()
+{
+    reactor* r = reactor_new();
+    ...
+    reactor_add(r, (event_handler*) delayed_handler_new(1500, timeout));
+    reactor_run(r);
+}
+```
+
+Un `delayed_handler` precisamente hace esto.  Espera cierto tiempo de
+milisegundos antes de invocar el manejador.  Una vez invocado se
+desinstala automáticamente.
+
+### Parpadeo de un LED
+
+Un caso de evento temporal que es muy frecuente en un sistema
+empotrado es el de hacer parpadear un LED cierto número de veces.
+Esto se consigue con un manejador especial denominado `blink_handler`.
+Se indica el pin donde se conecta, el número de milisegundos que debe
+permanecer en cada estado (encendido o apagado) y el número de
+parpadeos (ciclos encendido/apagado) que debe realizar.  Se encarga
+automáticamente de configurar como salida el pin y de destruir el
+manejador una vez terminada la secuencia.
+
+```
+#include <reactor/reactor.h>
+#include <reactor/blink_handler.h>
+#include <wiringPi.h>
+
+int main()
+{
+    wiringPiSetupGpio();
+    reactor* r = reactor_new();
+    reactor_add(r, (event_handler*) blink_handler_new(18, 200, 5));
+    reactor_run(r);
+}
+```
+
+En este caso el LED conectado a la pata GPIO18 parpadeará 5 veces con
+un periodo de 400ms (200ms encendido y 200ms apagado).
+
 
 ## Programación en red (patrón *acceptor-connector*)
 
@@ -586,11 +454,11 @@ y el rol del *cliente*.  El rol del *servidor* es pasivo, espera hasta
 que ocurra un evento (la conexión) y entonces reacciona.
 
 Acceptor-Connector es un patrón de diseño propuesto por Douglas
-C. Schmidt~\cite{schmidt97:_accep} y utilizado extensivamente en ACE
-(*Adaptive Communications Engine*), su biblioteca de comunicaciones.
-Se ocupa de la primera parte de la comunicación, desacopla el
-establecimiento de conexión y la inicialización del servicio del
-procesamiento que se realiza una vez que el servicio está
+C. Schmidt {{ "schmidt97:_accep" | cite }} y utilizado extensivamente
+en ACE (*Adaptive Communications Engine*), su biblioteca de
+comunicaciones.  Se ocupa de la primera parte de la comunicación,
+desacopla el establecimiento de conexión y la inicialización del
+servicio del procesamiento que se realiza una vez que el servicio está
 inicializado.  Para ello intervienen tres componentes: *acceptors*,
 *connectors* y manejadores de servicio *service handlers*.  Un
 *connector* representa el rol activo, y solicita una conexión a un
@@ -602,75 +470,88 @@ Veamos un ejemplo sencillo, un servidor de *echo*.  Se trata de un
 programa que devuelve lo mismo que se le envía por cualquier conexión.
 
 ```
-#include "reactor.h"
+#include <reactor/reactor.h>
+#include <reactor/socket_handler.h>
 
-void handle_echo(service_handler* h)
+void handle_echo(event_handler* ev)
 {
-    char buf[1024];
-    int n = service_handler_recv (h, buf, sizeof(buf));
-    if (n <= 0) {
-        service_handler_close (h);
-        Throw Exception(n, "Connection closed");
-    }
-    buf[n] =  '\0';
-    printf("server: [%s]\n", buf);
-    service_handler_send (h, buf, n);
+    char buf[128];
+    int n = event_handler_recv(ev, buf, sizeof(buf));
+    event_handler_send(ev, buf, n);
 }
 
 int main()
 {
     reactor* r = reactor_new();
-    reactor_add(r, acceptor_new ("10000", "tcp", handle_echo));
+    reactor_add(r, (event_handler*)acceptor_new ("10000", handle_echo));
     reactor_run(r);
     return 0;
 }
 ```
+
 
 El `acceptor` se encargará de llamar a *listen* y *accept* cuando sea
 preciso.  En el momento en que se establezca una nueva conexión se
-creará un `service_handler` con el *socket* esclavo y con la función
-de procesamiento que se le indica.  Cuando se llama a
-`service_handler_close` se elimina automáticamente ese manejador del
-`reactor`.
+creará un `event_handler` que actúa de *service handler* con el
+*socket* esclavo y con la función de procesamiento que se le indica.
+En este caso escucha en el puerto TCP 10000.
 
-El conector es similar, salvo por el hecho de que el complementario
-del `acceptor`, el `connector`, no es un `event_handler` en nuestra
-implementación.
+El `conector` es similar, salvo por el hecho de que en el constructor
+establece la conexión con el otro extremo.  Si éste no está disponible
+se elevará una excepción.  Si solo se pretende usarlo para enviar
+datos al servidor ni siquiera es necesario añadirlo al *reactor*.
 
 ```
-#include "reactor.h"
+#include <reactor/reactor.h>
+#include <reactor/socket_handler.h>
 
-void handle_echo(service_handler* h)
+void handler(event_handler* ev)
 {
-    char buf[1024];
-    int n = service_handler_recv (h, buf, sizeof(buf));
-    if (n <= 0) {
-        service_handler_close (h);
-        Throw Exception(n, "Connection closed");
-    }
-    buf[n] =  '\0';
-    printf("client: [%s]\n", buf);
+    char buf[128];
+    int n = event_handler_recv(ev, buf, sizeof(buf));
+    buf[n] = '\0';
+    printf("Got: %s\n", buf);
 }
 
 int main()
 {
     reactor* r = reactor_new();
-    connector* c = connector_new ("localhost", "10000", "tcp");
-    service_handler* h = connector_connect(c, echo_handler);
-    service_handler_send(h, "Hello, World!", 13);
-    reactor_add(r, &h->parent);
+    connector* c = connector_new("localhost", "10000", handler);
+    reactor_add(r, (event_handler*)c);
+    connector c_aux = *c;
+    
+    void producer(event_handler* ev)
+    {
+	    static int i;
+		char buf[128];
+		snprintf(buf, 128, "Prueba %d", i++);
+		connector_send(&c_aux, buf, strlen(buf));
+    }
+
+    reactor_add(r, (event_handler*)periodic_handler_new(1000, producer));
     reactor_run(r);
-    connector_destroy(c);
     return 0;
 }
 ```
 
-El `connector` crea el *service handler* para atender la conexión.
-Podemos usarlo directamente con `service_handler_send` y
-`service_handler_recv` o bien añadirlo a un `reactor` para responder
-de forma automática.  En este ejemplo lo usamos primero directamente y
-posteriormente lo añadimos a un `reactor` para que escriba las
-respuestas cuando lleguen.
+El `connector` crea el *event handler* para atender la conexión.
+Podemos usarlo directamente con `connector_send` y `connector_recv` o
+bien añadirlo a un `reactor` para responder de forma automática.  En
+este ejemplo creamos un evento periódico que envía por el conector un
+mensaje distinto cada vez y añadimos el `connector` al *reactor* para
+recibir el mensaje de eco del servidor anterior.
+
+Nota que el evento periódico no usa el puntero al conector
+directamente.  En su lugar hace una copia de todo el objeto y usa esa
+copia.  El motivo es simple, la memoria del objeto conector puede ser
+liberada en cualquier momento (por ejemplo, si se pierde la conexión).
+En ese caso ese espacio de memoria será ocupado por otros objetos y el
+campo correspondiente al descriptor de archivo (el socket en este
+caso) podría ser alterado.  El evento periódico necesita enviar al
+descriptor correcto, aunque haya sido cerrado por un problema de
+comunicaciones.  Si está cerrado se elevará una excepción y el evento
+periódico también se desinstalará automáticamente, como cabría
+esperar.
 
 Los sistemas en los que un componente actúa fundamentalmente con el
 rol de servidor, mientras que los otros componentes actúan como
@@ -683,21 +564,19 @@ comportarse como cliente y al revés.  Este tipo de sistemas en que
 todos los componentes toman rol de cliente o de servidor
 indistintamente se denominan arquitecturas *peer-to-peer*.
 
-## Casos de estudio
+## Un *media player* como manejador
 
-Vamos a explicar someramente algunos de los ejemplos incluídos en el
-software que acompaña al taller.  Se trata de ejemplos ligeramente más
-complejos que los ejemplos triviales, de forma que pueda apreciarse la
-ventaja de una arquitectura software sólida.
+## Otros manejadores
 
-### Dispositivo MP3
+### *Pipe handler*
 
-El primer ejemplo consiste en el desarrollo de un player MP3 con una
-Raspberry Pi.  
+Cuando queremos traducir eventos de otro tipo para que sean
+demultiplexados por el *reactor*.
 
-### Control de accesos
+### *Thread handler*
 
-### Control de aparcamiento
+Si además se necesita un hilo.
 
-### Vehículo autónomo
+### *Process handler*
 
+Para manejar programas externos de forma bidireccional.

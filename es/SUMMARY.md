@@ -11,6 +11,8 @@
 * [Sonido](snd.md)
 * [Red](net.md)
 * [Tratamiento de errores](except.md)
+* [Fundamentos de programación orientada a objetos](poo.md)
 * [Arquitectura software](sw.md)
+* [Casos de estudio](casos.md)
 * [Nuestra personalización de Raspbian](custom.md)
 * [Referencias](references.md)
