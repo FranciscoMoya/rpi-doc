@@ -1,11 +1,12 @@
-# Fundamentos de programación orientada a objetos
+# Fundamentos de POO
 
-Puede que te haya extrañado el título de esta sección. ¿Programación
-orientada a objetos? ¿En C?  La programación orientada a objetos (POO)
-no es más que una técnica de programación.  Cuando se dice que un
-lenguaje *soporta* POO significa que incorpora mecanismos específicos
-para hacer más fácil la POO. Pero en cualquier lenguaje actual se
-puede programar orientado a objetos.
+POO es la abreviatura de programación orientada a objetos. Puede que
+te haya extrañado el título de esta sección. ¿Programación orientada a
+objetos? ¿En C?  La programación orientada a objetos no es más que una
+técnica de programación.  Cuando se dice que un lenguaje *soporta* POO
+significa que incorpora mecanismos específicos para hacer más fácil la
+POO. Pero en cualquier lenguaje actual se puede programar orientado a
+objetos.
 
 Un objeto no es más que una zona de memoria con semántica asociada.
 Es decir, que tienen significado y hay un conjunto de operaciones que
