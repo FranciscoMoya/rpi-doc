@@ -84,6 +84,10 @@ En este taller veremos el uso básico de la Raspberry Pi y periféricos
 y dispositivos. En ediciones sucesivas iremos incrementando el número
 de dispositivos y nuevos proyectos de ejemplo.
 
+Una de las principales diferencias de esta edición del taller es que
+vamos a dedicar una buena parte del tiempo a hablar de arquitectura
+software.
+
 ## La familia Raspberry Pi
 
 Raspberry Pi se diseñó alrededor de un SoC (*System On a Chip*) de

@@ -1,3 +1,5 @@
+[//]: # (-*- markdown; coding: utf-8 -*-)
+
 # Fundamentos de POO
 
 POO es la abreviatura de programación orientada a objetos. Puede que

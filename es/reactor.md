@@ -1,10 +1,6 @@
-[//]: # (-*- markdown -*-)
+[//]: # (-*- markdown; coding: utf-8 -*-)
 
 # La biblioteca `reactor`
-
-Una de las principales diferencias de esta edición del taller es que
-vamos a dedicar una buena parte del tiempo a hablar de arquitectura
-software.
 
 Este capítulo tiene dos objetivos:
 

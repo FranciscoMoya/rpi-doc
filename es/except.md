@@ -1,4 +1,4 @@
-[//]: (-*- mode: markdown; coding: utf-8 -*-)
+[//]: # (-*- markdown; coding: utf-8 -*-)
 # Manejo de errores
 
 Antes de empezar a escribir programas relativamente complejos en C
