@@ -125,7 +125,7 @@ incluídos en la biblioteca `reactor` del taller.
   <img src="img/reactor_handlers.svg" width="100%">
 
   <figcaption style="font-size:smaller; font-style:italic">
-  <div style="width:350px">
+  <div style="width:90%">
   Jerarquía de manejadores incluidos actualmente en la biblioteca
   <em>reactor</em>.
   </div>
