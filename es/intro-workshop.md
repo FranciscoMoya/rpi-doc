@@ -150,6 +150,6 @@ git pull -u
 Happy hacking!
 
 <div style="float:right">
-Toledo, {{ file.mtime.strftime('%B %d, %Y') }}<br/>
+Toledo, {{ file.mtime.year }}<br/>
 Francisco Moya Fernández
 </div>
