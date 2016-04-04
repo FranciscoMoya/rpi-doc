@@ -147,5 +147,5 @@ cd git/rpi-src
 git pull -u
 ```
 
-<div style="align:right">Toledo, {{ gitbook.time }}<br/>
+<div style="align:right">Toledo, {{ file.mtime }}<br/>
 Francisco Moya Fernández</div>
