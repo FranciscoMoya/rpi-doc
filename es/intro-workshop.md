@@ -117,3 +117,30 @@ Este manual está dividido en tres partes:
   fuentes de eventos heterogéneas.  Cómo se organiza un programa
   complejo para que no sea imposible modificarlo.
 
+## Repositorios GitHub
+
+La última versión del material del curso está disponible en todo
+momento en [GitHub](http://github.com) en los siguientes repositorios:
+
+```
+https://github.com/FranciscoMoya/rpi-workshop.git
+https://github.com/FranciscoMoya/rpi-src.git
+```
+
+El primer repositorio corresponde a la documentación del taller. A
+menos que quieras adaptarla para otro fin es probable que prefieras
+descargarla de
+[gitbooks.io](https://franciscomoya.gitbooks.io/taller-de-raspberry-pi/).
+Ten presente que el manual no se distribuye bajo la licencia de GNU,
+sino bajo la licencia
+[Creative Commons Reconocimiento-NoComercial-CompartirIgual 4.0 Internacional](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+como se indica al comienzo de este capítulo.
+
+El segundo repositorio corresponde al software de apoyo, que tienes
+preinstalado en tu *Raspberry Pi* para actualizarlo ejecuta un
+terminal de órdenes y escribe:
+
+```
+cd git/rpi-src
+git pull -u
+```
