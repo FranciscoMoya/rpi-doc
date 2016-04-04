@@ -1,4 +1,4 @@
-[//]: (-*- mode: markdown; coding: utf-8 -*-)
+[//]: # (-*- mode: markdown; coding: utf-8 -*-)
 # Casos de estudio
 
 Vamos a explicar someramente algunos de los ejemplos incluídos en el
@@ -14,6 +14,8 @@ Raspberry Pi.
 ## Control de accesos
 
 ## Control de aparcamiento
+
+Sensores de proximidad, comunicaciones.
 
 ## Vehículo autónomo
 

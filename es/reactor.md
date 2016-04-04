@@ -199,7 +199,7 @@ combinación con el `reactor`.
 Siguiendo el patrón *reactor* encapsulamos la interacción con
 cualquier fuente de eventos como un *event handler*:
 
-```
+``` C
 #include <reactor/reactor.h>
 
 static void keyboard(event_handler* ev);
@@ -226,7 +226,7 @@ eventos.  El descriptor 0 corresponde a la entrada estándar.
 
 El programa principal es sencillo:
 
-```
+``` C
 #include <reactor/reactor.h>
 #include <reactor/console.h>
 
@@ -252,7 +252,7 @@ Algunos de vosotros estaréis pensando que esto es matar moscas a
 cañonazos, que es mucho más simple un bucle sin más, sin reactor ni
 manejadores.  Algo de este estilo:
 
-```
+``` C
 int main()
 {
     void* state = console_set_raw_mode(0);
@@ -293,7 +293,7 @@ el `input_handler`.  Se configuran automáticamente como entradas con
 *pull down* y se detectan tanto las transiciones de nivel bajo a alto
 (*press*) como de nivel alto a bajo (*release*).
 
-```
+``` C
 #include <reactor/reactor.h>
 #include <reactor/input_handler.h>
 #include <wiringPi.h>
@@ -340,7 +340,7 @@ en un archivo especial.
 
 Usar *periodic handlers* es igual de sencillo que cualquier otro:
 
-```
+``` C
 #include <reactor/reactor.h>
 #include <reactor/periodic_handler.h>
 #include <stdio.h>
@@ -366,7 +366,7 @@ Los manejadores de eventos se desinstalan automáticamente cuando
 ocurre una excepción, así que si queremos ejecutar un evento cierto
 número de veces podemos hacerlo contando el número de disparos.
 
-```
+``` C
 void handler(event_handler* ev)
 {
     static int i = 0;
@@ -396,7 +396,7 @@ Otro tipo de eventos disparados por tiempo es el caso de los eventos
 retardados.  Por ejemplo, pasado cierto tiempo si no se cumple cierta
 condición salir del programa.
 
-```
+``` C
 #include <reactor/reactor.h>
 #include <reactor/delayed_handler.h>
 
@@ -430,7 +430,7 @@ parpadeos (ciclos encendido/apagado) que debe realizar.  Se encarga
 automáticamente de configurar como salida el pin y de destruir el
 manejador una vez terminada la secuencia.
 
-```
+``` C
 #include <reactor/reactor.h>
 #include <reactor/blink_handler.h>
 #include <wiringPi.h>
@@ -473,7 +473,7 @@ intercambiados en la conexión.
 Veamos un ejemplo sencillo, un servidor de *echo*.  Se trata de un
 programa que devuelve lo mismo que se le envía por cualquier conexión.
 
-```
+``` C
 #include <reactor/reactor.h>
 #include <reactor/socket_handler.h>
 
@@ -504,7 +504,7 @@ establece la conexión con el otro extremo.  Si éste no está disponible
 se elevará una excepción.  Si solo se pretende usarlo para enviar
 datos al servidor ni siquiera es necesario añadirlo al *reactor*.
 
-```
+``` C
 #include <reactor/reactor.h>
 #include <reactor/socket_handler.h>
 
@@ -591,7 +591,7 @@ trabajo se deja en un hilo auxiliar que se encarga de ejecutar
 `mpg123` cuando es necesario, pero todo eso es invisible para el
 usuario.  Veamos un ejemplo:
 
-```
+``` C
 #include <reactor/reactor.h>
 #include <reactor/console.h>
 #include <reactor/music_player.h>
@@ -710,7 +710,7 @@ probablemente cambiará con el tiempo.
 
 Veamos un ejemplo sencillo de `thread_handler`:
 
-```
+``` C
 #include <reactor/reactor.h>
 #include <reactor/thread_handler.h>
 #include <stdio.h>
@@ -798,7 +798,7 @@ extremo.  Cada extremo es libre de añadir su vista del
 `process_handler` a un `reactor` o directamente ejecutar un programa
 externo.  Veamos un ejemplo:
 
-```
+``` C
 #include <reactor/reactor.h>
 #include <reactor/process_handler.h>
 #include <reactor/delayed_handler.h>
@@ -858,7 +858,7 @@ Por defecto actualmente la biblioteca *reactor* se compila como una
 biblioteca estática `libreactor.a`.  Para poder compilar programas que
 la usan solo hay que añadir las siguientes banderas al `makefile`:
 
-```
+``` makefile
 REACTOR=/home/pi/git/rpi-src/c/reactor
 CFLAGS=-pthread -ggdb -I$(REACTOR)
 LDFLAGS=-pthread -L$(REACTOR)/reactor

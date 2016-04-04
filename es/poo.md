@@ -20,7 +20,7 @@ en un registro de personal?
 
 La respuesta es con ayuda de una estructura, por ejemplo:
 
-```
+``` C
 typedef struct empleado_ empleado;
 struct empleado_ {
     const char* nombre;
@@ -39,7 +39,7 @@ objetos se definen funciones que reciben los parámetros necesarios y
 devuelven un puntero a una estructura de éstas, los constructores.
 Por ejemplo:
 
-```
+``` C
 empleado* empleado_new(const char* nombre, 
                        const char* puesto,
                        double sueldo)
@@ -66,7 +66,7 @@ mientras que el segundo solo rellena los datos.  Esto resulta útil
 para poder definir empleados en memoria dinámica o en variables
 automáticas:
 
-```
+``` C
 empleado* ed = empleado_new("Paco", "Jefe", 1800.);
 empleado ea;
 empleado_init(&ea, "Pepe", "Currito", 1000.);
@@ -94,7 +94,7 @@ dependiendo del modo en que se ha construido el objeto.  El decir, el
 propio objeto lleva no solo datos sino también punteros a funciones
 que pueden cambiar dependiendo del caso.
 
-```
+``` C
 typedef struct empleado_ empleado;
 typedef void (*empleado_func)(empleado*);
 struct empleado_ {
@@ -107,7 +107,7 @@ struct empleado_ {
 
 Y el destructor puede ser una función tan simple como:
 
-```
+``` C
 void empleado_destroy(empleado* this)
 {
     this->destroy(this);
@@ -126,7 +126,7 @@ clase. Todas las demás operaciones son responsables de *mantener* los
 invariantes de clase.  Veamos cómo quedaría la función
 `empleado_init`.
 
-```
+``` C
 static void empleado_free_members(empleado*);
 
 void empleado_init(empleado* this,
@@ -151,7 +151,7 @@ Pero esto no libera la estructura de `empleado` cuando se construye
 con `empleado_new`.  Así que en ese caso habrá que cambiar el
 destructor:
 
-```
+``` C
 static void empleado_free(empleado*);
 
 empleado* empleado_new(const char* nombre, 
@@ -189,7 +189,7 @@ retribuciones anuales será diferente según se trate de un empleado
 normal o de un gerente.  Eso se puede conseguir añadiendo otra función
 virtual para ello.
 
-```
+``` C
 typedef struct empleado_ empleado;
 typedef void (*empleado_func)(empleado*);
 typedef double (*empleado_func_double)(empleado*);
@@ -205,7 +205,7 @@ struct empleado_ {
 El campo `retribuciones` se inicializa en el constructor, de forma
 similar a `destroy` utilizando la siguiente función:
 
-```
+``` C
 static double empleado_retribuciones_14pagas(empleado* this)
 {
     return 14.*this->sueldo;
@@ -214,7 +214,7 @@ static double empleado_retribuciones_14pagas(empleado* this)
 
 Con lo que el método quedaría tan simple como:
 
-```
+``` C
 double empleado_retribuciones(empleado* this)
 {
     return this->retribuciones(this);
@@ -224,7 +224,7 @@ double empleado_retribuciones(empleado* this)
 Sin embargo, en el caso del gerente tendríamos un objeto con más
 atributos:
 
-```
+``` C
 typedef struct gerente_ gerente;
 typedef void (*gerente_func)(gerente*);
 struct gerente_ {
@@ -242,7 +242,7 @@ a esa primera parte.
 Por otro lado, la clase `gerente` debe *redefinir* el método de
 cálculo de retribuciones:
 
-```
+``` C
 static double gerente_retribuciones(empleado* this)
 {
     gerente* g = (gerente*) this;
@@ -269,7 +269,7 @@ convierte su argumento en un `gerente`.  Si se ha llamado a este
 método es seguro que se trata de un gerente.  Ahora podemos calcular
 las retribuciones de cualquier empleado sea o no gerente:
 
-```
+``` C
 empleado* equipo[] = {
     (empleado*) gerente_new("Paco", "Jefe", 1800., 4000.),
     empleado_new("Pepe", "Currito", 1000.),

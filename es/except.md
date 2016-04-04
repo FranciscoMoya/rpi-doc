@@ -33,7 +33,7 @@ un único archivo de cabecera (`cexcept.h`) y su uso es muy simple.
 Cuando el programa tiene suficiente información para manejar posibles
 errores debe utilizar una construcción de este estilo:
 
-```
+``` C
 Try {
     /* Código de usuario, sin ´manejo de errores */ 
 }
@@ -45,7 +45,7 @@ Catch (ex) {
 En el momento en que se puede producir una situación excepcional o un
 error debe notificarse de esta forma:
 
-```
+``` C
 if (funcion_tradicional() < 0)
    Throw ex;
 ```
@@ -58,7 +58,7 @@ En nuestros ejemplos utilizaremos `reactor/exception.h`, una
 biblioteca auxiliar en la que definimos la excepción como una
 estructura similar a esta:
 
-```
+``` C
 typedef struct {
     int error_code;
     const char* what;
@@ -70,7 +70,7 @@ define_exception_type(exception);
 Así que si necesitas una descripción textual del error puedes usar el
 campo `what` de la estructura.  Por ejemplo:
 
-```
+``` C
 exception ex;
 Try {
     guardar_datos(db);
@@ -85,7 +85,7 @@ Para notificar una situación excepcional se dice que se eleva una
 excepción.  Es decir, se usa una sentencia `Throw` con los valores
 apropiados de la excepción.  Por ejemplo:
 
-```
+``` C
 f = fopen(fname, "r");
 if (f == NULL)
     Throw Exception(errno, "")
@@ -102,7 +102,7 @@ En algunos casos se sabe cómo manejar algunos errores, pero no todos.
 En esos casos puede ser útil capturar la posible excepción y volverla
 a lanzar si no se sabe qué hacer con ella.  Por ejemplo:
 
-```
+``` C
 void f() {
     exception e;
     Try {
@@ -149,7 +149,7 @@ que no se cierran con `fclose`, archivos abiertos con `open` que no se
 cierran con `close`, etc.).  Por ejemplo, considera esta función para
 contar el número de líneas de un archivo:
 
-```
+``` C
 int contar_lineas(const char* nombre)
 {
     FILE* f = fopen(nombre, "r");
@@ -172,7 +172,7 @@ y no está vacía.  Pero ¿qué pasa si hay error?
 
 Podemos aprovechar lo que ahora sabemos para notificar errores:
 
-```
+``` C
 int contar_lineas(const char* nombre)
 {
     FILE* f = fopen(nombre, "r");
@@ -196,7 +196,7 @@ El problema es que en caso de error de lectura el archivo `f` no se
 cierra nunca.  Nadie llama a `fclose`.  La solución es poner la
 excepción pero no lanzarla hasta el final.
 
-```
+``` C
 int contar_lineas(const char* nombre)
 {
     FILE* f = fopen(nombre, "r");
@@ -226,7 +226,7 @@ fragmento separamos el código en dos funciones, la función
 `contar_lineas_en_file` ni siquiera sabe que se tenga que liberar
 ningún recurso.
 
-```
+``` C
 int contar_lineas_en_file(FILE* f)
 {
     int lineas = 0;
@@ -272,7 +272,7 @@ En `reactor` hemos proporcionado un mecanismo para que las excepciones
 no capturadas desemboquen en un mensaje de información sobre el error
 y un volcado de la traza de llamada.  Por ejemplo:
 
-```
+``` C
 Uncaught exception (error_code 111) at socket_handler.c:167
 Error en connect: Connection refused
 Current call trace (last 5):
@@ -319,7 +319,7 @@ WiFi con otra Raspberry Pi, o incluso una salida digital.  La esencia
 de Unix y todos sus derivados e imitaciones es que todo en el sistema
 se vea como un archivo desde el punto de vista del sistema operativo.
 
-```
+``` C
 ssize_t write(int fd, const void* buf, size_t size);
 ```
 
@@ -329,7 +329,7 @@ coincidir con el número de bytes totales y no por ello implica error.
 Para poder mandar todo hay que volver a llamar a `write` con el resto.
 Por tanto este uso es típico:
 
-```
+``` C
 int escribir_datos(int fd, const tipo_datos* datos)
 {
     const void* buf = datos;
@@ -349,7 +349,7 @@ Es innecesariamente largo debido a que `write` no devuelve los bytes
 escritos, sino que tiene dos posibles significados.  Con excepciones
 esto no pasa, vamos a envolver `write` en una función más amigable:
 
-```
+``` C
 int write_ex(int fd, const void* buf, size_t size)
 {
     if (0 > write(fd, buf, size))
@@ -363,7 +363,7 @@ devuelve ningún error.  Si hay errores se trata aparte, en el
 `Try/Catch` correspondiente.  Ahora se puede simplificar
 considerablemente:
 
-```
+``` C
 void escribir_datos(int fd, const tipo_datos* datos)
 {
     const void *buf = datos, *end = buf + sizeof(tipo_datos);
@@ -399,7 +399,7 @@ reactor.  El hilo principal tiene el contexto de ejecución 0 (cero).
 Si queremos tener excepciones en el otro hilo basta asignarle un
 contexto de excepción diferente al principio del hilo:
 
-```
+``` C
 void* thread(thread_handler* t)
 {
     current_exception_context = 1;
