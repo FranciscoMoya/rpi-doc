@@ -147,5 +147,9 @@ cd git/rpi-src
 git pull -u
 ```
 
-<div style="align:right">Toledo, {{ file.mtime }}<br/>
-Francisco Moya Fernández</div>
+Happy hacking!
+
+<div style="float:right">
+Toledo, {{ file.mtime.strftime('%B %d, %Y') }}<br/>
+Francisco Moya Fernández
+</div>
