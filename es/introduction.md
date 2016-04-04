@@ -1,4 +1,4 @@
-[//]: # (-*- markdown -*-)
+[//]: # (-*- markdown; coding: utf-8 -*-)
 # Introducción
 
 <figure style="float:right;padding:10px">
