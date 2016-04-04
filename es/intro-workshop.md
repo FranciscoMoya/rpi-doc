@@ -93,8 +93,10 @@ directamente el ratón y el teclado USB del puesto de laboratorio.
 > taller es posible que convoquemos una edición 3b en septiembre.  El
 > objetivo es reducir sensiblemente el precio de la matrícula
 > eliminando del kit del alumno la Raspberry Pi 3 y los componentes ya
-> incluidos en otras ediciones.  En cualquier caso estas ediciones
-> intermedias solo se producirán si hay demanda suficiente.
+> incluidos en otras ediciones.  De esta forma alumnos que ya han
+> cursado ediciones pasadas del taller pueden actualizar su formación.
+> En cualquier caso estas ediciones intermedias solo se producirán si
+> hay demanda suficiente.
 
 Otra diferencia importante es que en esta edición incorporamos un
 [nuevo sitio web](https://sites.google.com/site/tallerraspberrypi/) de
@@ -108,7 +110,7 @@ Este manual está dividido en tres partes:
 
 * La primera parte introduce la Raspberry Pi, sus características y su
   historia, el sistema operativo que vamos a emplear, y el entorno de
-  desarrollo que vamos a emplear.
+  desarrollo.
 
 * La segunda parte describe los diferentes componentes de la Raspberry
   Pi desde un punto de vista aislado.  Se trata de que el alumno sepa
@@ -147,9 +149,15 @@ cd git/rpi-src
 git pull -u
 ```
 
+## Contacto
+
+Hemos puesto mucha ilusión en esta renovación del taller.  Esperamos
+que cubra tus espectativas, pero si no lo hace no dudes en hacernos
+llegar tus sugerencias.
+
 Happy hacking!
 
 <div style="float:right">
-Toledo, {{ file.mtime.year }}<br/>
+Toledo, {{ file.mtime }}<br/>
 Francisco Moya Fernández
 </div>
