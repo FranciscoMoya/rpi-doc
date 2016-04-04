@@ -218,19 +218,19 @@ Raspberry Pi ya se han diseñado un buen número de modelos:
 
 
               | **A** | **B** | **CM** | **A+** | **B+** | **2B** | **Zero** | **3B**
---------------|:-----:|:-----:|:------:|:------:|:------:|:------:|:--------:|:------:
-SoC (BCMxxxx) | 2835  | 2835  | 2835   | 2835   | 2835   | 2836   | 2835     | 2837
-Frecuencia    | 700MHz| 700MHz| 700MHz | 700MHz | 700MHz | 900MHz | 1GHz     | 1.2GHz
-Arquitectura  | ARM6  | ARM6  | ARM6   | ARM6   | ARM6   | ARM7   | ARM6     | ARM8 
-Núcleos       | 1     | 1     | 1      | 1      | 1      | 4      | 1        | 4
-Memoria RAM   | 256MB | 512MB | 512MB  | 256MB  | 512MB  | 1GB    | 512MB    | 1GB
-Memoria Flash | SD    | SD    | 4GB    | microSD| microSD| microSD| microSD  | microSD
-Ethernet 10/100 | <i class="fa fa-square-o"></i>  | <i class="fa fa-check-square-o"></i>    | <i class="fa fa-square-o"></i>     | <i class="fa fa-square-o"></i>     | <i class="fa fa-check-square-o"></i>     | <i class="fa fa-check-square-o"></i>     | <i class="fa fa-check-square-o"></i>       | <i class="fa fa-check-square-o"></i>
-Puertos USB   | 1     | 2     | 1      | 1      | 4      | 4      | 1        | 4
-GPIO pins     | 21    | 21    | 54     | 26     | 26     | 26     | 26       | 26
-HDMI          | <i class="fa fa-check-square-o"></i>    | <i class="fa fa-check-square-o"></i>    | <i class="fa fa-check-square-o"></i>     | <i class="fa fa-check-square-o"></i>     | <i class="fa fa-check-square-o"></i>     | <i class="fa fa-check-square-o"></i>     | <i class="fa fa-check-square-o"></i>       | <i class="fa fa-check-square-o"></i>
-DSI ports     | 1     | 1     | 2      | 1      | 1      | 1      | 0        | 1
-Cam ports     | 1     | 1     | 2      | 1      | 1      | 1      | 0        | 1
+ --------------|:-----:|:-----:|:------:|:------:|:------:|:------:|:--------:|:------:
+ SoC (BCMxxxx) | 2835  | 2835  | 2835   | 2835   | 2835   | 2836   | 2835     | 2837
+ Frecuencia    | 700MHz| 700MHz| 700MHz | 700MHz | 700MHz | 900MHz | 1GHz     | 1.2GHz
+ Arquitectura  | ARM6  | ARM6  | ARM6   | ARM6   | ARM6   | ARM7   | ARM6     | ARM8 
+ Núcleos       | 1     | 1     | 1      | 1      | 1      | 4      | 1        | 4
+ Memoria RAM   | 256MB | 512MB | 512MB  | 256MB  | 512MB  | 1GB    | 512MB    | 1GB
+ Memoria Flash | SD    | SD    | 4GB    | microSD| microSD| microSD| microSD  | microSD
+ Ethernet 10/100 | <i class="fa fa-square-o"/> | <i class="fa fa-check-square-o"/>   | <i class="fa fa-square-o"/>    | <i class="fa fa-square-o"/>    | <i class="fa fa-check-square-o"/>    | <i class="fa fa-check-square-o"/>    | <i class="fa fa-check-square-o"/>      | <i class="fa fa-check-square-o"/>
+ Puertos USB   | 1     | 2     | 1      | 1      | 4      | 4      | 1        | 4
+ GPIO pins     | 21    | 21    | 54     | 26     | 26     | 26     | 26       | 26
+ HDMI          | <i class="fa fa-check-square-o"/>   | <i class="fa fa-check-square-o"/>   | <i class="fa fa-check-square-o"/>    | <i class="fa fa-check-square-o"/>    | <i class="fa fa-check-square-o"/>    | <i class="fa fa-check-square-o"/>    | <i class="fa fa-check-square-o"/>      | <i class="fa fa-check-square-o"/>
+ DSI ports     | 1     | 1     | 2      | 1      | 1      | 1      | 0        | 1
+ Cam ports     | 1     | 1     | 2      | 1      | 1      | 1      | 0        | 1
 
 <figure style="float:right; padding:10px">
   <img src="img/cm-io.jpg" width="350"/>
