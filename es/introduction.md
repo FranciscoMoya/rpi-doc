@@ -216,6 +216,7 @@ Raspberry Pi ya se han diseñado un buen número de modelos:
   (6.5cm por 3cm) y su bajo precio (se estima en torno a 5$ sin
   ningún zócalo montado).
 
+<div style="font-size:smaller">
 
 |              | **A** | **B** | **CM** | **A+** | **B+** | **2B** | **Zero** | **3B** |
 |--------------|:-----:|:-----:|:------:|:------:|:------:|:------:|:--------:|:------:|
@@ -228,9 +229,12 @@ Raspberry Pi ya se han diseñado un buen número de modelos:
 |Ethernet 10/100 | <i class="fa fa-square-o"/> | <i class="fa fa-check-square-o"/>   | <i class="fa fa-square-o"/>    | <i class="fa fa-square-o"/>    | <i class="fa fa-check-square-o"/>    | <i class="fa fa-check-square-o"/>    | <i class="fa fa-check-square-o"/>      | <i class="fa fa-check-square-o"/> |
 |Puertos USB   | 1     | 2     | 1      | 1      | 4      | 4      | 1        | 4      |
 |GPIO pins     | 21    | 21    | 54     | 26     | 26     | 26     | 26       | 26     |
-|HDMI          | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/>
+|HDMI          | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> |
 |DSI ports     | 1     | 1     | 2      | 1      | 1      | 1      | 0        | 1      |
 |Cam ports     | 1     | 1     | 2      | 1      | 1      | 1      | 0        | 1      |
+
+</div>
+
 
 <figure style="float:right; padding:10px">
   <img src="img/cm-io.jpg" width="350"/>
