@@ -29,6 +29,16 @@ grado*.  Los ejemplos que abordaremos son sencillos, pero no
 triviales.  Se proporcionarán plantillas de componentes reusables para
 construir sistemas relativamente sofisticados.
 
+> **Info** 
+> [<img src="img/gpl3.png" height="80" style="float:right"/>](http://www.gnu.org/licenses/gpl-3.0.en.html)
+> Todo el código que te entregamos con el taller puedes usarlo en tus
+> propios trabajos y proyectos.  Se distribuye bajo la 
+> [licencia pública de GNU](http://www.gnu.org/licenses/gpl-3.0.en.html),
+> una licencia permisiva que te permite incluso
+> modificar el software o explotar comercialmente tus proyectos.  Solo
+> hay una condición, los trabajos derivados solo se pueden distribuir
+> bajo esta licencia.
+
 Una limitación importante de este taller es que no tratamos con
 sistemas de tiempo real estricto pero no podemos hacer más en dos
 créditos.  En un futuro próximo intentaremos ofrecer cursos
@@ -56,11 +66,12 @@ esta edición la selección ha sido la siguiente:
   </figcaption>
 </figure>
 
-Los precios pueden variar ligeramente respecto al momento de compra.
-Por ejemplo, en marzo ya teníamos las Raspberry Pi 3 modelo B, los
-alimentadores originales y las tarjetas microSD.  Hemos tenido
-problemas con otro tipo de alimentadores más baratos y no hemos
-querido arriesgar.
+Los enlaces a la derecha te llevarán al sitio del fabricante
+seleccionado.  Los precios pueden variar ligeramente respecto al
+momento de compra.  Por ejemplo, en marzo ya teníamos las Raspberry Pi
+3 modelo B, los alimentadores originales y las tarjetas microSD.
+Hemos tenido problemas con otro tipo de alimentadores más baratos y no
+hemos querido arriesgar.
 
 ## Diferencias con ediciones pasadas
 
@@ -83,9 +94,15 @@ directamente el ratón y el teclado USB del puesto de laboratorio.
 > incluidos en otras ediciones.  En cualquier caso estas ediciones
 > intermedias solo se producirán si hay demanda suficiente.
 
+Otra diferencia importante es que en esta edición incorporamos un
+[nuevo sitio web](https://sites.google.com/site/tallerraspberrypi/) de
+soporte al curso.  Queremos activar una comunidad de usuarios
+interesados alrededor de este sitio.  Participa y haznos llegar tus
+sugerencias.
+
 ## Estructura del manual
 
-El manual está dividido en tres partes:
+Este manual está dividido en tres partes:
 
 * La primera parte introduce la Raspberry Pi, sus características y su
   historia, el sistema operativo que vamos a emplear, y el entorno de
@@ -99,3 +116,4 @@ El manual está dividido en tres partes:
   software.  Cómo construimos programas que tratan con múltiples
   fuentes de eventos heterogéneas.  Cómo se organiza un programa
   complejo para que no sea imposible modificarlo.
+
