@@ -18,3 +18,39 @@ considerable esfuerzo en explicar cómo comunicar la Raspberry Pi con
 el mundo exterior, añadiendo sensores y actuadores de diferentes
 tipos.
 
+## Kit del alumno
+
+Este taller está concebido como una actividad de motivación
+*pro-bono*, sin ningún tipo de remuneración para el personal
+involucrado en el curso.  El 100% del dinero recaudado en las
+matrículas se invierte en el material que se lleva el alumno.  Las
+compras se realizan con meses de antelación para poder aprovechar
+ofertas y proveedores extranjeros.
+
+Cada edición del taller tiene su propia selección de componentes.  En
+esta edición la selección ha sido la siguiente:
+
+<figure style="padding:10px">
+  <iframe src="https://docs.google.com/spreadsheets/d/16aW5zV-DAbm8R-N74DJ7_KGVBSAacWIodptxNJuLd38/pubhtml?gid=0&amp;single=true&amp;headers=false&amp;range=A1:B15&amp;chrome=false&amp;gridlines=false" frameborder="0" style="width:100%;height:460px"></iframe>
+
+  <figcaption style="font-size:smaller; font-style:italic">
+  <div style="width:600px">Preselección de componentes para esta edición.</div>
+  </figcaption>
+</figure>
+
+Los precios pueden variar ligeramente respecto al momento de compra.
+Por ejemplo, en marzo ya teníamos las Raspberry Pi 3 modelo B, los
+alimentadores originales y las tarjetas microSD.
+
+## Diferencias con ediciones pasadas
+
+Todo es diferente.  Las ediciones pasadas del taller dedicaban la
+mayor parte del tiempo a conseguir un entorno de desarrollo cómodo con
+la Raspberry Pi.  Esto limitaba enormemente el tiempo que podíamos
+dedicar a hacer proyectos y, por tanto, la utilidad del taller.
+
+En esta edición todo el material se proporcionará completamente
+configurado y listo para usarse y no será necesario ningún software en
+otro ordenador personal.  El kit del alumno incluirá un conversor
+HDMI-VGA para poder usar los monitores del laboratorio y se conectará
+directamente el ratón y el teclado USB del puesto de laboratorio.
