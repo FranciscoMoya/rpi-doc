@@ -204,17 +204,14 @@ cualquier fuente de eventos como un *event handler*:
 
 static void keyboard(event_handler* ev);
 
-event_handler* keyboard_handler_new()
-{
+event_handler* keyboard_handler_new() {
     return event_handler_new(0, keyboard);
 }
 
-static void keyboard(event_handler* ev)
-{
+static void keyboard(event_handler* ev) {
     char buf[1];
     if (read(ev->fd, buf, 1) < 0 || buf[0] == 'q')
         reactor_quit(ev->r);
-
     printf("Pulsado %c\n", buf[0]);
 }
 ```
@@ -701,7 +698,182 @@ sugerir que `pipe_handler` no es realmente necesaria.  Sin embargo
 creemos que es interesante para cualquier manejador que traduce
 directamente interrupciones a eventos del *reactor*.
 
+Te preguntarás entonces por qué no lo hemos utilizado.  La respuesta
+tiene que ver con la biblioteca *wiringPi*.  Esta biblioteca tiene
+soporte de detección de cambios en una entrada digital mediante
+interrupciones.  Sin embargo la API es demasiado primitiva, no hay
+forma de discriminar la pata que ha generado la interrupción a menos
+que se utilicen distintas rutinas de servicio para cada pata.  De
+momento eso implica que necesitamos implementar un mecanismo de
+barrido aún cuando se activen las interrupciones.  Es algo que
+probablemente cambiará con el tiempo.
+
+Veamos un ejemplo sencillo de `thread_handler`:
+
+```
+#include <reactor/reactor.h>
+#include <reactor/thread_handler.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <time.h>
+#include <errno.h>
+    
+static void* productor(thread_handler* h) {
+    struct timespec t = { .tv_sec = 0, .tv_nsec = 500000000 };
+    for(int i = 1; !h->cancel; ++i) {
+    	pipe_handler_write_ne(&h->parent, &i, sizeof(i));
+	    nanosleep(&t, NULL);
+    }
+    return NULL;
+}
+
+static void consumidor(event_handler* ev)
+{
+    int n;
+	pipe_handler_read((pipe_handler*)ev, &n, sizeof(n));
+    printf("Got %d\n", n);
+    if (n > 9)
+    	reactor_quit(ev->r);
+}
+
+int main()
+{
+    reactor* r = reactor_new();
+    thread_handler* p = thread_handler_new(consumidor, productor);
+    reactor_add(r, (event_handler*)p);
+    reactor_run(r);
+    reactor_destroy(r);
+}
+```
+
+Para evitar problemas los argumentos del constructor son de tipo
+diferente.  El primer argumento es una función de manejo de eventos
+normal, porque está previsto que se use como cualquier otro manejador.
+La segunda es el hilo por lo que tiene una signatura ligeramente
+diferente, compatible con la que corresponde en las funciones de
+creación de hilos del sistema operativo.
 
 ### *Process handler*
 
-Para manejar programas externos de forma bidireccional.
+Los programas con hilos son relativamente complejos de depurar porque
+un comportamiento inadecuado en un hilo puede afectar al
+comportamiento del resto de los hilos.  Es muy recomendable para los
+programadores noveles reducir el uso de múltiples hilos a casos
+relativamente simples y con escasa interacción entre hilos.  El
+`thread_handler` al estar basado sobre el `pipe_handler` implementa un
+mecanismo de comunicación completamente ajeno a los problemas de
+sincronización entre hilos, por lo que los hilos pueden ser
+prácticamente independientes.
+
+Cuando el trabajo se complica también aparecen nuevas necesidades de
+sincronización y con ello es frecuente que aparezcan problemas de
+interbloqueo y *condiciones de carrera*.  Depurar este tipo de
+problemas puede llegar a ser extremadamente complejo.
+
+Cuando la funcionalidad de los hilos es compleja puede que interese
+desacoplar el sistema en procesos independientes que interactúan
+mediante procedimientos de comunicación de bajo acoplamiento (pipes,
+memoria compartida, archivos, etc.).  Los procesos garantizan un mayor
+nivel de aislamiento que los hilos y esto contribuye a que sean más
+fáciles de depurar.
+
+Un ejemplo de esta aproximación es Google Chrome.  Cada pestaña del
+navegador se ejecuta como un proceso independiente por lo que un
+posible fallo en una pestaña no puede afectar a las demás.  Google
+prima de esta forma la estabilidad frente a la eficiencia.
+
+Otra razón para usar procesos en lugar de hilos es la necesidad de
+interactuar con programas externos.  En ese caso las llamadas al
+sistema para la ejecución de programas reemplazarán por completo el
+proceso actual, por lo que no cabe plantear la opción de los hilos.
+
+La biblioteca *reactor* proporciona un `process_handler` similar al
+`thread_handler` pero con dos pipes configuradas para la comunicación
+bidireccional entre ambos procesos.  Ambos procesos verán un
+`process_handler` diferente y configurado para hablar con el otro
+extremo.  Tienen el atributo `fd` para leer datos provenientes del
+otro extremo y un nuevo atributo `out` para enviar datos al otro
+extremo.  Cada extremo es libre de añadir su vista del
+`process_handler` a un `reactor` o directamente ejecutar un programa
+externo.  Veamos un ejemplo:
+
+```
+#include <reactor/reactor.h>
+#include <reactor/process_handler.h>
+#include <reactor/delayed_handler.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+void parent (event_handler* ev) {
+    process_handler* h = (process_handler*) ev;
+    char buf[128];
+    int n = read(ev->fd, buf, sizeof(buf));
+    if (n > 0)
+        printf("Padre: %s\n", buf);
+    write(h->out, "padre", 6);
+}
+
+void child (event_handler* ev) {
+    process_handler* h = (process_handler*) ev;
+    char buf[128];
+    int n = read(ev->fd, buf, sizeof(buf));
+    if (n > 0)
+        printf("Hijo: %s\n", buf);
+    write(h->out, "hijo", 5);
+}
+
+void quit(event_handler* ev) { reactor_quit(ev->r); }
+
+int main() {
+    reactor* r  = reactor_new();
+    process_handler* h = process_handler_new(parent, child);
+    process_handler_stay_forever_on_child(h);
+    reactor_add(r, &h->parent);
+    reactor_add(r, (event_handler*)delayed_handler_new(1000, quit));
+    write(h->out, "main", 5);
+    reactor_run(r);
+    reactor_destroy(r);
+}
+```
+
+En este ejemplo disponemos de dos procesos (padre e hijo) que
+simplemente envían al otro extremo un mensaje de identificación de sí
+mismos cuando reciben algo previamente.  Para iniciar el intercambio
+de mensajes desde el programa principal enviamos un mensaje al proceso
+padre.
+
+Nota que inmediatamente después de crear el `process_handler` llamamos
+a `process_handler_stay_forever_on_child`.  Se trata de una función
+que configura un reactor con un único manejador, el `process_handler`
+del hijo, y se queda en el bucle de eventos de este reactor hasta el
+final del programa. Es muy habitual este patrón, por lo que se
+proporciona una función para implementarlo.  El proceso padre no hace
+nada al invocarla.
+
+## Compilar con *reactor*
+
+Por defecto actualmente la biblioteca *reactor* se compila como una
+biblioteca estática `libreactor.a`.  Para poder compilar programas que
+la usan solo hay que añadir las siguientes banderas al `makefile`:
+
+```
+REACTOR=/home/pi/git/rpi-src/c/reactor
+CFLAGS=-pthread -ggdb -I$(REACTOR)
+LDFLAGS=-pthread -L$(REACTOR)/reactor
+LDLIBS=-lreactor -lwiringPi -lpthread
+```
+
+La variable `REACTOR` tiene la ruta relativa o absoluta donde está
+instalado reactor.  Ajusta su valos si la cambias.  El compilador
+necesita utilizar la bandera `-pthread` para generar correctamente el
+código de los hilos y la bandera `-I$(REACTOR)` para encontrar los
+archivos de cabecera.  El montador también necesita la bandera
+`-pthread` para construir correctamente ejecutables con hilos y
+`-L$(REACTOR)/reactor` para encontrar la biblioteca estática.
+Finalmente añadimos las bibliotecas que utiliza (*reactor*, *wiringPi*
+y la biblioteca de manejo de hilos *pthread*).
+
+Todos los ejemplos del taller vienen con un `makefile` completamente
+funcional pero deliberadamente simple.  Analízalos en detalle.
