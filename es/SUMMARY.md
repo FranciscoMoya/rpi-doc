@@ -1,9 +1,9 @@
-[//]: (-*- mode: markdown; coding: utf-8 -*-)
+[//]: # (-*- markdown; coding: utf-8 -*-)
 # Tabla de contenido
 
 * [Resumen](README.md)
 * [Introducción](intro-workshop.md)
-  * [La Raspberry Pi](introduction.md)
+  * [La Raspberry Pi](intro-rpi.md)
   * [El sistema GNU/Linux](intro-gnu.md)
   * [Desarrollo en C](dev-c.md)
   * [Desarrollo en Python](dev-python.md)
@@ -11,6 +11,7 @@
   * [GPIO](gpio.md)
   * [I2C](i2c.md)
   * [SPI](spi.md)
+  * [UART](uart.md)
   * [Vídeo](cam.md)
   * [Sonido](snd.md)
   * [Red](net.md)

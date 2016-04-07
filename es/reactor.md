@@ -104,7 +104,7 @@ evento busca al manejador correspondiente para invocar su método
 `handle_events`.
 
 En el taller utilizaremos una implementación propia de este patrón que
-se incluye en la carpeta `reactor`.  Incluye numerosas
+se incluye en la carpeta `src/c/reactor`.  Incluye numerosas
 implementaciones de diferentes `event_handler` para eventos de
 interés.  Tómate tu tiempo para analizarlos en detalle.
 
@@ -877,3 +877,29 @@ y la biblioteca de manejo de hilos *pthread*).
 
 Todos los ejemplos del taller vienen con un `makefile` completamente
 funcional pero deliberadamente simple.  Analízalos en detalle.
+
+## Sensor analógico
+
+Hemos visto cómo puede medirse una magnitud analógica utilizando un
+montaje con la pata MISO de la interfaz SPI y una entrada digital.  Es
+hora de convertir esa técnica en un nuevo manejador de eventos para la
+automatización.
+
+El reto es definir el manejador `analog_handler` para detectar cuando
+se pasan ciertos umbrales previamente configurados.  Debe cumplir los
+siguientes requisitos:
+
+* Debe poder seleccionarse la pata digital, los umbrales de activación
+  y desactivación, el periodo de muestreo y la frecuencia del reloj.
+  
+* Debe medir periódicamente usando el método descrito en el capítulo
+  sobre SPI.
+  
+* Debe notificar cuando se supera el umbral de activación y cuando el
+  valor queda por debajo del umbral de desactivación.
+  
+* Una vez notificada una activación o una desactivación ya no vuelve a
+  notificar nada hasta que cambie el estado (pasa de activado a
+  desactivado o a la inversa).
+  
+En la carpeta `src/c/`

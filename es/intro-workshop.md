@@ -1,26 +1,13 @@
 [//]: # (-*- markdown; coding: utf-8 -*-)
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Taller de Raspberry Pi</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Francisco Moya</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Reconocimiento-NoComercial-CompartirIgual 4.0 Internacional License</a>.<br />Creado a partir de la obra en <a xmlns:dct="http://purl.org/dc/terms/" href="https://www.gitbook.com/book/franciscomoya/taller-de-raspberry-pi/" rel="dct:source">https://www.gitbook.com/book/franciscomoya/taller-de-raspberry-pi/</a>.
-
 # Taller de Raspberry Pi
 
-Este pequeño manual es la documentación oficial de la tercera edición
-del *Taller de iniciación a Raspberry Pi*, que se celebrará en junio
-de 2016 en la Escuela de Ingeniería Industrial de Toledo, de la
-Universidad de Castilla-La Mancha, España.
-
-Raspberry Pi es un pequeño computador diseñado inicialmente como una
-herramienta docente para enseñar a programar y electrónica digital.
 Un taller no aspira a dar unos conocimientos teóricos profundos, sino
-que tiene una orientación estrictamente práctica.
-
-Te enseñaremos lo que incluye la Raspberry Pi, cómo configurarla y
-cómo usarla para realizar tus propios proyectos.  Invertiremos un
-considerable esfuerzo en explicar cómo comunicar la Raspberry Pi con
-el mundo exterior, añadiendo sensores y actuadores de diferentes
-tipos.  Se pretende que los ejemplos sean abordables incluso por
-alumnos de primer curso que ya hayan cursado la asignatura de
-*Informática*.
+que tiene una orientación estrictamente práctica.  Te enseñaremos lo
+que incluye la Raspberry Pi, cómo configurarla y cómo usarla para
+realizar tus propios proyectos.  Se pretende que los ejemplos sean
+abordables incluso por alumnos de primer curso que ya hayan cursado la
+asignatura de *Informática*.
 
 Una importante incorporación en esta edición del taller son las
 nociones de arquitectura software.  Queremos que se usen las
@@ -72,8 +59,8 @@ Los enlaces a la derecha te llevarán al sitio del fabricante
 seleccionado.  Los precios pueden variar ligeramente respecto al
 momento de compra.  Por ejemplo, en marzo ya teníamos las Raspberry Pi
 3 modelo B, los alimentadores originales y las tarjetas microSD.
-Hemos tenido problemas con otro tipo de alimentadores más baratos y no
-hemos querido arriesgar.
+Hemos tenido problemas en el pasado con otro tipo de alimentadores más
+baratos y no hemos querido arriesgar.
 
 ## Diferencias con ediciones pasadas
 
@@ -87,6 +74,13 @@ configurado y listo para usarse y no será necesario ningún software en
 otro ordenador personal.  El kit del alumno incluirá un conversor
 HDMI-VGA para poder usar los monitores del laboratorio y se conectará
 directamente el ratón y el teclado USB del puesto de laboratorio.
+
+También hemos tratado los problemas de infraestructura que sufrimos en
+ediciones pasadas.  En primer lugar hemos preparado el taller para que
+no sea necesario ningún tipo de comunicación con el exterior, ni
+soporte de aplicaciones externas tales como *Bonjour*.  Proporcionamos
+todos los mecanismos de comunicación posibles previamente configurados
+pero no necesitaremos ninguno.
 
 > **Warning** 
 > Dada la radicalidad de los cambios que hemos hecho en el
@@ -131,33 +125,20 @@ https://github.com/FranciscoMoya/rpi-workshop.git
 https://github.com/FranciscoMoya/rpi-src.git
 ```
 
-El primer repositorio corresponde a la documentación del taller. A
-menos que quieras adaptarla para otro fin es probable que prefieras
-descargarla de
+El primer repositorio corresponde a la documentación del taller, a los
+archivos a partir de los cuales se genera este manual.  A menos que
+quieras adaptarlo para otro fin es probable que prefieras descargarla
+de
 [gitbooks.io](https://franciscomoya.gitbooks.io/taller-de-raspberry-pi/).
 Ten presente que el manual no se distribuye bajo la licencia de GNU,
 sino bajo la licencia
-[Creative Commons Reconocimiento-NoComercial-CompartirIgual 4.0 Internacional](http://creativecommons.org/licenses/by-nc-sa/4.0/)
-como se indica al comienzo de este capítulo.
+[Creative Commons Reconocimiento-NoComercial-CompartirIgual 4.0 Internacional](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 El segundo repositorio corresponde al software de apoyo, que tienes
-preinstalado en tu *Raspberry Pi* para actualizarlo ejecuta un
+preinstalado en tu *Raspberry Pi*.  Para actualizarlo ejecuta un
 terminal de órdenes y escribe:
 
 ```
-cd git/rpi-src
+cd src
 git pull -u
 ```
-
-## Contacto
-
-Hemos puesto mucha ilusión en esta renovación del taller.  Esperamos
-que cubra tus espectativas, pero si no lo hace no dudes en hacernos
-llegar tus sugerencias.
-
-Happy hacking!
-
-<div style="float:right">
-Toledo, {{ file.mtime }}<br/>
-Francisco Moya Fernández
-</div>
