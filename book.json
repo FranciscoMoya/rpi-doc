@@ -1,6 +1,6 @@
 {
     "plugins": [
-        "mathjax-beta",
+        "mathjax",
         "richquotes",
         "addcssjs",
         "include-codeblock",
