@@ -30,4 +30,6 @@ han realizado en la tarjeta microSD que se distribuye en el taller.
   `mpg123`.
 * Añadir el usuario `pi` al grupo `staff` para que funcione `pip install`.
 * Instalar la biblioteca *wiringPi* para Python con `pip install wiringpi2`.
-* Descargar las pruebas del sistema del repositorio GitHub del taller.
+* Descargar las pruebas del sistema del repositorio GitHub del taller con 
+  `git clone https://github.com/FranciscoMoya/rpi-src.git src` y 
+  `git clone https://github.com/FranciscoMoya/rpi-workshop.git doc`.

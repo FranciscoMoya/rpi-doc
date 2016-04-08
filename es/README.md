@@ -2,6 +2,20 @@
 
 # Tercera edición del taller de Raspberry Pi
 
+> **Info**
+> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+> <img alt="Licencia de Creative Commons" style="border-width:0; float:right" src="img/cc-by-nc-sa-88x31.png" />
+> </a><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">
+> Taller de Raspberry Pi</span> por 
+> <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">
+> Francisco Moya</span> se distribuye bajo la licencia 
+> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+> Creative Commons Reconocimiento-NoComercial-CompartirIgual 4.0 
+> Internacional License</a>.<br />
+> <span style="font-size:smaller">Documento creado a partir de la obra en 
+> <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/FranciscoMoya/rpi-workshop" rel="dct:source">
+> https://github.com/FranciscoMoya/rpi-workshop</a></span>.
+
 Estamos en la tercera edición de nuestro *Taller de introducción a
 Raspberry Pi*.  Las dos ediciones anteriores se celebraron con el
 mismo entusiasmo que ésta pero con mucho menos tiempo de preparación.
@@ -22,10 +36,7 @@ llegar tus sugerencias.
 
 Happy hacking!
 
-<div style="float:right">
+<div style="float:right; display:block">
 Toledo, {{ file.mtime }}<br/>
 Francisco Moya Fernández
 </div>
-
-> **Info**
-> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Taller de Raspberry Pi</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Francisco Moya</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Reconocimiento-NoComercial-CompartirIgual 4.0 Internacional License</a>.<br />Creado a partir de la obra en <a xmlns:dct="http://purl.org/dc/terms/" href="https://www.gitbook.com/book/franciscomoya/taller-de-raspberry-pi/" rel="dct:source">https://www.gitbook.com/book/franciscomoya/taller-de-raspberry-pi/</a>.

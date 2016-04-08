@@ -102,7 +102,7 @@ sugerencias.
 
 Este manual está dividido en tres partes:
 
-* La primera parte introduce la Raspberry Pi, sus características y su
+* La primera parte introduce la Raspberry Pi, sus características, su
   historia, el sistema operativo que vamos a emplear, y el entorno de
   desarrollo.
 
