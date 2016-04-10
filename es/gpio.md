@@ -1,4 +1,4 @@
-[//]: # (-*- markdown -*-)
+[//]: # (-*- markdown; coding: utf-8 -*-)
 
 # GPIO (*General Purpose Input/Output*)
 

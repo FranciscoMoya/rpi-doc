@@ -23,4 +23,7 @@
   * [Casos de estudio](casos.md)
 * [Apéndices](apendices.md)
   * [Nuestra personalización de Raspbian](custom.md)
+  * [Secuencia de arranque](boot.md)
+  * [Alimentación de Raspberry Pi](power.md)
+  * [Configuración de Raspberry Pi](config.md)
   * [Referencias](references.md)

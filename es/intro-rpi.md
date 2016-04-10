@@ -63,6 +63,24 @@ respetable número de modelos:
   pensada para aplicaciones finales donde el consumo y/o el coste sean
   factores importantes.
 
+> **Info**
+> [<img src="img/Raspi_Colour_R.png" height="80" style="float:right"/>](http://www.raspberrypi.org/)
+> La logomarca de Raspberry Pi es una marca registrada de la
+> *Raspberry Pi Foundation*.  Fue diseñada por Paul Bleech, que ganó
+> el concurso de logos que organizó la fundación en 2011.
+
+<figure style="float:right; padding:10px">
+  <img src="img/cm-io.jpg" width="350"/>
+
+  <figcaption style="font-size:smaller; font-style:italic">
+  <div style="width:350px">
+  Compute Module IO Board con el módulo
+  insertado. Fuente: blog de
+  <a href="http://www.raspberrypi.org/raspberry-pi-compute-module-new-product/">raspberrypi.org</a>.
+  </div>
+  </figcaption>
+</figure>
+
 * En abril de 2014 se anuncia la *Raspberry Pi Compute Module*. Es
   similar al modelo B, pero en lugar de ranura SD incorpora 4GB de
   eMMC Flash e integra todo en un circuito impreso DDR2 SODIMM,
@@ -81,15 +99,28 @@ respetable número de modelos:
   [Sphinx](http://dock2office.com/raspberry-pi/) que sirve para
   utilizar una tableta como un ordenador de escritorio, etc.
 
+<figure style="float:right; padding:10px"> <img
+  src="https://www.raspberrypi.org/wp-content/uploads/2014/07/HAT-Pi-Flexis-500x298.jpg"
+  width="350"/>
+
+  <figcaption style="font-size:smaller; font-style:italic">
+	<div style="width:300px">
+	Plantilla de la especificación mecánica de HAT. Fuente: <a
+	href="https://www.raspberrypi.org/blog/introducing-raspberry-pi-hats/">raspberrypi.org</a>.
+	</div>
+  </figcaption>
+</figure>
+
 * En julio de 2014 se anuncia la *Raspberry Pi modelo B+*.  Se trata
   de un rediseño del modelo B, muy similar pero con importantes
   consecuencias.  Se amplía el número de pines de la cabecera de GPIO
-  a 40 pines, se sustituye el zócalo SD por uno microSD, se mejora la
-  alimentación y el audio, se incluye en el mismo conector la salida
-  de video compuesto y el audio (como muchos portátiles), y se corrige
-  el factor de forma para que encaje completamente en el tamaño de una
-  tarjeta de crédito.  La ampliación de la cabecera de pines se
-  complementa muy poco después con la especificación
+  a 40 pines, se sustituye el zócalo SD por uno microSD, se aumenta el
+  número de puertos USB a cuatro, se mejora la alimentación y el
+  audio, se incluye en el mismo conector la salida de video compuesto
+  y el audio (como muchos portátiles), y se corrige el factor de forma
+  para que encaje completamente en el tamaño de una tarjeta de
+  crédito.  La ampliación de la cabecera de pines se complementa muy
+  poco después con la especificación
   [HAT](https://www.raspberrypi.org/blog/introducing-raspberry-pi-hats/)
   (*Hardware Attached on Top*) que determina las limitaciones físicas
   y eléctricas que deben cumplir las placas de expansión de *Raspberry
@@ -102,6 +133,17 @@ respetable número de modelos:
   [Adafruit](https://www.adafruit.com/categories/405), de
   [Pimoroni](https://shop.pimoroni.com/collections/hats) y de
   [The Pi Hut](https://thepihut.com/collections/raspberry-pi-hats)).
+
+<figure style="float:right; padding:10px">
+  <img src="img/CM_and_pi.jpg" width="350"/>
+
+  <figcaption style="font-size:smaller; font-style:italic">
+  <div style="width:350px">
+  Compute Module y Raspberry Pi modelo B. Fuente: blog de
+  <a href="http://www.raspberrypi.org/raspberry-pi-compute-module-new-product/">raspberrypi.org</a>.
+  </div>
+  </figcaption>
+</figure>
 
 * En noviembre de 2014 se anuncia la *Raspberry Pi A+* como el
   rediseño equivalente del modelo A.  Un cambio significativo es que
@@ -132,128 +174,18 @@ respetable número de modelos:
 * En febrero de 2016 se anuncia la *Raspberry Pi 3 modelo B*,
   coincidiendo con el cuarto cumpleaños de la *Raspberry Pi modelo B*
   original.  Se vuelve a actualizar el procesador por un BCM2837
+  diseñado específicamente para la Raspberry Pi 3 (quad-core
+  Cortex-A53) a 1.2GHz, incluye un BCM WiFi 802.11n y Bluetooth 4.1.  El
+  cambio es muy importante, porque se pasa a una arquitectura de 64
+  bits, aunque la compatibilidad hacia atrás sigue siendo total.
 
-
-> **Info** El coste agregado de todos los componentes adicionales que
-> sería preciso incorporar a la *Raspberry Pi Zero* para desarrollar
-> cómodamente supera ampliamente el coste de la *Raspberry Pi B+*.
-
-La nueva Raspberry Pi Zero es ideal para prototipos de equipos, pero
-dificulta notablemente el desarrollo.  Por ejemplo, conectar un
-teclado y un ratón exigiría un hub USB OTG, la mera actualización del
-sistema operativo requeriría algún tipo de conexión de red, y la
-conexión de dispositivos externos al puerto GPIO requiere incorporar
-cabeceras de pines o soldadura.  Todo esto está ya en la Raspberry Pi
-modelo B+.
-
-  Actualmente la versión más potente de
-  Raspberry Pi, la *Raspberry Pi 2*, utiliza una versión más avanzada
-  del SoC de Broadcom, el
-  [BCM2836](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2836/).
-
-
-
-El BCM2835 incorpora un núcleo ARM1176JZF-S de bajo consumo y un
-coprocesador multimedia (GPU) de doble núcleo VideoCore IV de
-Broadcom.  La GPU implementa OpenGL-ES 2.0 y es capaz de codificar y
-decodificar vídeo FullHD a 30fps, a la vez que muestra gráficos FullHD
-a 60fps en un LCD o en un monitor HDMI.  Una característica llamativa
-de este procesador es su montaje apilado con la memoria RAM (*package
-on package*). La estructura se muestra en la figura.  Por este motivo
-el circuito impreso de la Raspberry Pi no deja ver procesador
-alguno. Esta técnica permite reducir considerablemente el tamaño del
-PCB (*Printed Circuit Board*) necesario.
-
-El nuevo BCM2836 tiene básicamente la misma arquitectura interna que
-su antecesor pero incorpora un procesador Cortex-A7 de cuatro núcleos
-que sustituye al ARM117JZF-S del BCM2835.  Esto tiene importantes
-consecuencias desde el punto de vista del software, puesto que este
-procesador implementa el repertorio de instrucciones de ARM v.7 en
-lugar de ARM v.6 como su antecesor.
-
-Además del procesador y la GPU, el SoC de la Raspberry Pi
-incorpora un amplio conjunto de periféricos:
-
-<figure style="float:right; padding:10px">
-  <img src="img/Package_on_Package.png" width="350"/>
-
-  <figcaption style="font-size:smaller; font-style:italic">
-  <div style="width:350px">
-  Esquema de soldadura vertical *package on package*. Los
-  sustratos del SoC (A) y de la memoria (B) se sueldan mediante
-  una matriz de pequeñas bolitas de soldadura (2) uno encima del otro
-  y todo ello sobre el PCB (1). Fuente: Tosaka en <a
-  href="http://commons.wikimedia.org/wiki/File:Package_on_Package_(Side_view).PNG">Wikimedia
-  Commons</a>
-  </div>
-  </figcaption>
-</figure>
-
-* Temporizador.
-* Controlador de interrupciones.
-* Entradas/salidas digitales de propósito genérico, GPIO (*General
-  Purpose Input-Output*). Dispone de 54 pero no todas están
-  disponibles en la Raspberry Pi.
-* Puerto USB.
-* Audio PCM a través de bus I2S (*Integrated Interchip Sound*).
-* Controlador de acceso directo a memoria, DMA.
-* Maestro y esclavo de bus I2C (*Inter-Integrated Circuit*).
-* Maestros y esclavo de bus SPI (*Serial Peripheral Interface*).
-* Módulos para generación de pulsos de anchura variable, PWM.
-* Puertos serie, UART.
-* Interfaz para memorias eMMC, SD, SDIO.
-* Interfaz HDMI
-
-
-La Raspberry Pi Foundation ha diseñado varias versiones de Raspberry
-Pi que se acomodan a distintos requisitos.  En la corta historia de la
-Raspberry Pi ya se han diseñado un buen número de modelos:
-
-<figure style="float:right; padding:10px">
-  <img src="img/CM_and_pi.jpg" width="350"/>
-
-  <figcaption style="font-size:smaller; font-style:italic">
-  <div style="width:350px">
-  Compute Module y Raspberry Pi modelo B. Fuente: blog de
-  <a href="http://www.raspberrypi.org/raspberry-pi-compute-module-new-product/">raspberrypi.org</a>.
-  </div>
-  </figcaption>
-</figure>
-
-* El modelo A no incorpora ningún periférico adicional. Dispone de
-  256MB de RAM y deja algunos zócalos sin poblar. Sólo incorpora un
-  puerto USB.
-* El modelo B, cuenta con 512MB de RAM y además dispone de un
-  [Microchip LAN9512](http://www.microchip.com/wwwproducts/Devices.aspx?product=LAN9512).
-  Este periférico añade al sistema un *hub* USB 2.0 y un
-  controlador Ethernet 10/100.
-* El
-  [Raspberry Pi Compute Module](http://www.raspberrypi.org/raspberry-pi-compute-module-new-product/)
-  es un pequeño módulo con el mismo factor de forma que un conector
-  SODIMM, el empleado en las memorias de los portátiles.  Al
-  contrario que los diseños originales, el *Compute Module* no
-  requiere una tarjeta SD para almacenar el sistema operativo, sino
-  que incorpora una memoria eMMC de 4GB.
-* Los modelos A+ y B+ actualizan ligeramente el diseño original de
-  los modelos originales para corregir pequeñas deficiencias.  Más
-  pines de GPIO, se sustituye la tarjeta SD por una microSD, se reduce
-  el consumo hasta 1W, y se mejora el audio. También cuenta con más
-  puertos USB, lo que hace innecesario el uso de un *hub*
-  externo.
-* *Raspberry Pi 2 modelo B* se presentó en febrero de 2015. Actualiza
-  el procesador con el nuevo
-  [BCM2836](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2836/README.md)
-  y duplica la memoria RAM del modelo anterior.  El BCM2836 es muy
-  similar al anterior pero sustituye el núcleo ARM1176JZF-S por un
-  *quad-core Cortex A7* a 900MHz, que supone un incremento de
-  rendimiento en torno a seis veces el del modelo anterior.
-* *Raspberry Pi Zero* es el último miembro de la familia.  Se
-  trata de una versión de muy bajo coste del modelo A+. Tiene 512MB de
-  RAM, un BCM2835 a 1GHz y no incorpora zócalos para la cámara, para
-  pantalla LCD, para monitor RCA o para auriculares.  Las
-  características más destacables son su factor de forma reducido
-  (6.5cm por 3cm) y su bajo precio (se estima en torno a 5$ sin
-  ningún zócalo montado).
+> **Info**
+> [<img src="img/themagpi-logo.png" height="50" style="float:right"/>](http://www.raspberrypi.org/magpi/)
+> Si quieres conocer más sobre la historia de Raspberry Pi y su
+> comunidad te recomendamos que visites el sitio web de la revista
+> [*The MagPi*](http://www.raspberrypi.org/magpi/). Se trata de una
+> revista de gran calidad y completamente gratuita en su versión
+> electrónica.
 
 |              | **CM** | **A+** | **B+** | **2B** | **Zero** | **3B** |
 |--------------|:------:|:------:|:------:|:------:|:--------:|:------:|
@@ -273,85 +205,133 @@ Raspberry Pi ya se han diseñado un buen número de modelos:
 |Cam ports     | 2      | 1      | 1      | 1      | 0        | 1      |
 
 
+## Los sistemas en chip de Broadcom
+
 <figure style="float:right; padding:10px">
-  <img src="img/cm-io.jpg" width="350"/>
+  <img src="img/Package_on_Package.png" width="350"/>
 
   <figcaption style="font-size:smaller; font-style:italic">
   <div style="width:350px">
-  Compute Module IO Board con el módulo
-  insertado. Fuente: blog de
-  <a href="http://www.raspberrypi.org/raspberry-pi-compute-module-new-product/">raspberrypi.org</a>.
+  Esquema de soldadura vertical *package on package*. Los
+  sustratos del SoC (A) y de la memoria (B) se sueldan mediante
+  una matriz de pequeñas bolitas de soldadura (2) uno encima del otro
+  y todo ello sobre el PCB (1). Fuente: Tosaka en <a
+  href="http://commons.wikimedia.org/wiki/File:Package_on_Package_(Side_view).PNG">Wikimedia
+  Commons</a>
   </div>
   </figcaption>
 </figure>
 
-La ventaja del *Compute Module* es que todas las interfaces
-proporcionadas por el BCM2835 están disponibles. Corresponderá al
-diseñador de la aplicación la decisión de cuáles se exponen en
-conectores externos y cuáles no.
+La mayoría de los modelos de Raspberry Pi se basan en el Broadcom
+BCM2835.  Este *sistema-en-chip* incorpora un núcleo ARM1176JZF-S de
+bajo consumo y un coprocesador multimedia (GPU) de doble núcleo
+VideoCore IV.  La GPU implementa OpenGL-ES 2.0 y es capaz de codificar
+y decodificar vídeo FullHD a 30fps, a la vez que muestra gráficos
+FullHD a 60fps en un LCD o en un monitor HDMI.  Una característica
+llamativa de este procesador es su montaje apilado con la memoria RAM
+(*package on package*). La estructura se muestra en la figura.  Por
+este motivo el circuito impreso de la Raspberry Pi no deja ver
+procesador alguno. Esta técnica permite reducir considerablemente el
+tamaño del PCB (*Printed Circuit Board*) necesario.
 
-Tanto como ejemplo de integración del módulo, como herramienta de
-desarrollo, la Raspberry Pi Foundation también distribuye un diseño
-abierto (*Compute Module IO Board*) que expone todas las
-interfaces en conectores accesibles, tal y como muestra la
-figura.
+Además del procesador y la GPU, el SoC de la Raspberry Pi
+incorpora un amplio conjunto de periféricos:
 
-En esta edición del taller nos centraremos en la Raspberry Pi Modelo
-B+, que es la que actualmente tiene una mejor relación
-precio-prestaciones para el desarrollo.
-Sin embargo todo lo que describiremos en este taller es compatible con
-todos los modelos actuales de *Raspberry Pi*.
-
-
-<figure style="float:right; padding:10px">
-  <img src="img/rpi-b-plus-pcb-overview.svg" width="350"/>
-
-  <figcaption style="font-size:smaller; font-style:italic">
-  <div style="width:350px">
-  Esquema general del
-  circuito impreso de Raspberry Pi modelo B+. Fuente:
-  <a href="https://www.mediawiki.org/wiki/File:Raspberry_Pi_B+_illustration.svg">Wikimedia</a>.
-  </div>
-  </figcaption>
-</figure>
-
-<figure style="float:right; padding:10px">
-  <img src="img/rpi-zero-pcb-overview.svg" width="250"/>
-
-  <figcaption style="font-size:smaller; font-style:italic">
-  <div style="width:350px">
-  Esquema general del
-  circuito impreso de Raspberry Pi Zero. Fuente:
-  <a href="https://en.wikipedia.org/wiki/File:Location_of_connectors_and_ICs_on_Raspberry_Pi_Zero.svg">Wikipedia</a>.
-  </div>
-  </figcaption>
-</figure>
-
-
-
-
+* Temporizador.
+* Controlador de interrupciones.
+* Entradas/salidas digitales de propósito genérico, GPIO (*General
+  Purpose Input-Output*). Dispone de 54 pero no todas están
+  disponibles en la Raspberry Pi.
+* Puerto USB.
+* Audio PCM a través de bus I2S (*Integrated Interchip Sound*).
+* Controlador de acceso directo a memoria, DMA.
+* Maestro y esclavo de bus I2C (*Inter-Integrated Circuit*).
+* Maestros y esclavo de bus SPI (*Serial Peripheral Interface*).
+* Módulos para generación de pulsos de anchura variable, PWM.
+* Puertos serie, UART.
+* Interfaz para memorias eMMC, SD, SDIO.
+* Interfaz HDMI
 
 > **Info**
-> [<img src="img/Raspi_Colour_R.png" height="80" style="float:right"/>](http://www.raspberrypi.org/)
-> La logomarca de Raspberry Pi es una marca registrada de la
-> *Raspberry Pi Foundation*.  Fue diseñada por Paul Bleech, que ganó
-> el concurso de logos que organizó la fundación en 2011.
+> <img src="img/hermanhermitage.jpg" height="150"
+> style="float:right;margin:10px"/> Aplicando técnicas de ingeniería
+> inversa se documentó una parte sustancial de la GPU en el
+> [repositorio GitHub de Herman Hermitage](https://github.com/hermanhermitage).
+> Es posible que este trabajo haya influido en la
+> [reciente decisión de Broadcom](https://www.raspberrypi.org/blog/a-birthday-present-from-broadcom/)
+> de liberar la documentación oficial de Videocore IV.  Los usuarios
+> avanzados pueden ya disfrutar de unas
+> [bibliotecas de desarrollo](http://elinux.org/Raspberry_Pi_VideoCore_APIs)
+> razonablemente maduras y un driver OpenGL acelerado completamente libre.
 
+El BCM2836 de la *Raspberry Pi 2 modelo B* tiene básicamente la misma
+arquitectura interna que su antecesor pero incorpora un procesador
+Cortex-A7 de cuatro núcleos que sustituye al ARM117JZF-S del BCM2835 y
+no utiliza la técnica de montaje *package-on-package*.  Tiene
+importantes consecuencias desde el punto de vista del software, puesto
+que este procesador implementa el repertorio de instrucciones de ARM
+v.7 en lugar de ARM v.6 como su antecesor.
+
+El BCM2837 de la *Raspberry Pi 3 modelo B* es un sistema-en-chip
+diseñado específicamente para este modelo de Raspberry Pi.  Actualiza
+el procesador por cuatro cores Cortex-A53 de 64 bits, pero sigue
+incorporando la GPU Videocore IV porque se trata de una de las pocas
+GPUs con documentación pública del fabricante.
+
+El ARM Cortex-A53 tiene como nombre interno *Apollo* y suele usarse en
+procesadores de alto rendimiento en combinación con el ARM Cortex-A57
+(*Atlas*) siguiendo la configuración *big.LITTLE* (multiprocesador
+heterogéneo).  El A53 es la versión de bajo consumo, reducido tamaño y
+relativa simplicidad de la arquitectura ARMv8, mientras que A57 es la
+versión de alto rendimiento, elevado consumo y mayor tamaño de la
+misma arquitectura.  Por ejemplo, el Exynos 7 Octa o el Snapdragon 810
+que incorporan muchos teléfonos móviles de gama alta sigue esta
+configuración empleando cuatro núcleos de cada tipo.  En el caso del
+BCM2837 se opta por incluir solo cuatro núcleos de bajo consumo, por
+lo que no pretende competir en alto rendimiento, sino en eficiencia
+energética.  Básicamente el rendimiento esperable es algo mejor que un
+quad-core Cortex-A9 (por ejemplo, como el procesador del iPad 2) pero
+a un coste sensiblemente inferior.
+
+El Cortex-A53 es de 64 bits, pero mantiene compatibilidad con el
+software de 32 bits.  Esto abre la posibilidad de utilizar un sistema
+operativo de 32 bits y aplicaciones de 32 bits, o bien un sistema
+operativo de 64 bits y aplicaciones de 32 y 64 bits indistintamente.
+La Raspberry Pi Foundation solo distribuye de momento un sistema
+operativo (Raspbian GNU/Linux) de 32 bits, y no tiene planes a corto
+plazo de mantener una versión de 64 bits.
+
+## Una Raspberry Pi para el taller
+
+Este taller de iniciación podría realizarse sobre cualquier modelo de
+Raspberry Pi.  La nueva Raspberry Pi Zero es ideal para prototipos de
+equipos, pero dificulta notablemente el desarrollo.  Por ejemplo,
+conectar un teclado y un ratón exigiría un hub USB OTG, la mera
+actualización del sistema operativo requeriría algún tipo de conexión
+de red, y la conexión de dispositivos externos al puerto GPIO requiere
+incorporar cabeceras de pines o soldadura.  Todo esto está ya en la
+Raspberry Pi modelo B+.
+
+> **Info** El coste agregado de todos los componentes adicionales que
+> sería preciso incorporar a la *Raspberry Pi Zero* para desarrollar
+> cómodamente supera ampliamente el coste de la *Raspberry Pi B+*.
+
+Por desgracia el precio del modelo B+ está subiendo debido a la caida
+de la demanda desde la salida al mercado de la Raspberry Pi 2 modelo
+B.  En esta coyuntura sale al mercado la Raspberry Pi 3 modelo B al
+mismo precio que la Raspberry Pi 2 modelo B, pero incluyendo además
+interfaz WiFi y Bluetooth.  Por este motivo nos decidimos por incluir
+la nueva Raspberry 3 modelo B en esta edición.  Sin embargo todos los
+ejemplos del taller son compatibles con cualquiera de los modelos.
+
+
+## Interoperabilidad con otros productos
 
 Alrededor de la Raspberry Pi Foundation ha surgido una enorme
 comunidad de usuarios de todos los niveles que genera información y
 productos. Hoy en día hay periféricos específicos de todo tipo para
 Raspberry Pi. Hay cámaras, touch panels con pantalla TFT, y multitud
 de tarjetas de interfaz con otros dispositivos.
-
-> **Info**
-> [<img src="img/themagpi-logo.png" height="50" style="float:right"/>](http://www.raspberrypi.org/magpi/)
-> Si quieres conocer más sobre la historia de Raspberry Pi y su
-> comunidad te recomendamos que visites el sitio web de la revista
-> [*The MagPi*](http://www.raspberrypi.org/magpi/). Se trata de una
-> revista de gran calidad y completamente gratuita en su versión
-> electrónica.
-
 
 Merece la pena destacar los esfuerzos por integrar periféricos de
 otras plataformas que ya disfrutaban de una amplia comunidad de
@@ -373,7 +353,7 @@ o con [AlaMode de WyoLum](http://wyolum.com/projects/alamode/) o con
 Por último nos gustaría mencionar las interfaces de Raspberry Pi a
 [Grove](http://www.seeedstudio.com/document/pdf/Introduction\%20to\%20Grove.pdf),
 una arquitectura modular y abierta para construir sistemas
-electrónicos al estilo de LEGO en los sistemas físicos. Grove fue
+electrónicos al estilo de LEGO en los sistemas físicos.  Grove fue
 inicialmente concebida para ser compatible con Arduino, y por tanto
 pueden emplearse junto con los adaptadores mencionados arriba, pero
 también pueden emplearse directamente mediante
@@ -390,188 +370,3 @@ una *base shield* especialmente concebida para Raspberry Pi.
   </div>
   </figcaption>
 </figure>
-
-En este taller veremos el uso básico de la Raspberry Pi y periféricos
-y dispositivos. En ediciones sucesivas iremos incrementando el número
-de dispositivos y nuevos proyectos de ejemplo.
-
-Una de las principales diferencias de esta edición del taller es que
-vamos a dedicar una buena parte del tiempo a hablar de arquitectura
-software.
-
-
-##La alimentación de Raspberry Pi
-
-La alimentación le llega a través de un conector microUSB
-independiente del que se utiliza para la conexión de periféricos.
-Esto garantiza que no podemos meter la pata en la alimentación, todos
-los alimentadores microUSB son seguros porque proporcionan una tensión
-de 5V con la polaridad adecuada.
-
-
-Si utilizas un modelo A o B original, para evitar problemas con los
-dispositivos USB (especialmente cuando se usan interfaces de red WiFi
-o Ethernet, o discos duros portátiles) es necesario utilizar un
-*hub USB* alimentado externamente.
-
-
-Es más, muchos de los hubs USB disponibles en el mercado
-(especialmente los más baratos) permiten alimentar la Raspberry Pi
-directamente desde el puerto USB al que se conecta (*upstream port*),
-dejando desconectado el puerto de alimentación.  Es preciso aclarar
-que esta característica conocida como retro-alimentación (*back
-powering*) hace que la alimentación no pase por el circuito de
-protección contra sobretensiones.  Por tanto es muy importante que el
-hub empleado tenga
-[protección contra sobre-corriente con un límite no superior a 2.5A](http://www.raspberrypi.org/upcoming-board-revision/).
-Afortunadamente casi todos los circuitos integrados de los hub USB
-incorporan el mecanismo de detección de sobre-corriente en el propio
-chip, por lo que es bastante probable que el hub implemente dicha
-protección.
-
-Ha habido una amplia polémica en los foros acerca de qué formas de
-alimentación son las ideales. Se han propuesto otras alternativas,
-como la de
-[utilizar el conector de GPIO para alimentar el circuito conectando directamente una fuente a los pines +Vcc y GND](http://www.raspberrypi.org/forums/viewtopic.php?f=44&t=55645). Pero
-nuevamente se salta el fusible de protección, por lo que debemos
-asegurar que se implementan las debidas protecciones contra
-sobre-corriente.
-
-Si investigas un poco este tema verás que hay una amplia variedad de
-comentarios que parecen prevenir contra el *back powering* por
-saltarse el fusible de protección.  Sin embargo ten presente que lo que
-se pretende proteger es una Raspberry Pi de menos de 30€.  En el
-caso de la Raspberry Pi Zero no llega a 5€. Si el hub no
-implementa las protecciones necesarias es verdad que se pondría en
-riesgo la Raspberry Pi, pero también se pondría en riesgo cualquier
-otro dispositivo que se conecte en los puertos *downstream*.  En
-particular se pondría en riesgo los discos duros, las cámaras, etc. La
-mayoría de ellos tienen un coste comparable o superior a la Raspberry
-Pi y nadie cuestiona que se conecten al hub. A fin de cuentas está
-para eso.
-
-> **Info** Si tu hub alimentado no permite *back powering* la
->  Raspberry Pi no se encenderá al conectarla al hub. En ese caso es
->  todavía mejor, es lo correcto según la especificación de USB.
->  Simplemente hay que conectar un cable de uno de los puertos del hub
->  al puerto microUSB de alimentación. Ocupamos un puerto más pero
->  estaremos seguros de que el circuito está protegido contra
->  sobrecorrientes.
-
-Los modelos A+ y B+ ya tienen un *hub* USB incorporado y el
-fusible de protección tiene una corriente nominal sensiblemente
-superior (2A), por lo que se suele alimentar con un alimentador
-microUSB de 2A normal, como los que se usan para cargar los teléfonos
-modernos.
-
-> **Warning**
-> <img src="img/usb_pinout.png" height="160" style="float:right;margin:10px"/>
->  Si tu hub alimentado permite *back powering* pero
->  no estás seguro de que tenga protección contra sobre-corriente no
->  te arriesgues, corta el hilo rojo, correspondiente al pin 1 del
->  cable *upstream* y usa un cable microUSB en uno de los puertos
->  libres para alimentar la Raspberry Pi.
-
-## La fuente de alimentación de la Raspberry Pi
-
-La alimentación externa de la Raspberry Pi se utiliza para generar las
-diferentes tensiones de alimentación que requieren.  La fuente de
-alimentación de la Raspberry Pi genera tensiones de 5V, 3.3V, 2.5V y
-1.8V que se necesitan en varias partes del PCB.
-
-Esta parte del circuito de la Raspberry Pi es la que ha experimentado
-una evolución más significativa.  Una amplia discusión sobre las
-diferencias puede consultarse en el
-[blog de Adafruit](https://learn.adafruit.com/introducing-the-raspberry-pi-model-b-plus-plus-differences-vs-model-b/power-supply).
-
-Los modelos iniciales empleaban reguladores lineales mientras que los
-modelos A+ y B+ emplean fuentes conmutadas mucho más eficientes.  La
-diferencia en consumo puede ser notable.
-
-Además es frecuente leer en los foros que los modelos originales se
-resetean al desconectar dispositivos USB. Con los modelos A+ y B+ se
-añade un circuito protector para la alimentación especialmente
-diseñado para permitir las conexiones y desconexiones en caliente.
-
-## Secuencia de arranque
-
-Una vez que la Raspberry Pi recibe alimentación se inicia una
-secuencia de operaciones que se conoce como *secuencia de arranque*.
-Está básicamente documentada en [elinux.org](http://elinux.org/RPi_Software):
-
-* Cuando la Raspberrypi Pi se enciende el núcleo ARM1176JZF-S está apagado, y la GPU
-  VideoCore IV está encendida.  En este punto incluso la propia memoria SDRAM está
-  deshabilitada.
-* El pequeño núcleo RISC de la GPU empieza a ejecutar la primera etapa del
-  *bootloader* que está almacenada en la ROM del BCM2835. Esta primera etapa lee la
-  tarjeta microSD, que debe tener una primera partición en formato FAT32, y carga la segunda
-  etapa del *bootloader*, que corresponde al contenido del archivo
-  `bootcode.bin`.  Puesto que la memoria SDRAM sigue deshabilitada esta carga se
-  produce en la memoria cache de segundo nivel, y la ejecuta.
-* El código de `bootcode.bin` habilita la SDRAM y lee el archivo
-  `start.elf` que contiene el firmware de la GPU en formato ELF (el típico de los
-  binarios en GNU/Linux). Este archivo es también ejecutado por la GPU.  Entre otras cosas
-  este archivo contiene los codecs de video y la implementación de OpenGL ES.
-* El código de `start.elf` arranca la CPU ARM1176JZF-S. Un archivo adicional
-  `fixup.dat` se usa para configurar la partición de la SDRAM entre la GPU y la
-  CPU. A partir de aquí el sistema operativo contenido en el archivo `kernel.img`
-  se ejecuta en la CPU ARM1176JZF-S.
-* El archivo `kernel.img` es el primer archivo de la secuencia de arranque que
-  ejecuta el procesador ARM. Habitualmente contendrá el núcleo del sistema operativo pero
-  puede contener programas arbitrarios. Como ejemplos puede consultarse
-    [el repositoro GitHub de David Welch](https://github.com/dwelch67/raspberrypi).
-
-> **Info**
-> <img src="img/hermanhermitage.jpg" height="150" style="float:right;margin:10px"/>
-> Aplicando técnicas de ingeniería inversa se documentó una parte
-> sustancial de la GPU en el
-> [repositorio GitHub de Herman Hermitage](https://github.com/hermanhermitage). Es
-> posible que este trabajo haya influido en la
-> [reciente decisión de Broadcom](https://www.raspberrypi.org/blog/a-birthday-present-from-broadcom/)
-> de liberar la documentación oficial de Videocore IV.  Los usuarios
-> avanzados pueden ya disfrutar de unas
-> [bibliotecas de desarrollo](http://elinux.org/Raspberry_Pi_VideoCore_APIs)
-> razonablemente maduras.
-
-Esta secuencia de arranque implica que la Raspberry Pi requiere de una
-tarjeta microSD para poder arrancar.  Sin embargo esto tiene una
-ventaja clara, es imposible inutilizarla por errores de programación.
-En la jerga habitual en sistemas empotrados se dice que no puede ser
-enladrillada (*bricked* en inglés).
-
-> **Warning**
-> La primera etapa del *bootloader* solo sabe leer particiones
-> formateadas en FAT32. Esto es especialmente relevante con las
-> tarjetas microSD de gran tamaño, que habitualmente vienen
-> formateadas en exFAT y Microsoft Windows 8 y posteriores también
-> utilizan por defecto exFAT para formatearlas. Hay multitud de
-> mensajes en los foros alertando de tarjetas que no funcionan con
-> Raspberry Pi cuando lo único que pasa es que no están adecuadamente
-> formateadas.
-
-
-## Parámetros configurables
-
-Todos los parámetros de configuración inicial de la Raspberry Pi se
-buscan en un archivo opcional denominado `config.txt` que debe estar
-en la misma partición FAT32 que el *bootloader*. Este fichero es leído
-por la GPU antes de arrancar la CPU y puede verse como el equivalente
-a las memorias Flash o EEPROM empleadas por el BIOS de los
-computadores personales para guardar los parámetros de inicialización.
-
-El formato del fichero es extremadamente simple. Consiste en líneas
-del tipo `parámetro=valor` o líneas de comentarios que empiezan por el
-signo #. Entre los parámetros configurables se encuentran los
-diferentes modos de video y su configuración, la partición de la
-memoria cache entre GPU y CPU, la posibilidad de deshabilitar la
-memoria cache de nivel 2, la posibilidad de elevar la frecuencia de
-diversos componentes por encima de las especificaciones del fabricante
-(*overclocking*), los códigos de activación de los codecs no libres, o
-los parámetros de arranque del sistema operativo.  Una detallada
-explicación de la mayoría de estos parámetros puede encontrarse en
-[elinux.org](http://elinux.org/RPiconfig).
-
-Actualmente la distribución de software *Raspbian*, que es la que
-vamos a usar en el taller, ya dispone de una herramienta de
-configuración, que no hace sino editar de forma interactiva este
-archivo.
