@@ -32,4 +32,9 @@ han realizado en la tarjeta microSD que se distribuye en el taller.
 * Instalar la biblioteca *wiringPi* para Python con `pip install wiringpi2`.
 * Descargar las pruebas del sistema del repositorio GitHub del taller con 
   `git clone https://github.com/FranciscoMoya/rpi-src.git src` y 
-  `git clone https://github.com/FranciscoMoya/rpi-workshop.git doc`.
+  `git clone https://github.com/FranciscoMoya/rpi-doc.git doc`.
+* Instalar `nodejs`, `npm` y `node-semver`.
+* Instalar `gitbook` con `npm install gitbook-cli -g`.
+* Compilar la documentación con `gitbook build`, `gitbook epub`,
+  `gitbook pdf`.
+

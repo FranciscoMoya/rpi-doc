@@ -197,7 +197,7 @@ respetable número de modelos:
 |Memoria Flash | 4GB    | microSD| microSD| microSD| microSD  | microSD|
 |GPIO pins     | 54     | 26     | 26     | 26     | 26       | 26     |
 |Puertos USB   | 1      | 1      | 4      | 4      | 1        | 4      |
-|Ethernet 10/100 | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> |
+|Ethernet 10/100 | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-check-square-o"/> |
 |WiFi            | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-check-square-o"/> |
 |Bluetooth       | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-check-square-o"/> |
 |HDMI          | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> |
@@ -247,7 +247,7 @@ incorpora un amplio conjunto de periféricos:
 * Controlador de acceso directo a memoria, DMA.
 * Maestro y esclavo de bus I2C (*Inter-Integrated Circuit*).
 * Maestros y esclavo de bus SPI (*Serial Peripheral Interface*).
-* Módulos para generación de pulsos de anchura variable, PWM.
+* Módulo para generación de pulsos de anchura variable, PWM.
 * Puertos serie, UART.
 * Interfaz para memorias eMMC, SD, SDIO.
 * Interfaz HDMI
@@ -290,8 +290,8 @@ configuración empleando cuatro núcleos de cada tipo.  En el caso del
 BCM2837 se opta por incluir solo cuatro núcleos de bajo consumo, por
 lo que no pretende competir en alto rendimiento, sino en eficiencia
 energética.  Básicamente el rendimiento esperable es algo mejor que un
-quad-core Cortex-A9 (por ejemplo, como el procesador del iPad 2) pero
-a un coste sensiblemente inferior.
+quad-core Cortex-A9 (por ejemplo, como el procesador del Apple iPad 2)
+pero a un coste sensiblemente inferior.
 
 El Cortex-A53 es de 64 bits, pero mantiene compatibilidad con el
 software de 32 bits.  Esto abre la posibilidad de utilizar un sistema
