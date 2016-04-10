@@ -121,7 +121,7 @@ La última versión del material del curso está disponible en todo
 momento en [GitHub](http://github.com) en los siguientes repositorios:
 
 ```
-https://github.com/FranciscoMoya/rpi-workshop.git
+https://github.com/FranciscoMoya/rpi-doc.git
 https://github.com/FranciscoMoya/rpi-src.git
 ```
 

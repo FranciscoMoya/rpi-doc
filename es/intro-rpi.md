@@ -4,9 +4,9 @@
 <figure style="float:right;padding:10px">
   <img src="img/pi3.jpg" width="350"/>
 
-  <figcaption style="font-size:smaller; font-style:italic">Raspberry
-  Pi 3 modelo B. Foto de <a
-  href="https://www.raspberrypi.org/wp-content/uploads/2016/03/pi3.jpg">raspberrypi.org</a>.
+  <figcaption style="font-size:smaller;font-style:italic;text-align:center">
+	Raspberry Pi 3 modelo B. Foto de <a
+	href="https://www.raspberrypi.org/wp-content/uploads/2016/03/pi3.jpg">raspberrypi.org</a>.
   </figcaption>
 </figure>
 
@@ -18,104 +18,139 @@ acumulaban conocimientos sobre aplicaciones concretas, en lugar de
 conocimientos sobre las propias tecnologías.  Raspberry Pi surge como
 una iniciativa de bajo coste para promover la experimentación con la
 programación desde edades tempranas, aunque no por ello se trata de un
-mero juguete.  El lanzamiento oficial fue el 29 de febrero de 2012.
+mero juguete.
 
-<iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1O_kx6KaHBA3DeTRGWc1XvJHzJGTVgV95dR1xLzW9eu4&font=Default&lang=en&initial_zoom=2&height=650' width='100%' height='650' frameborder='0'></iframe>
-
-
-
-> **Info**
-> [<img src="img/Raspi_Colour_R.png" height="80" style="float:right"/>](http://www.raspberrypi.org/)
-> La logomarca de Raspberry Pi es una marca registrada de la
-> *Raspberry Pi Foundation*.  Fue diseñada por Paul Bleech, que ganó
-> el concurso de logos que organizó la fundación en 2011.
-
-
-Alrededor de la Raspberry Pi Foundation ha surgido una enorme
-comunidad de usuarios de todos los niveles que genera información y
-productos. Hoy en día hay periféricos específicos de todo tipo para
-Raspberry Pi. Hay cámaras, touch panels con pantalla TFT, y multitud
-de tarjetas de interfaz con otros dispositivos.
-
-> **Info**
-> [<img src="img/themagpi-logo.png" height="50" style="float:right"/>](http://www.raspberrypi.org/magpi/)
-> Si quieres conocer más sobre la historia de Raspberry Pi y su
-> comunidad te recomendamos que visites el sitio web de la revista
-> [*The MagPi*](http://www.raspberrypi.org/magpi/). Se trata de una
-> revista de gran calidad y completamente gratuita en su versión
-> electrónica.
-
-
-Merece la pena destacar los esfuerzos por integrar periféricos de
-otras plataformas que ya disfrutaban de una amplia comunidad de
-usuarios.  Así por ejemplo, pueden utilizarse los periféricos de
-[Lego Mindstorms](http://mindstorms.lego.com/) y las piezas de
-[LEGO Technic](http://www.lego.com/es-es/technic) para construir
-robots controlados por Raspberry Pi empleando
-[BrickPi de Dexter
-Industries](http://www.dexterindustries.com/BrickPi/).
-
-También pueden utilizarse la enorme variedad de módulos de expansión
-de Arduino (*shields*) con
-[GertDuino de Gert van Loo](http://www.raspberrypi.org/tag/gertduino/),
-o con
-[ArduBerry de Dexter Industries](http://www.dexterindustries.com/Arduberry.html),
-o con [AlaMode de WyoLum](http://wyolum.com/projects/alamode/) o con
-[ArduPi de Cooking Hacks](http://www.cooking-hacks.com/documentation/tutorials/raspberry-pi-to-arduino-shields-connection-bridge).
-
-Por último nos gustaría mencionar las interfaces de Raspberry Pi a
-[Grove](http://www.seeedstudio.com/document/pdf/Introduction\%20to\%20Grove.pdf),
-una arquitectura modular y abierta para construir sistemas
-electrónicos al estilo de LEGO en los sistemas físicos. Grove fue
-inicialmente concebida para ser compatible con Arduino, y por tanto
-pueden emplearse junto con los adaptadores mencionados arriba, pero
-también pueden emplearse directamente mediante
-[GrovePi de Dexter Industries](http://www.dexterindustries.com/GrovePi/),
-una *base shield* especialmente concebida para Raspberry Pi.
-
-<figure style="float:right; padding:10px">
-  <img src="img/brcm2835plusmemory.jpg" width="350"/>
-
-  <figcaption style="font-size:smaller; font-style:italic">
-  <div style="width:350px">
-  Memoria RAM (izquierda) y BCM2835 (derecha). Foto tomada del blog de
-  <a href="http://www.raspberrypi.org/libraries-codecs-oss/">raspberrypi.org</a>.
-  </div>
-  </figcaption>
-</figure>
-
-En este taller veremos el uso básico de la Raspberry Pi y periféricos
-y dispositivos. En ediciones sucesivas iremos incrementando el número
-de dispositivos y nuevos proyectos de ejemplo.
-
-Una de las principales diferencias de esta edición del taller es que
-vamos a dedicar una buena parte del tiempo a hablar de arquitectura
-software.
+<iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1O_kx6KaHBA3DeTRGWc1XvJHzJGTVgV95dR1xLzW9eu4&font=Default&lang=es&initial_zoom=2&height=500' width='100%' height='500' frameborder='0'></iframe>
 
 ## La familia Raspberry Pi
 
-Raspberry Pi se diseñó alrededor de un SoC (*System On a Chip*) de
-Broadcom, el
-[BCM2835](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2835/),
-diseñado para aplicaciones móviles que requieran tratamiento de video
-o gráficos 3D (cámaras de vídeo, reproductores multimedia, teléfonos
-móviles, etc.).  Actualmente la versión más potente de Raspberry Pi,
-la *Raspberry Pi 2*, utiliza una versión más avanzada del SoC de
-Broadcom, el
-[BCM2836](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2836/).
+En la línea de tiempo de arriba puedes ver un conjunto de los hitos
+más significativos relacionados con Raspberry Pi.  En la corta
+historia de la *Raspberry Pi Foundation* ya se han generado un
+respetable número de modelos:
 
 <figure style="float:right; padding:10px">
-  <img src="img/bcm2835sideview.jpg" width="350"/>
-
+  <img src="img/bcm2835sideview.jpg" width="300"/>
   <figcaption style="font-size:smaller; font-style:italic">
-  <div style="width:350px">
-Vista lateral
-  amplificada del montaje del procesador y la memoria de Raspberry
-  Pi. Foto tomada del blog de
-  <a href="http://www.raspberrypi.org/factory-pictures-from-south-wales/">raspberrypi.org</a>.
+  <div style="width:300px">
+	Vista lateral amplificada del montaje del BCM2835 y la memoria
+	de los modelos originales de Raspberry Pi. Foto tomada del blog de
+	<a href="http://www.raspberrypi.org/factory-pictures-from-south-wales/">raspberrypi.org</a>.
   </div>
   </figcaption>
 </figure>
+
+* *Raspberry Pi modelo B* fue el primer modelo puesto a la venta, el
+  29 de febrero de 2012.  El diseño original incluía dos modelos con
+  el mismo circuito impreso.  Ambos se diseñaron alrededor de un SoC
+  (*System On a Chip*) de Broadcom, el
+  [BCM2835](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2835/)
+  a 700MHz, pensado para aplicaciones móviles que requieran
+  tratamiento de video o gráficos 3D (cámaras de vídeo, reproductores
+  multimedia, teléfonos móviles, etc.).  La mayoría de los pines de
+  entrada/salida del BCM2835 se dispusieron en una cabecera de 26
+  pines.  El modelo B era la versión de gama alta, orientada a
+  desarrolladores, con más memoria (512MB de RAM frente a 256MB) , un
+  puerto Ethernet 100BaseTX y un *hub USB* con dos puertos USB 2.0.
+  Los modelos originales incorporaban una ranura SD.  En septiembre de
+  2012 se revisó ligeramente el diseño para corregir algunos
+  problemas.  Esta revisión modifica ligeramente los pines de
+  entrada/salida disponibles.
+
+* *Raspberry Pi modelo A* es la versión reducida del modelo B.
+  Incorpora la mitad de memoria RAM que el modelo B (256MB), no
+  incluye interfaz Ethernet y solo incorpora un puerto USB 2.0.  Está
+  pensada para aplicaciones finales donde el consumo y/o el coste sean
+  factores importantes.
+
+* En abril de 2014 se anuncia la *Raspberry Pi Compute Module*. Es
+  similar al modelo B, pero en lugar de ranura SD incorpora 4GB de
+  eMMC Flash e integra todo en un circuito impreso DDR2 SODIMM,
+  similar al de las memorias de los portátiles.  Esto permite disponer
+  de todos los pines del BCM2835 pero exige otro circuito impreso con
+  el zócalo SODIMM y los conectores necesarios.  Se utiliza
+  extensivamente en el desarrollo de productos basados en Raspberry
+  Pi, como el *media player*
+  [Slice](https://www.raspberrypi.org/blog/creating-and-kickstarting-slice-the-compute-module-based-media-player/)
+  de FiveNinjas, los satélites
+  [CubeSat](https://www.raspberrypi.org/blog/compute-module-cubesats/),
+  la cámara
+  [Otto](https://www.raspberrypi.org/blog/otto-a-hackable-camera-powered-by-raspberry-pi/),
+  el [Cube Solver](https://www.raspberrypi.org/blog/cube-solver/) que
+  es capaz de solucionar un *cubo Rubik*,
+  [Sphinx](http://dock2office.com/raspberry-pi/) que sirve para
+  utilizar una tableta como un ordenador de escritorio, etc.
+
+* En julio de 2014 se anuncia la *Raspberry Pi modelo B+*.  Se trata
+  de un rediseño del modelo B, muy similar pero con importantes
+  consecuencias.  Se amplía el número de pines de la cabecera de GPIO
+  a 40 pines, se sustituye el zócalo SD por uno microSD, se mejora la
+  alimentación y el audio, se incluye en el mismo conector la salida
+  de video compuesto y el audio (como muchos portátiles), y se corrige
+  el factor de forma para que encaje completamente en el tamaño de una
+  tarjeta de crédito.  La ampliación de la cabecera de pines se
+  complementa muy poco después con la especificación
+  [HAT](https://www.raspberrypi.org/blog/introducing-raspberry-pi-hats/)
+  (*Hardware Attached on Top*) que determina las limitaciones físicas
+  y eléctricas que deben cumplir las placas de expansión de *Raspberry
+  Pi* para garantizar la compatibilidad futura.  Todas las Raspberry
+  Pi serán compatibles con esta especificación desde esta fecha.
+  *HAT* permite configuración automática de entradas/salidas digitales
+  así como de los drivers por medio de dos pines dedicados (`ID_SD` e
+  `ID_SC`).  Hoy en día hay multitud de *HATs* en el mercado (como
+  ejemplo, véase la colección de
+  [Adafruit](https://www.adafruit.com/categories/405), de
+  [Pimoroni](https://shop.pimoroni.com/collections/hats) y de
+  [The Pi Hut](https://thepihut.com/collections/raspberry-pi-hats)).
+
+* En noviembre de 2014 se anuncia la *Raspberry Pi A+* como el
+  rediseño equivalente del modelo A.  Un cambio significativo es que
+  se abandona la idea de usar el mismo circuito impreso.  De esta
+  forma se consigue reducir sensiblemente el tamaño y con ello el
+  precio.  Incorpora la cabecera HAT, que ya estará presente en todos
+  los modelos posteriores, y se reduce significativamente el consumo.
+
+* En febrero de 2015, casi en el tercer aniversario de la Raspberry Pi
+  original, se anuncia la *Raspberry Pi 2 modelo B*.  Actualiza el
+  procesador a un
+  [BCM2836](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2836/)
+  (quad-core Cortex-A7) a 900MHz e incorpora 1GB de RAM.  Por primera
+  vez se abre la posibilidad de usar Microsoft Windows 10 en
+  *Raspberry Pi* aunque el sistema operativo recomendado por la
+  *Raspberry Pi Foundation* sigue siendo Raspbian.
+  
+* En noviembre de 2015 se anuncia la *Raspberry Pi Zero*. Se trata de
+  una versión diminuta del modelo A+ con mayor velocidad (1GHz) y más
+  memoria (512MB). Sin poblar los zócalos se llegó a bajar el precio a
+  5$. El número 40 de la revista
+  [The MagPi](https://www.raspberrypi.org/magpi/) incluía una
+  Raspberry Pi Zero de regalo.  Parece que la presión de Google tras
+  una reunión de Eric Schmidt y Eben Upton fue
+  [decisiva](https://www.raspberrypi.org/magpi/making-pi-zero/) en su
+  desarrollo.
+
+* En febrero de 2016 se anuncia la *Raspberry Pi 3 modelo B*,
+  coincidiendo con el cuarto cumpleaños de la *Raspberry Pi modelo B*
+  original.  Se vuelve a actualizar el procesador por un BCM2837
+
+
+> **Info** El coste agregado de todos los componentes adicionales que
+> sería preciso incorporar a la *Raspberry Pi Zero* para desarrollar
+> cómodamente supera ampliamente el coste de la *Raspberry Pi B+*.
+
+La nueva Raspberry Pi Zero es ideal para prototipos de equipos, pero
+dificulta notablemente el desarrollo.  Por ejemplo, conectar un
+teclado y un ratón exigiría un hub USB OTG, la mera actualización del
+sistema operativo requeriría algún tipo de conexión de red, y la
+conexión de dispositivos externos al puerto GPIO requiere incorporar
+cabeceras de pines o soldadura.  Todo esto está ya en la Raspberry Pi
+modelo B+.
+
+  Actualmente la versión más potente de
+  Raspberry Pi, la *Raspberry Pi 2*, utiliza una versión más avanzada
+  del SoC de Broadcom, el
+  [BCM2836](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2836/).
+
 
 
 El BCM2835 incorpora un núcleo ARM1176JZF-S de bajo consumo y un
@@ -267,17 +302,6 @@ precio-prestaciones para el desarrollo.
 Sin embargo todo lo que describiremos en este taller es compatible con
 todos los modelos actuales de *Raspberry Pi*.
 
-> **Info** El coste agregado de todos los componentes adicionales que
-> sería preciso incorporar a la *Raspberry Pi Zero* para desarrollar
-> cómodamente supera ampliamente el coste de la *Raspberry Pi B+*.
-
-La nueva Raspberry Pi Zero es ideal para prototipos de equipos, pero
-dificulta notablemente el desarrollo.  Por ejemplo, conectar un
-teclado y un ratón exigiría un hub USB OTG, la mera actualización del
-sistema operativo requeriría algún tipo de conexión de red, y la
-conexión de dispositivos externos al puerto GPIO requiere incorporar
-cabeceras de pines o soldadura.  Todo esto está ya en la Raspberry Pi
-modelo B+.
 
 <figure style="float:right; padding:10px">
   <img src="img/rpi-b-plus-pcb-overview.svg" width="350"/>
@@ -302,6 +326,79 @@ modelo B+.
   </div>
   </figcaption>
 </figure>
+
+
+
+
+
+> **Info**
+> [<img src="img/Raspi_Colour_R.png" height="80" style="float:right"/>](http://www.raspberrypi.org/)
+> La logomarca de Raspberry Pi es una marca registrada de la
+> *Raspberry Pi Foundation*.  Fue diseñada por Paul Bleech, que ganó
+> el concurso de logos que organizó la fundación en 2011.
+
+
+Alrededor de la Raspberry Pi Foundation ha surgido una enorme
+comunidad de usuarios de todos los niveles que genera información y
+productos. Hoy en día hay periféricos específicos de todo tipo para
+Raspberry Pi. Hay cámaras, touch panels con pantalla TFT, y multitud
+de tarjetas de interfaz con otros dispositivos.
+
+> **Info**
+> [<img src="img/themagpi-logo.png" height="50" style="float:right"/>](http://www.raspberrypi.org/magpi/)
+> Si quieres conocer más sobre la historia de Raspberry Pi y su
+> comunidad te recomendamos que visites el sitio web de la revista
+> [*The MagPi*](http://www.raspberrypi.org/magpi/). Se trata de una
+> revista de gran calidad y completamente gratuita en su versión
+> electrónica.
+
+
+Merece la pena destacar los esfuerzos por integrar periféricos de
+otras plataformas que ya disfrutaban de una amplia comunidad de
+usuarios.  Así por ejemplo, pueden utilizarse los periféricos de
+[Lego Mindstorms](http://mindstorms.lego.com/) y las piezas de
+[LEGO Technic](http://www.lego.com/es-es/technic) para construir
+robots controlados por Raspberry Pi empleando
+[BrickPi de Dexter
+Industries](http://www.dexterindustries.com/BrickPi/).
+
+También pueden utilizarse la enorme variedad de módulos de expansión
+de Arduino (*shields*) con
+[GertDuino de Gert van Loo](http://www.raspberrypi.org/tag/gertduino/),
+o con
+[ArduBerry de Dexter Industries](http://www.dexterindustries.com/Arduberry.html),
+o con [AlaMode de WyoLum](http://wyolum.com/projects/alamode/) o con
+[ArduPi de Cooking Hacks](http://www.cooking-hacks.com/documentation/tutorials/raspberry-pi-to-arduino-shields-connection-bridge).
+
+Por último nos gustaría mencionar las interfaces de Raspberry Pi a
+[Grove](http://www.seeedstudio.com/document/pdf/Introduction\%20to\%20Grove.pdf),
+una arquitectura modular y abierta para construir sistemas
+electrónicos al estilo de LEGO en los sistemas físicos. Grove fue
+inicialmente concebida para ser compatible con Arduino, y por tanto
+pueden emplearse junto con los adaptadores mencionados arriba, pero
+también pueden emplearse directamente mediante
+[GrovePi de Dexter Industries](http://www.dexterindustries.com/GrovePi/),
+una *base shield* especialmente concebida para Raspberry Pi.
+
+<figure style="float:right; padding:10px">
+  <img src="img/brcm2835plusmemory.jpg" width="350"/>
+
+  <figcaption style="font-size:smaller; font-style:italic">
+  <div style="width:350px">
+  Memoria RAM (izquierda) y BCM2835 (derecha). Foto tomada del blog de
+  <a href="http://www.raspberrypi.org/libraries-codecs-oss/">raspberrypi.org</a>.
+  </div>
+  </figcaption>
+</figure>
+
+En este taller veremos el uso básico de la Raspberry Pi y periféricos
+y dispositivos. En ediciones sucesivas iremos incrementando el número
+de dispositivos y nuevos proyectos de ejemplo.
+
+Una de las principales diferencias de esta edición del taller es que
+vamos a dedicar una buena parte del tiempo a hablar de arquitectura
+software.
+
 
 ##La alimentación de Raspberry Pi
 

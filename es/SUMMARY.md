@@ -2,7 +2,7 @@
 # Tabla de contenido
 
 * [Resumen](README.md)
-* [Introducción](intro-workshop.md)
+* [Introducción](intro.md)
   * [La Raspberry Pi](intro-rpi.md)
   * [El sistema GNU/Linux](intro-gnu.md)
   * [Desarrollo en C](dev-c.md)
