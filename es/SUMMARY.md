@@ -1,4 +1,4 @@
-[//]: # (-*- markdown; coding: utf-8 -*-)
+[//]: # (-*- mode: markdown; coding: utf-8 -*-)
 # Tabla de contenido
 
 * [Resumen](README.md)
