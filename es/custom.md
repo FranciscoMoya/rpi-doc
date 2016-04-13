@@ -17,7 +17,8 @@ han realizado en la tarjeta microSD que se distribuye en el taller.
   aplicaciones de manera que tengamos acceso rápido a la aplicación de
   configuración de la Raspberry Pi, un terminal, un navegador, un
   editor de textos y el entorno de programación IDLE.
-* Configurar el fondo de escritorio al archivo [`UCLM-EII-bg.png`](img/UCLM-EII-bg.png).
+* Configurar el fondo de escritorio al archivo
+  [`UCLM-EII-bg.png`](img/UCLM-EII-bg.png).
 * Configurar la disposición (*layout*) de teclado en
   castellano por defecto.
 * Ejecutar la aplicación de configuración y en la pestaña de
@@ -27,14 +28,12 @@ han realizado en la tarjeta microSD que se distribuye en el taller.
   como `Spain/Spanish` y finalmente la zona WiFi como `ES/Spain`.
 * Instalar algunos paquetes adicionales: `tmux`, `i2c-tools`,
   `python-smbus`, `ipython`, `zile`, `python-dev`, `python-gpiozero`, 
-  `mpg123`.
+  `mpg123`, `manpages-es`, `gcc-4.9-doc`, `gdb-doc`.
 * Añadir el usuario `pi` al grupo `staff` para que funcione `pip install`.
 * Instalar la biblioteca *wiringPi* para Python con `pip install wiringpi2`.
 * Descargar las pruebas del sistema del repositorio GitHub del taller con 
   `git clone https://github.com/FranciscoMoya/rpi-src.git src` y 
   `git clone https://github.com/FranciscoMoya/rpi-doc.git doc`.
 * Instalar `nodejs`, `npm` y `node-semver`.
-* Instalar `gitbook` con `npm install gitbook-cli -g`.
-* Compilar la documentación con `gitbook build`, `gitbook epub`,
-  `gitbook pdf`.
-
+* Instalar `gitbook` con `sudo npm install gitbook-cli -g`.
+* Compilar la documentación con `gitbook install`, `gitbook build`.
