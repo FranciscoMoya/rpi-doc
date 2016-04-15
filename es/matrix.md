@@ -156,5 +156,71 @@ Básicamente el procedimiento puede extraerse de
 [esta página](http://doc.sccode.org/Guides/ClientVsServer.html).  En
 el momento en que se pulsa una tecla enviaremos una orden `/s_new` y
 en el momento en que se libere la tecla enviaremos una orden
-`/n_free`.  Previamente hay que configurar cada `SynthDef` o cargarlas
-de un archivo externo.
+`/n_free`.  Previamente hay que configurar los `SynthDef` ya
+compilados en una carpeta accesible por `scsynth`.
+
+En el momento que se escriben estas páginas `sclang`, que es el
+cliente de `scsynth`, no funciona correctamente en Raspbian por algún
+error sutil que solo se manifiesta con la nueva versión de GCC.  Solo
+lo necesitamos para compilar los `SynthDef`, así que puede usarse
+temporalmente una versión independiente, como
+[la de *redFrik* en GitHub](https://github.com/redFrik/supercolliderStandaloneRPI2).
+
+En esta versión hemos hecho pruebas para asegurarnos del
+funcionamiento de los mensajes.  Primero hemos probado nuestra
+hipótesis activando de forma manual dos notas a la vez.
+
+```
+s.boot;
+SynthDef("seno", { arg freq=600; Out.ar(0, SinOsc.ar(freq, 0, 0.1)); }).load(s);
+s.sendMsg("/s_new", "seno", x = s.nextNodeID, 1, 1);
+s.sendMsg("/s_new", "seno", y = s.nextNodeID, 1, 1, "freq", 900);
+...
+s.sendMsg("/n_free", x);
+s.sendMsg("/n_free", y);
+```
+
+Probando de forma interactiva con `scide` podemos ver que
+efectivamente el mensaje `/s_new` activa una nota y `/n_free` lo
+desactiva.  El uso de un único *SynthDef* con un argumento facilita
+considerablemente su uso.  Podríamos tener un *SynthDef* por cada
+instrumento.  Pero vayamos poco a poco.
+
+Para asegurarnos del formato del mensaje vamos a capturar los mensajes
+usando *netcat*.  Por un lado en un terminal ejecutamos:
+
+```
+pi@raspberrypi:~ $ nc -l -p 9999 | tee mensajes.txt
+```
+
+Por otro lado ejecutamos el siguiente código con `sclang`:
+
+```
+r = Server(\myServer, NetAddr("localhost", 9999));
+SynthDef("seno", { arg freq=600; Out.ar(0, SinOsc.ar(freq, 0, 0.1)); }).load(r);
+r.sendMsg("/s_new", "seno", x = s.nextNodeID, 1, 1);
+r.sendMsg("/s_new", "seno", y = s.nextNodeID, 1, 1, "freq", 1024);
+r.sendMsg("/n_free", x);
+r.sendMsg("/n_free", y);
+```
+
+Ahora no arrancamos una instancia de `scsynth` sino que asumimos que
+hay uno en el puerto 9999 de *localhost*.  En realidad está *netcat*
+capturando todo lo que se genera.  Este es el resultado:
+
+```
+/d_load\0,si\0/home/pi/sc/share/user/synthdefs/seno.scsyndef\0\0\0\0\0
+/s_new\0\0,siii\0\0\0seno\0\0\0\0\0\0\0\6\0\0\0\1\0\0\0\1
+/s_new\0\0,siiisi\0seno\0\0\0\0\0\0\0\7\0\0\0\1\0\0\0\1freq\0\0\0\0\0\0\4\0
+/n_free\0,i\0\0\0\0\0\6
+/n_free\0,i\0\0\0\0\0\7
+```
+
+Nosotros vamos a utilizar TCP por lo que además tendremos que preceder
+cada mensaje con la longitud en formato *big-endian*.
+
+Ya tenemos claro los elementos.  Hay que ejecutar `scsynth` y usar un
+`connector` para enviar mensajes.  Cuando nuestro programa termine
+`scsynth` también debe hacerlo.  Una forma sencilla de conseguirlo es
+con un `process_handler`, aunque no necesitemos reaccionar ante lo que
+imprima el programa.
