@@ -147,17 +147,17 @@
      </g>
      <g class="com.sun.star.drawing.TextShape">
       <g id="id16">
-       <text class="TextShape"><tspan class="TextParagraph" font-family="Nimbus Sans L, sans-serif" font-size="635px" font-weight="400"><tspan class="TextPosition" x="2545" y="4750" transform="translate(2545,4750) rotate(-90) translate(-2545,-4750)"><tspan fill="rgb(0,0,0)" stroke="none">Columna</tspan></tspan></tspan></text>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="Nimbus Sans L, sans-serif" font-size="635px" font-weight="400"><tspan class="TextPosition" x="1081" y="5030"><tspan fill="rgb(0,0,0)" stroke="none">Fila</tspan></tspan></tspan></text>
       </g>
      </g>
      <g class="com.sun.star.drawing.TextShape">
       <g id="id17">
-       <text class="TextShape"><tspan class="TextParagraph" font-family="Nimbus Sans L, sans-serif" font-size="635px" font-weight="400"><tspan class="TextPosition" x="4281" y="5030"><tspan fill="rgb(0,0,0)" stroke="none">Fila</tspan></tspan></tspan></text>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="Nimbus Sans L, sans-serif" font-size="635px" font-weight="400"><tspan class="TextPosition" x="8637" y="6305"><tspan fill="rgb(0,0,0)" stroke="none">Pull</tspan></tspan><tspan class="TextPosition" x="8637" y="7092"><tspan fill="rgb(0,0,0)" stroke="none">down</tspan></tspan></tspan></text>
       </g>
      </g>
      <g class="com.sun.star.drawing.TextShape">
       <g id="id18">
-       <text class="TextShape"><tspan class="TextParagraph" font-family="Nimbus Sans L, sans-serif" font-size="635px" font-weight="400"><tspan class="TextPosition" x="8637" y="6305"><tspan fill="rgb(0,0,0)" stroke="none">Pull</tspan></tspan><tspan class="TextPosition" x="8637" y="7092"><tspan fill="rgb(0,0,0)" stroke="none">down</tspan></tspan></tspan></text>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="Nimbus Sans L, sans-serif" font-size="635px" font-weight="400"><tspan class="TextPosition" x="3050" y="7430"><tspan fill="rgb(0,0,0)" stroke="none">Columna</tspan></tspan></tspan></text>
       </g>
      </g>
     </g>

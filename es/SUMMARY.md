@@ -22,7 +22,7 @@
   * [La biblioteca reactor en Python](reactor-py.md)
   * [Casos de estudio](casos.md)
     * [Dispositivo MP3](mp3.md)
-    * [Piano de juguete](matrix.md)
+    * [Piano de juguete](piano.md)
     * [Control de accesos](ac.md)
     * [Control de aparcamiento](parking.md)
     * [Vehículo autónomo](auto.md)
