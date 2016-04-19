@@ -2,6 +2,19 @@
 
 # Desarrollo en C
 
+Por primera vez el taller se realizará en versión multi-lenguaje (C y
+Python).  Esperamos de esta forma acomodarnos a un número mayor de
+alumnos.  En la actualidad usamos Python como primer lenguaje de la
+titulación (primer semestre de primer curso, asignatura *Informática*)
+pero hasta este curso hemos utilizado C.  Por tanto hay un grupo de
+estudiantes que se sienten más cómodos con C y otro que se siente más
+cómodo con Python.
+
+Este manual trata de dividir el contenido de forma que no tengas que
+leer todo si lo que te interesa es uno solo de estos lenguajes.  En
+este capítulo describiremos el conjunto de herramientas que vamos a
+usar para hacer programas en C y un ejemplo sencillo de su uso.
+
 ## Herramientas
 
 Para la realización de estas prácticas utilizaremos un
@@ -42,24 +55,19 @@ este documento presentarla en profundidad.  Las opciones más comunes
 son:
 
 
-* [`-c`] Compila o ensambla, pero no enlaza, obteniéndose un
-  archivo en código objeto con extensión `.o`.
-* [`-E`] Realiza únicamente el preprocesamiento, enviando el
-  resultado a la salida estándar.
-* [`-g`] Incluye información estándar para el depurado.
-* [`-I`*ruta*] Especifica la ruta al directorio donde
-  encontrar los archivos de cabecera.
-* [`-L`*ruta*] Especifica la ruta al directorio donde
-  encontrar bibliotecas de funciones.
-* [`-l`*FICH*] Enlaza con la biblioteca de nombre
-  `libFICH.a`.
-* [`-o` *archivo*] Indica el nombre del archivo
-  ejecutable (`gcc -o hola hola.c`).
-* [`-S`] Preprocesa y compila, pero no ensambla ni enlaza.
-* [`-v`] Muestra las fases por las que va pasando el compilador.
-* [`-w`] Suprime los mensajes de aviso (*warnings*).
-* [`-Wall`] Emite todos los avisos que el compilador pueda
-  generar.
+**Opción**&nbsp;&nbsp;&nbsp;&nbsp; | **Significado**
+-----------|----------------
+`-c` | Compila o ensambla, pero no enlaza, obteniéndose un archivo en código objeto con extensión `.o`
+`-E` |  Realiza únicamente el preprocesamiento, enviando el resultado a la salida estándar
+`-g` | Incluye información estándar para el depurado
+`-Iruta` | Especifica la *ruta* a la carpeta donde encontrar los archivos de cabecera
+`-Lruta` | Especifica la *ruta* a la carpeta donde encontrar bibliotecas de funciones
+`-lXXX` |  Enlaza con la biblioteca de nombre `libXXX.a`
+`-o` *nombre* | Indica el nombre del archivo ejecutable
+`-S` | Preprocesa y compila, pero no ensambla ni enlaza
+`-v` | Muestra las fases por las que va pasando el compilador
+`-w` | Suprime los mensajes de aviso (*warnings*)
+`-Wall` | Emite todos los avisos que el compilador pueda generar
 
 
 ### La herramienta de construcción `make`

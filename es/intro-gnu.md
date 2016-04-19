@@ -1,5 +1,5 @@
 [//]: # (-*- markdown; coding: utf-8 -*-)
-# Familiarización con GNU
+# El sistema GNU/Linux
 
 <figure style="float:right; padding:10px">
   <img src="img/raspbian1.png" width="400">
@@ -668,6 +668,27 @@ mensajes de la herramienta de compilación y también errores del
 compilador.  Suele ser mucho texto, necesitamos verlo con un paginador
 y nos interesa especialmente los primeros errores.
 
+Además de los paginadores conviene comentar en esta sección algunos
+*filtros*.  Un filtro no es más que un programa que recibe la entrada
+estándar de otro programa, la manipula de forma determinada, y la
+vuelve a sacr una vez manipulada por la salida estándar.
+
+Un filtro extraordinariamente útil es `grep` (*global regular
+expression print*).  Se trata de una orden que busca líneas que
+contienen un patrón determinado.  Las líneas que no contienen el
+patrón no se imprimen, mientras que las que lo contienen se imprimen.
+Por ejemplo para encontrar todos los ejecutables de `/usr/bin` que
+contienen `zip` en el nombre:
+
+```
+pi@raspberrypi:~ $ ls -R /usr/bin | grep zip
+pi@raspberrypi:~ $ ▂
+```
+
+Puede cambiarse el funcionamiento para que imprima las líneas que no
+cumplen el patrón, o escribir patrones mucho más evolucionados.
+Cuando puedas tómate algo de tiempo para entender el funcionamiento de
+`grep` leyendo la página de manual.
 
 ## Enlaces: `ln`
 
@@ -736,7 +757,9 @@ La orden `id` permite saber quién eres:
 
 ```
 pi@raspberrypi:~ $ id
-uid=1000(pi) gid=1000(pi) grupos=1000(pi),4(adm),20(dialout),24(cdrom),27(sudo),29(audio),44(video),46(plugdev),60(games),100(users),101(input),108(netdev),997(gpio),998(i2c),999(spi)
+uid=1000(pi) gid=1000(pi) grupos=1000(pi),4(adm),20(dialout),24(cdrom),27(sudo),
+29(audio),44(video),46(plugdev),60(games),100(users),101(input),108(netdev),997(
+gpio),998(i2c),999(spi)
 pi@raspberrypi:~ $ ▂
 ```
 
@@ -762,7 +785,7 @@ modificación.  Sin embargo antes de la fecha hay mucha más información.
 **Campo** | **Significado**
 ----------|----------------
 `-rw-r--r--` | Permisos
-`1` | Número de referencias al archivo (nombres o enlaces)
+`1`  | Número de referencias al archivo (nombres o enlaces)
 `pi` | Usuario (dueño)
 `pi` | Grupo (dueño)
 `55` | Tamaño en bytes
@@ -944,17 +967,217 @@ permisos de superusuario.
 ## Gestión de procesos
 
 Una de las actividades que seguramente deberás hacer cuando estás
-desarrollando es parar procesos que puedan haberse quedado bloqueados.
+desarrollando es ver qué procesos están ejecutándose en el sistema y
+parar procesos que puedan haberse quedado bloqueados.
 
-ps, top, kill
+Vamos a comentar solo tres aplicaciones para estos fines aunque la
+gama de herramientas es mucho más amplia.  No te quedes en lo que te
+contamos, aprende poco a poco más herramientas.
+
+En primer lugar para ver los procesos que se ejecutan en el sistema
+está la orden `ps` (*processes*).  Sin ningún argumento adicional nos
+proporciona información de los procesos que se han ejecutado desde la
+misma *shell* en la que se ejecuta `ps`:
+
+```
+pi@raspberrypi:~ $ ps
+  PID TTY          TIME CMD
+  894 pts/0    00:00:18 bash
+ 1211 pts/0    00:00:00 ps
+pi@raspberrypi:~ $ ▂
+```
+
+En un formato tabular se muestra información básica:
+
+**Campo** | **Significado**
+----------|----------------
+`PID`     | Identificador de proceso
+`TTY`     | Terminal 
+`TIME`    | Tiempo acumulado de CPU
+`CMD`     | Nombre del ejecutable
+
+El *pid* (*process id*) es un número que asigna el sistema operativo a
+todos los procesos.  Cada proceso en ejecución debe tener un *pid*
+diferente, pero una vez terminado se puede emplear su antiguo *pid* en
+otro proceso.  Podemos controlar los procesos usando este número de
+identificación.
+
+Vamos a ilustrarlo con un ejemplo. Abre un terminal y escribe:
+
+```
+pi@raspberrypi:~ $ cat
+```
+
+El proceso `cat` está esperando datos de su entrada estándar, pero
+vamos a suponer que no tenemos ni idea de qué pasa.  Solo sabemos que
+el programa no termina. Vamos a matarlo.
+
+Ejecuta otro terminal y escribe:
+
+```
+pi@raspberrypi:~ $ ps -u pi | grep cat
+ 2093 pts/0    00:00:00 cat
+pi@raspberrypi:~ $ ▂
+```
+
+Mostramos todos los procesos del usuario `pi` (opción `-u`) pero luego
+filtramos la salida con `grep` para mostrar solo las líneas que
+contienen `cat`.  El primer número es el PID del proceso.  Vamos a
+solicitar su terminación con la orden `kill`:
+
+```
+pi@raspberrypi:~ $ kill 2093
+pi@raspberrypi:~ $ ▂
+```
+
+Si te fijas en el primer terminal el proceso ha terminado y lo indica
+en pantalla con un mensaje.
+
+```
+pi@raspberrypi:~ $ cat
+Terminado
+pi@raspberrypi:~ $ ▂
+```
+
+Es posible que el programa no termine. Aún podemos hacer algo más,
+podemos exigir que el programa termine.  Si esta vez no lo hace el
+sistema operativo lo matará.  Vuelve a ejecutar `cat` y en la otra
+ventana:
+
+```
+pi@raspberrypi:~ $ ps -u pi | grep cat
+ 2101 pts/0    00:00:00 cat
+pi@raspberrypi:~ $ kill -9 2101
+pi@raspberrypi:~ $ ▂
+```
+
+Ahora el mensaje que muestra la otra ventana es ligeramente diferente:
+
+```
+pi@raspberrypi:~ $ cat
+Terminado (killed)
+pi@raspberrypi:~ $ ▂
+```
+
+La orden `kill` no es exactamente para *matar* procesos.  En realidad
+`kill` envía señales a los procesos.  Hay un montón de señales que se
+pueden mandar (usa la opción `-l` para tener una lista). Por defecto
+envía la señal 15 (`SIGTERM`) que es una solicitud de terminación.
+Los procesos pueden ignorarla.  La opción `-9` simplemente manda una
+señal diferente (`SIGKILL`) que los procesos no pueden ignorar.
+
+Tambén conviene comentar la orden `top`, que muestra el estado del
+sistema en tiempo real, poniendo los procesos que más memoria y/o CPU
+consumen en los primeros lugares.  Si el sistema está lento y no sabes
+por qué puede que hayas dejado algún proceso colgando.  Mira con `top`
+cuál es y mátalo.  Una vez identificado puedes matarlo desde el propio
+`top` pulsando la tecla `k` (*kill*).  Para salir pulsa `q` (*quit*).
+
+Si el nombre del ejecutable es lo suficientemente descriptivo podemos
+matarlo directamente sin buscar su *pid* usando la orden `killall`:
+
+```
+pi@raspberrypi:~ $ killall -9 cat
+pi@raspberrypi:~ $ ▂
+```
+
+Pero ten en cuenta que `killall` manda la señal a todos los procesos
+que tienen el campo `CMD` como el que se indica en el argumento.
+
+> **Info** Te proponemos el siguiente ejercicio.  Imagina que has
+> ejecutado el archivo `ejecutable` que tiene permiso *setuid* de
+> `root`.  Por un error de programación el programa no termina.  ¿Qué
+> orden deberás ejecutar para matarlo?
 
 ## Control de versiones
 
-git
+El software, como cualquier proceso de ingeniería es un proceso
+iterativo.  Los programas no se hacen de golpe, sino poco a poco,
+añadiendo una cosa cada vez.  Después de añadir una función nueva es
+frecuente realizar un proceso de reingeniería, para dejar todo el
+programa más simple.  En este proceso es frecuente generar
+*regresiones*, es decir, cosas que funcionaben dejan de
+funcionar. ¿Cómo volvemoa a la situación anterior?
 
-## Dispositivos
+La solución, obviamente, es gestionando diferentes versiones.  Pero
+gestionar de forma manual diferentes versiones es un proceso tedioso y
+muy propenso a error.  Lo correcto es emplear un sistema de control de
+versiones.  En este taller te proponemos GIT, el mismo que usa el
+núcleo Linux, y el mismo que usamos en la documentación y en el
+software de apoyo de este taller.
 
-### Discos USB
+La orden `git` no es el programa más fácil de usar de tu nueva
+Raspberry Pi y no vamos a convertir este taller en un taller sobre
+*git*.  Solo te comentaremos las órdenes que necesitas para actualizar
+el software del taller.  Así siempre tendrás lo último.
 
-### Puertos serie
+Las carpetas `src` y `doc` de tu *home* son dos repositorios GIT que
+contienen lo mismo que en los repositorios oficiales de
+[github.com](http://github.com/FranciscoMoya/).  Fueron creados como
+se indica en el apéndice que describe
+[nuestra personalización de Raspbian](custom.html).  Cuando una
+carpeta es un repositorio GIT contiene una subcarpeta oculta llamada
+`.git`.
 
+```
+pi@raspberrypi:~ $ ls -d */.git
+doc/.git  src/.git
+pi@raspberrypi:~ $ ▂
+```
+
+Este directorio tiene algunos archivos perfectamente legibles.  En
+particular el archivo `config`:
+
+```
+pi@raspberrypi:~ $ cat src/.git/config
+[core]
+        repositoryformatversion = 0
+		filemode = true
+		bare = false
+		logallrefupdates = true
+[remote "origin"]
+        url = https://github.com/FranciscoMoya/rpi-src.git
+		fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+        remote = rigin
+		merge = refs/heads/master
+pi@raspberrypi:~ $ ▂
+```
+
+Aunque no entiendas ni la mitad lo que está claro es que ahí aparece
+la URL del repositorio original.
+
+Para actualizar con los últimos cambios usa `git pull`:
+
+```
+pi@raspberrypi:~ $ cd src
+pi@raspberrypi:~/src $ git pull -u
+pi@raspberrypi:~ $ cd ../doc
+pi@raspberrypi:~/doc $ git pull -u
+pi@raspberrypi:~/doc $ ▂
+```
+
+Para reconstruir la documentación utiliza `gitbook`:
+
+```
+pi@raspberrypi:~/doc $ gitbook build
+pi@raspberrypi:~/doc $ ▂
+```
+
+Cuando tengas algo de tiempo invierte en aprender acerca del control
+de versiones, especialmente de GIT.  Cuando estés haciendo el *Trabajo
+Fin de Grado* será demasiado tarde.  Empezarás a ponerte excusas a ti
+mismo y terminarás llevando el control de versiones de forma manual.
+Es una receta para el desastre, no digas que no te lo avisé.  He visto
+casos de alumnos que estaban dispuestos a pagar más de 1000$ para
+recuperar su precioso disco duro, donde estaba todo.  He visto alumnos
+que corregían una y otra vez los mismos errores y siempre estaban ahí,
+como si se tratara de un fantasma.  Pero sobre todo he vivido la
+diferencia entre el estudiante que hace software sabiendo que tiene el
+respaldo del control de versiones y el que piensa en no tocar lo que
+ya funciona.  Si no se toca no se avanza.  Si no se experimenta no
+aprende.
+
+Actualmente hay un excelente libro {{ "chacon09:_pro_git" | cite }}
+disponible gratuitamente [en línea](https://git-scm.com/book/es/v2) y
+en castellano.  No hay excusas.
