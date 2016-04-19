@@ -13,7 +13,7 @@
 > Creative Commons Reconocimiento-NoComercial-CompartirIgual 4.0 
 > Internacional License</a>.<br />
 > <span style="font-size:smaller">Documento creado a partir de la obra en 
-> <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/FranciscoMoya/rpi-workshop" rel="dct:source">
+> <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/FranciscoMoya/rpi-doc" rel="dct:source">
 > https://github.com/FranciscoMoya/rpi-workshop</a></span>.
 
 Estamos en la tercera edición de nuestro *Taller de introducción a

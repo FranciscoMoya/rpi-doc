@@ -48,7 +48,7 @@ Cada edición del taller tiene su propia selección de componentes.  En
 esta edición la selección ha sido la siguiente:
 
 <figure style="padding:10px">
-  <iframe src="https://docs.google.com/spreadsheets/d/16aW5zV-DAbm8R-N74DJ7_KGVBSAacWIodptxNJuLd38/pubhtml?gid=1395231998&amp;single=true&amp;headers=false&amp;range=A1:B15&amp;chrome=false&amp;gridlines=false" frameborder="0" style="width:100%;height:350px"></iframe>
+  <iframe src="https://docs.google.com/spreadsheets/d/16aW5zV-DAbm8R-N74DJ7_KGVBSAacWIodptxNJuLd38/pubhtml?gid=1395231998&amp;single=true&amp;headers=false&amp;range=A1:B25&amp;chrome=false&amp;gridlines=false" frameborder="0" style="width:100%;height:350px"></iframe>
 
   <figcaption style="font-size:smaller; font-style:italic">
   <div style="width:600px">Preselección de componentes para esta edición.</div>
