@@ -8,7 +8,7 @@
  </defs>
  <defs>
   <font id="EmbeddedFont_1" horiz-adv-x="2048">
-   <font-face font-family="Dingbats embedded" units-per-em="2048" font-weight="normal" font-style="normal" ascent="1693" descent="318"/>
+   <font-face font-family="Arial embedded" units-per-em="2048" font-weight="normal" font-style="normal" ascent="1958" descent="582"/>
    <missing-glyph horiz-adv-x="2048" d="M 0,0 L 2047,0 2047,2047 0,2047 0,0 Z"/>
    <glyph unicode="" horiz-adv-x="1482"/>
    <glyph unicode="" horiz-adv-x="1482"/>
@@ -134,57 +134,57 @@
      </g>
      <g class="com.sun.star.drawing.TextShape">
       <g id="id14">
-       <text class="TextShape"><tspan class="TextParagraph" font-family="Dingbats" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="17872" y="8903"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="17872" y="9073"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
       </g>
      </g>
      <g class="com.sun.star.drawing.TextShape">
       <g id="id15">
-       <text class="TextShape"><tspan class="TextParagraph" font-family="Dingbats" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="1468" y="1903"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="1468" y="2073"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
       </g>
      </g>
      <g class="com.sun.star.drawing.TextShape">
       <g id="id16">
-       <text class="TextShape"><tspan class="TextParagraph" font-family="Dingbats" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="3187" y="1903"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="3187" y="2073"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
       </g>
      </g>
      <g class="com.sun.star.drawing.TextShape">
       <g id="id17">
-       <text class="TextShape"><tspan class="TextParagraph" font-family="Dingbats" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="4906" y="1903"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="4906" y="2073"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
       </g>
      </g>
      <g class="com.sun.star.drawing.TextShape">
       <g id="id18">
-       <text class="TextShape"><tspan class="TextParagraph" font-family="Dingbats" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="6625" y="1903"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="6625" y="2073"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
       </g>
      </g>
      <g class="com.sun.star.drawing.TextShape">
       <g id="id19">
-       <text class="TextShape"><tspan class="TextParagraph" font-family="Dingbats" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="8343" y="1903"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="8343" y="2073"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
       </g>
      </g>
      <g class="com.sun.star.drawing.TextShape">
       <g id="id20">
-       <text class="TextShape"><tspan class="TextParagraph" font-family="Dingbats" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="10062" y="1903"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="10062" y="2073"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
       </g>
      </g>
      <g class="com.sun.star.drawing.TextShape">
       <g id="id21">
-       <text class="TextShape"><tspan class="TextParagraph" font-family="Dingbats" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="11781" y="1903"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="11781" y="2073"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
       </g>
      </g>
      <g class="com.sun.star.drawing.TextShape">
       <g id="id22">
-       <text class="TextShape"><tspan class="TextParagraph" font-family="Dingbats" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="13500" y="1903"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="13500" y="2073"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
       </g>
      </g>
      <g class="com.sun.star.drawing.TextShape">
       <g id="id23">
-       <text class="TextShape"><tspan class="TextParagraph" font-family="Dingbats" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="17872" y="4989"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="17872" y="5159"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
       </g>
      </g>
      <g class="com.sun.star.drawing.TextShape">
       <g id="id24">
-       <text class="TextShape"><tspan class="TextParagraph" font-family="Dingbats" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="17872" y="6946"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="Arial, sans-serif" font-size="1270px" font-weight="400"><tspan class="TextPosition" x="17872" y="7116"><tspan fill="rgb(0,0,0)" stroke="none"></tspan></tspan></tspan></text>
       </g>
      </g>
     </g>
