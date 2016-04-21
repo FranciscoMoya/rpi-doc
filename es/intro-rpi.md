@@ -301,6 +301,17 @@ La Raspberry Pi Foundation solo distribuye de momento un sistema
 operativo (Raspbian GNU/Linux) de 32 bits, y no tiene planes a corto
 plazo de mantener una versión de 64 bits.
 
+<figure style="float:right; padding:10px">
+  <img src="img/brcm2835plusmemory.jpg" width="350"/>
+
+  <figcaption style="font-size:smaller; font-style:italic">
+  <div style="width:350px">
+  Memoria RAM (izquierda) y BCM2835 (derecha). Foto tomada del blog de
+  <a href="http://www.raspberrypi.org/libraries-codecs-oss/">raspberrypi.org</a>.
+  </div>
+  </figcaption>
+</figure>
+
 ## Una Raspberry Pi para el taller
 
 Este taller de iniciación podría realizarse sobre cualquier modelo de
@@ -349,6 +360,13 @@ o con
 [ArduBerry de Dexter Industries](http://www.dexterindustries.com/Arduberry.html),
 o con [AlaMode de WyoLum](http://wyolum.com/projects/alamode/) o con
 [ArduPi de Cooking Hacks](http://www.cooking-hacks.com/documentation/tutorials/raspberry-pi-to-arduino-shields-connection-bridge).
+El tandem de Raspberry Pi y Arduino es muy interesante cuando se
+requiere estricto control de la latencia.  El sistema operativo
+*Raspbian GNU/Linux* no es de tiempo real, no puede garantizar
+latencias de interrupción muy bajas y la resolución de los
+temporizadores es del orden de los milisegundos.  Sin embargo la mayor
+simplicidad del software de Arduino hace que sea muy predecible en
+cuanto a tiempos de respuesta.
 
 Por último nos gustaría mencionar las interfaces de Raspberry Pi a
 [Grove](http://www.seeedstudio.com/document/pdf/Introduction\%20to\%20Grove.pdf),
@@ -360,13 +378,3 @@ también pueden emplearse directamente mediante
 [GrovePi de Dexter Industries](http://www.dexterindustries.com/GrovePi/),
 una *base shield* especialmente concebida para Raspberry Pi.
 
-<figure style="float:right; padding:10px">
-  <img src="img/brcm2835plusmemory.jpg" width="350"/>
-
-  <figcaption style="font-size:smaller; font-style:italic">
-  <div style="width:350px">
-  Memoria RAM (izquierda) y BCM2835 (derecha). Foto tomada del blog de
-  <a href="http://www.raspberrypi.org/libraries-codecs-oss/">raspberrypi.org</a>.
-  </div>
-  </figcaption>
-</figure>
