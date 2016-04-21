@@ -20,10 +20,7 @@ desmontarlo entero e identificamos el teclado de membrana que hay bajo
 las teclas del piano.
 
 <figure style="float:right;padding:10px">
-<!--
-<img src="img/teclado-piano.png" width="350"/>
--->
-  <img src="img/piano.png" width="350"/>
+  <img src="img/teclas.jpg" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
 	Teclado de membrana bajo las teclas del piano.
   </figcaption>
