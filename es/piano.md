@@ -84,27 +84,24 @@ para ver que hace todo lo que necesitamos y muchísimo más.  Mejor, en
 el futuro le añadiremos funcionalidad.
 
 Solo falta ver cómo podemos usar *Sonic-Pi* desde nuestro programa.
-Si hacemos una búsqueda rápida para encontrar una *command line
-interface to sonic-pi* seguro que encontramos
-[sonic-pi-cli](https://github.com/Widdershin/sonic-pi-cli).  Puede
-valer, pero si miramos un poquito el código fuente veremos que en
-realidad utiliza una conexión TCP al puerto 4557. Mmmm, osea que
-Sonic-Pi ya tiene un protocolo para ser controlado de forma remota.
-Fantástica idea, vamos a usar el `connector` de la biblioteca
-*Reactor* para ésto.  Si exploramos un poco más el código de Sonic-Pi
-parece que internamente utiliza otro programa que hace la síntesis de
-sonido,
+Examinando en detalle la documentación descubrimos que Sonic-Pi
+utiliza otro programa para generar el sonido,
 [*SuperCollider audio synthesis server*](http://supercollider.github.io/),
-que resulta que tiene un ejecutable independiente llamado `scsynth`
+y se comunica con él a través de mensajes UDP hacia el puerto 4556.
+Fantástica idea, vamos a usar el `connector` de la biblioteca
+*Reactor* para ésto.
+
+*SuperCollider* tiene un ejecutable independiente llamado `scsynth`
 con soporte de conexiones remotas UDP o TCP e incluso un cliente de
-línea de órdenes llamado `sclang`.
+línea de órdenes llamado `sclang` (ver página de manual).
 
 Todos los elementos están claros, solo falta sentarse a diseñar el
 pegamento:
 
 * El servidor `scsynth` debe arrancarse previamente.  Podemos echar
   una ojeada al código de Sonic-Pi para ver qué opciones serían
-  razonables.
+  razonables. O más simple aún, podemos capturar los mensajes usando
+  *wireshark*.
 
 * Nuestro programa debe explorar el teclado para detectar pulsaciones
   y levantamientos de tecla.
@@ -118,6 +115,7 @@ pegamento:
 
 ## Exploración del teclado
 
+
 <figure style="float:right;padding:10px">
   <img src="img/button.svg" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
@@ -129,16 +127,17 @@ pegamento:
 ## Control remoto de SuperCollider
 
 Es el momento de aprender algo sobre *SuperCollider* y de su control
-remoto.  El control remoto utiliza una versión simplificada del
-protocolo
+remoto en [doc.sccode.org](http://doc.sccode.org).  El control remoto
+utiliza una versión simplificada del protocolo
 [*Open Sound Control*](http://cnmat.berkeley.edu/user/adrian_freed/blog/2008/10/06/open_sound_control_1_1_specification).
 Describiremos la versión TCP, que es la que vamos a usar.
 
 * Todos los datos se codifican en *big-endian* (*network byte order*).
 
-* Cada mensaje va precedido por un entero de 32 bits que contiene la
-  longitud del mensaje. A continuación aparece una orden (*command*) o
-  un paquete de órdenes (*bundle*).
+* Si es TCP cada mensaje va precedido por un entero de 32 bits que
+  contiene la longitud del mensaje, en UDP no hace falta. A
+  continuación aparece una orden (*command*) o un paquete de órdenes
+  (*bundle*).
 
 * Cada orden (*command*) consiste en una cadena que representa la
   orden, seguida de una coma y una lista de letras que representan los
@@ -149,10 +148,11 @@ Describiremos la versión TCP, que es la que vamos a usar.
 
 * Cada paquete de órdenes (*bundle*) empieza con la cadena `#bundle`
   (incluido el `'\0'` terminador de las cadenas C). A continuación una
-  marca temporal de 64 bits y a continuación todas las órdenes
-  incluidas en el paquete codificadas igual que en un mensaje normal
-  (con la longitud precediendo a cada orden).  Los paquetes de órdenes
-  no van a ser necesarios.
+  marca temporal de 64 bits en el formato usado por NTP (*Network Time
+  Protocol*) y a continuación todas las órdenes incluidas en el
+  paquete codificadas igual que en un mensaje normal (con la longitud
+  precediendo a cada orden).  Los paquetes de órdenes no van a ser
+  necesarios.
 
 La lista completa de las órdenes soportadas está disponible en
 [doc.sccode.org](http://doc.sccode.org/Reference/Server-Command-Reference.html).
@@ -160,83 +160,106 @@ Algunas órdenes reciben respuestas usando el mismo protocolo.
 
 Básicamente el procedimiento puede extraerse de
 [esta página](http://doc.sccode.org/Guides/ClientVsServer.html).  En
-el momento en que se pulsa una tecla enviaremos una orden `/s_new` y
-en el momento en que se libere la tecla enviaremos una orden
-`/n_free`.  Previamente hay que configurar los `SynthDef` ya
-compilados en una carpeta accesible por `scsynth`.
+el momento en que se pulsa una tecla enviaremos una orden `/s_new`.
+Previamente hay que configurar los `SynthDef` ya compilados en una
+carpeta accesible por `scsynth`.
 
-> **Warning** En el momento que se escriben estas páginas `sclang`,
-> que es el cliente de `scsynth`, no funciona correctamente en
-> Raspbian por un error oculto que solo se manifiesta con la nueva
-> versión de GCC.  Solo lo necesitamos para compilar los `SynthDef`,
-> así que puede usarse temporalmente una versión independiente, como
-> [la de *redFrik* en GitHub](https://github.com/redFrik/supercolliderStandaloneRPI2). Así
-> nos ahorramos recompilar el paquete.
+<figure style="float:right;padding:10px">
+  <img src="img/wireshark-sonic-pi.png" width="350"/>
+  <figcaption style="font-size:smaller;font-style:italic;text-align:center">
+    Captura de *Wireshark* mostrando todo el tráfico OSC de Sonic-Pi.
+  </figcaption>
+</figure>
 
 Antes de nada hemos hecho pruebas para asegurarnos del funcionamiento
-de los mensajes.  Primero hemos probado nuestra hipótesis activando de
-forma manual dos notas a la vez con `sclang` o con `scide`.
+de los mensajes.  Arranca `wireshark` y empieza una captura de
+paquetes en la interfaz de *loopback* `lo`.  Después arranca
+`sonic-pi` y escribe el siguiente programa:
 
 ```
-s.boot;
-SynthDef("seno", { arg freq=600; Out.ar(0, SinOsc.ar(freq)); }).load(s);
-s.sendMsg("/s_new", "seno", x = s.nextNodeID, 1, 1);
-s.sendMsg("/s_new", "seno", y = s.nextNodeID, 1, 1, "freq", 900);
-...
-s.sendMsg("/n_free", x);
-s.sendMsg("/n_free", y);
+use_synth :piano
+play :e1
 ```
 
-Probando de forma interactiva con `scide` (*Ctrl-Intro* ejecuta solo
-la línea del cursor) podemos ver que efectivamente el mensaje `/s_new`
-activa una nota y `/n_free` lo desactiva.  El uso de un único
-*SynthDef* con un argumento facilita considerablemente su uso.
-Podríamos tener un *SynthDef* más elaborado por cada instrumento.
-Pero vayamos poco a poco.
-
-Para asegurarnos del formato del mensaje vamos a capturar los mensajes
-usando *netcat*.  Por un lado en un terminal lo ejecutamos en modo
-servidor UDP:
+Y pulsamos el botón *Run*. Ya podemos analizar la captura. La mayoría
+del tráfico capturado indica que se trata de protocolo *OSC* (*Open
+Sound Control*), pero si exploramos un poco veremos que hay varios
+destinatarios. ¿Cómo sabemos cuáles son los mensajes que corresponden
+a `scsynth`?  Basta mirar cómo se ha ejecutado en un terminal:
 
 ```
-pi@raspberrypi:~ $ nc -l -u 9999 | tee mensajes.txt
+pi@raspberrypi:~/src/c $ ps -ef | grep scsynth
+pi        2717  2687  7 13:09 pts/1    00:00:01 scsynth -u 4556 -a 64 -m 131072
+-D 0 -R 0 -l 1 -z 128 -c 128 -U /usr/lib/SuperCollider/plugins:/opt/sonic-pi/app
+/server/native/raspberry/extra-ugens/ -i 2 -o 2
+pi        2753  2746  0 13:10 pts/2    00:00:00 grep --color=auto scsynth
 ```
 
-Por otro lado ejecutamos el siguiente código con `sclang`:
+Como puedes observar se ejecuta con la opción `-u 4556` que indica el
+puerto UDP donde escucha.  Por tanto el tráfico que nos interesa es el
+que tiene como destino u origen el puerto UDP 4556.  Volvamos a
+*Wireshark*, en el recuadro *Filter* basta teclear la expresión
+`udp.port == 4556` y pulsar sobre el botón *Apply*.  A continuación se
+muestra todo el tráfico destinado al puerto 4556 de forma esquemática.
+Guarda la captura entera para consultarla cuando sea necesario.
 
 ```
-r = Server(\myServer, NetAddr("localhost", 9999));
-SynthDef("seno", { arg freq=600; Out.ar(0, SinOsc.ar(freq)); }).load(r);
-r.sendMsg("/s_new", "seno", x = s.nextNodeID, 1, 1);
-r.sendMsg("/s_new", "seno", y = s.nextNodeID, 1, 1, "freq", 1024);
-r.sendMsg("/n_free", x);
-r.sendMsg("/n_free", y);
+[ "/clearSched" ]
+[ "/g_freeAll", 0 ]
+[ "/notify", 1 ]
+[ "/d_loadDir", "/opt/sonic-pi/etc/synthdefs/compiled" ]
+[ "/sync", 1 ]
+[ "/b_allocRead", 0, "/opt/sonic-pi/etc/buffers/rand-stream.wav", 0, 0 ]
+[ "/clearSched" ]
+[ "/sync", 1 ]
+[ "/g_freeAll", 0 ]
+[ "/g_new", 2, 0, 0 ]
+[ "/g_new", 3, 2, 2 ]
+[ "/g_new", 4, 2, 3 ]
+[ "/g_new", 5, 3, 2 ]
+[ "/s_new", "sonic-pi-mixer", 6, 0, 2, "in_bus", 10 ]
+[ "/sync", 1 ]
+[ "/g_new", 7, 1, 4 ]
+[ "/s_new", "sonic-pi-basic_mixer", 8, 0, 2,
+	  "amp", 1,
+	  "amp_slide", 0.1,
+	  "amp_slide_shape", 1,
+	  "amp_slide_curve", 0,
+	  "in_bus", 12,
+	  "amp", 0.3,
+	  "out_bus", 10 ]
+[ "#bundle"
+	[ "/s_new", "sonic-pi-piano", 9, 0, 7,
+		  "note", 28.0
+		  "out_bus", 12 ]]
+[ "/n_set", 8, "amp_slide", 1.0 ]
+[ "/n_set", 8, "amp", 0 ]
+[ "/n_free", 8 ]
+[ "/n_free", 7 ]
+[ "/quit" ]
 ```
 
-Esta vez no arrancamos una nueva instancia de `scsynth` sino que
-asumimos que hay uno en el puerto 9999 de *localhost*.  En realidad
-está *netcat* capturando todo lo que se genera.  Este es el resultado
-poniendo cada mensaje en una línea independiente:
-
-```
-/d_load\0,si\0/home/pi/sc/share/user/synthdefs/seno.scsyndef\0\0\0\0\0
-/s_new\0\0,siii\0\0\0seno\0\0\0\0\0\0\0\6\0\0\0\1\0\0\0\1
-/s_new\0\0,siiisi\0seno\0\0\0\0\0\0\0\7\0\0\0\1\0\0\0\1freq\0\0\0\0\0\0\4\0
-/n_free\0,i\0\0\0\0\0\6
-/n_free\0,i\0\0\0\0\0\7
-```
-
-Nosotros vamos a utilizar TCP por lo que además tendremos que preceder
-cada mensaje con la longitud en formato *big-endian*.
+Hay mucho más de lo que uno podría pensar a primera vista.  No solo se
+instancia el piano sino también un `sonic-pi-mixer` y un
+`sonic-pi-basic_mixer`.  La nota no se envía en una orden OSC sino en
+un paquete en el que solo está esa nota, parece un poco redundante.  A
+priori se observan otras redundancias, como la repetición de
+`clearSched` y `g_freeAll`, o la activación de las notificaciones
+(`notify`) y varios mensajes de petición de estado (`status`) que no
+hemos puesto para hacerlo más legible.  Los mensajes `sync` hacen
+pensar que es necesario esperar a que lo anterior se complete para
+evitar problemas en los siguientes mensajes.  En general la
+aproximación que recomendamos es implementar todo lo que hace
+*Sonic-Pi* y cuando todo funcione entonces vamos simplificando.
 
 Ya tenemos claro los elementos.  Hay que ejecutar `scsynth` y usar un
-`connector` para enviar mensajes.  Cuando nuestro programa termine
+`udp_connector` para enviar mensajes.  Cuando nuestro programa termine
 `scsynth` también debe hacerlo.  Una forma sencilla de conseguirlo es
 con un `process_handler`, aunque no necesitemos reaccionar ante lo que
 imprima el programa.
 
 Osea para este ejemplo necesitamos un `process_handler` y un
-`connector`, ¿cómo lo agrupamos?  ¿Definimos otro manejador de
+`udp_connector`, ¿cómo lo agrupamos?  ¿Definimos otro manejador de
 *Reactor*?  La respuesta está en cómo queremos lidiar con la entrada.
 *Reactor* es un patrón para definir comportamientos reactivos, si no
 hay que reaccionar no es necesario usarlo.  Los manejadores no
@@ -248,14 +271,14 @@ que redirigiremos toda la salida a `/dev/null`.  Sin embargo el
 control remoto de `scsynth` puede generar respuestas y notificaciones
 (ver la
 [guía de referencia de órdenes](http://doc.sccode.org/Reference/Server-Command-Reference.html)).
-Por ejemplo, el mensaje `/d_load` es asíncrono y no termina hasta que
-se recibe la respuesta `/done`.
+Por ejemplo, el mensaje `/d_loadDir` es asíncrono y no termina hasta
+que se recibe la respuesta `/done`.
 
-Por tanto ¿qué es nuestro sintetizador? Se trata de un `connector`
-especializado.  Un `connector` que automáticamente arranca otro
+Por tanto ¿qué es nuestro sintetizador? Se trata de un `udp_connector`
+especializado.  Un `udp_connector` que automáticamente arranca otro
 proceso aprovechando un `process_handler` para ello.  Un conector que
 al destruirse envía el mensaje `/quit` a `sc_synth` luego destruye el
-`process_handler` correspondiente.  Un `connector` con métodos
+`process_handler` correspondiente.  Un `udp_connector` con métodos
 especializados para enviar y recibir mensajes OSC.  Ahora ya podemos
 sentarnos a escribir código.
 
@@ -265,5 +288,19 @@ sentarnos a escribir código.
 > Esto es muy frecuente en la vida real,**lo que vemos como problema no
 > siempre es el problema si aplicamos ciertas dosis de imaginación y
 > *pensamiento lateral***.
+
+### Codificación y decodificación de OSC
+
+La mayor parte del trabajo tiene que ver con la codificación de
+mensajes OSC iguales que los que tenemos en la captura de *Wireshark*.
+En general optaría por utilizar una implementación de OSC ya
+disponible, como [liblo](http://liblo.sourceforge.net/).  Esto es una
+inversión a largo plazo porque permite integrar nuestro piano con
+otras aplicaciones OSC.
+
+
+```
+
+```
 
 ## Juntando todo

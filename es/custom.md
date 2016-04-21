@@ -28,8 +28,10 @@ han realizado en la tarjeta microSD que se distribuye en el taller.
   como `Spain/Spanish` y finalmente la zona WiFi como `ES/Spain`.
 * Instalar algunos paquetes adicionales: `tmux`, `i2c-tools`,
   `python-smbus`, `ipython`, `zile`, `python-dev`, `python-gpiozero`, 
-  `mpg123`, `manpages-es`, `gcc-4.9-doc`, `gdb-doc`.
-* Añadir el usuario `pi` al grupo `staff` para que funcione `pip install`.
+  `mpg123`, `manpages-es`, `gcc-4.9-doc`, `gdb-doc`, `wireshark`.
+* Añadir el usuario `pi` al grupo `staff` para que funcione `pip
+  install`, y al grupo `wireshark` para que podamos capturar tráfico
+  sin ser superusuario.
 * Instalar la biblioteca *wiringPi* para Python con `pip install wiringpi2`.
 * Descargar las pruebas del sistema del repositorio GitHub del taller con 
   `git clone https://github.com/FranciscoMoya/rpi-src.git src` y 
