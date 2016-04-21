@@ -32,13 +32,6 @@ adjunta.  Hay ocho columnas y tres filas.  Cuando se pulsa una de las
 teclas se cortocircuita la columna correspondiente con la fila
 correspondiente.  Es así de simple.
 
-<figure style="float:right;padding:10px">
-  <img src="img/matrix.svg" width="350"/>
-  <figcaption style="font-size:smaller;font-style:italic;text-align:center">
-	Disposición matricial del teclado de membrana.
-  </figcaption>
-</figure>
-
 Lo que vamos a hacer es eliminar el controlador actual del piano y
 sustituirlo por una Raspberry Pi.  Lo ideal sería poner una Raspberry
 Pi Zero, pero eso es un detalle menor, puesto que el diseño y el
@@ -48,6 +41,13 @@ ordenador convencional.  A mi me gusta especialmente la idea de un
 altavoz Bluetooth, que puede ser externo si queremos.  Se puede
 conseguir uno resistente al agua por poco más de seis euros en
 [Banggood.com](http://www.banggood.com/Mini-Waterproof-Wireless-Bluetooth-Speaker-For-iPad-iPhone-6-6-p-88071.html).
+
+<figure style="float:right;padding:10px">
+  <img src="img/matrix.svg" width="350"/>
+  <figcaption style="font-size:smaller;font-style:italic;text-align:center">
+	Disposición matricial del teclado de membrana.
+  </figcaption>
+</figure>
 
 Bueno, ya tenemos el primer concepto, solo nos falta el software para
 tener el prototipo. Hay dos cosas que debemos hacer:
@@ -289,6 +289,9 @@ sentarnos a escribir código.
 > siempre es el problema si aplicamos ciertas dosis de imaginación y
 > *pensamiento lateral***.
 
+Todo el código de este ejemplo lo tienes disponible en la carpeta
+`src/c/ejemplos/piano`.  Vamos a describir por encima sus módulos.
+
 ### Codificación y decodificación de OSC
 
 La mayor parte del trabajo tiene que ver con la codificación de
@@ -296,11 +299,61 @@ mensajes OSC iguales que los que tenemos en la captura de *Wireshark*.
 En general optaría por utilizar una implementación de OSC ya
 disponible, como [liblo](http://liblo.sourceforge.net/).  Esto es una
 inversión a largo plazo porque permite integrar nuestro piano con
-otras aplicaciones OSC.
+otras aplicaciones OSC.  Pero para este ejemplo ilustrativo vamos a
+implementar lo mínimo de OSC necesario.  Lo que queremos es ser
+capaces de ejecutar algo como esto:
 
-
+```C
+synth_handler_send(synth, "/d_loadDir",
+	               "/opt/sonic-pi/etc/synthdefs/compiled");
 ```
 
+Dado que los mensajes OSC tienen número variable de argumentos nuestra
+función `synth_handler_send` también tiene que tener número variable
+de argumentos, como `printf`.  Echa un vistazo a la página de manual
+de `stdarg` y al archivo `synth_handler.c` para ver cómo se
+implementa.  El caso es que los argumentos acabarán en una lista de
+tipo `va_list` que es lo que vamos a usar para componer el mensaje.
+
+La interfaz de programación es muy simple:
+
+```C
+size_t osc_encode_message(char* buf, size_t size,
+			  const char* cmd, va_list* ap);
+size_t osc_decode_message(const char* in, size_t size_in,
+			  char* out, size_t size_out);
+int osc_is_async(const char* command);
+int osc_is_done(const char* command);
 ```
+
+La función `osc_encode_message` construye un mensaje OSC a partir de
+sus componentes y `osc_decode_message` hace lo contrario.  Dada una
+orden cualquiera de OSC la función `osc_is_async` nos dice si es
+asíncrona (espera un `/done`) y `osc_is_done` nos dice si corresponde
+a una respuesta a una orden asíncrona (típicamente un `/done`, pero
+podría ser un `/fail`).
+
+> **Warning** Las funciones con número variable de argumentos no son
+> deseables en C porque impiden que el compilador compruebe que los
+> tipos utilizados son correctos (*type safety*).  Sin embargo es la
+> forma de conseguir una implementación de OSC mínima de unas 300
+> líneas.
+
+Con este módulo ya podemos construir el manejador de eventos de
+`scsynth`.  Está en los archivos `synth_handler.h` y
+`synth_handler.c`.  Nuevamente la interfaz de programación es
+extremadamente simple:
+
+```C
+synth_handler* synth_handler_new(synth_handler_function handler);
+void synth_handler_init(synth_handler* this,
+			synth_handler_function handler);
+void synth_handler_destroy(synth_handler* this);
+void synth_handler_send(synth_handler* h, const char* cmd, ...);
+void synth_handler_wait_done(synth_handler* this);
+```
+
+La función `synth_handler_wait_done` espera hasta que se han recibido
+respuesta de todas las operaciones asíncronas pendientes.
 
 ## Juntando todo
