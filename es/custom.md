@@ -27,8 +27,9 @@ han realizado en la tarjeta microSD que se distribuye en el taller.
   zona horaria (*Timezone*) `Europe/Madrid`, el teclado
   como `Spain/Spanish` y finalmente la zona WiFi como `ES/Spain`.
 * Instalar algunos paquetes adicionales: `tmux`, `i2c-tools`,
-  `python-smbus`, `ipython`, `zile`, `python-dev`, `python-gpiozero`, 
-  `mpg123`, `manpages-es`, `gcc-4.9-doc`, `gdb-doc`, `wireshark`.
+  `python-smbus`, `ipython`, `zile`, `python-dev`, `python-gpiozero`,
+  `mpg123`, `manpages-es`, `gcc-4.9-doc`, `gdb-doc`, `wireshark`,
+  `liblo-dev`, `python-liblo`.
 * Añadir el usuario `pi` al grupo `staff` para que funcione `pip
   install`, y al grupo `wireshark` para que podamos capturar tráfico
   sin ser superusuario.
