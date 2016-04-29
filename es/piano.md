@@ -43,7 +43,7 @@ conseguir uno resistente al agua por poco más de seis euros en
 [Banggood.com](http://www.banggood.com/Mini-Waterproof-Wireless-Bluetooth-Speaker-For-iPad-iPhone-6-6-p-88071.html).
 
 <figure style="float:right;padding:10px">
-  <img src="img/matrix.svg" width="350"/>
+  <img src="img/matrix.png" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
 	Disposición matricial del teclado de membrana.
   </figcaption>
@@ -123,14 +123,90 @@ pegamento:
   </figcaption>
 </figure>
 
+La estrategia para leer una matriz como la del teclado es conectar las
+columnas con salidas digitales y las filas con entradas digitales (o
+al revés).  En lo sucesivo asumiremos que se conecta como muestra la
+figura.  Fíjate en que la entrada digital correspondiente a cada fila
+tiene configurado un *pull-down* para que en caso de que no haya tecla
+pulsada se lea como un cero lógico.
+
+El barrido se realiza activando una sola columna cada vez y
+comprobando si hay alguna fila a uno lógico.  Si se encuentra una
+entonces es que se ha pulsado la tecla correspondiente al cruce de la
+columna activa y la fila leída como uno.
+
+El proceso es muy similar al `input_handler` pero al bucle de consulta
+de las entradas hay que añadir el bucle de activación de cada columna
+y la notificación debe incluir tanto la fila detectada como la columna
+activa.  Por tanto partiremos del código de `input_handler` y lo
+modificaremos para acomodarlo a nuestras necesidades.
+
+Todo el código de este ejemplo lo tienes disponible en la carpeta
+`src/c/ejemplos/piano`.  El código del `input_handler` modificado está
+en `matrix_handler.h` y `matrix_handler.c`.  A continuación resumimos
+los cambios que hemos realizado:
+
+* Hemos renombrado los archivos y todos los `input_handler` por
+  `matrix_handler`.
+
+* El atributo `inputs` pasa a ser `rows` y se crea un nuevo atributo
+  `cols`.  El contador `ninputs` se desglosa en `nrows` y `ncols`.
+
+* El atributo `values` pasa a ser un array de `nrows*ncols` valores.
+
+* En lugar de notificar el pin activo notificamos el número de tecla.
+
+* Exploramos todas las filas para cada columna activa en solitario.
+
+Eso es todo pero no debemos parar ahí.  Acabamos de hacer un nuevo
+handler que solapa extraordinariamente con el antiguo `input_handler`.
+Nunca debemos dejar código replicado.  En este caso podemos convertir
+el `input_handler` en un caso particular del `matrix_handler` con cero
+columnas.  Para ello tenemos que considerar este caso especial en la
+función de exploración `matrix_handler_poll`.
+
+> **Info** No tengas miedo de cambiar *Reactor* para adaptarla a tus
+> necesidades.  Es mucho más importante que no haya código replicado
+> que preservar el código de la biblioteca intacto.  Si haces
+> manejadores que pueden ser útiles a más gente considera compartirlos
+> como hemos hecho nosotros.  Contacta con los autores para
+> incorporarlos a la distribución oficial.
+
+Hasta la prueba del teclado es casi idéntica a la de `input_handler`.
+
+```C
+#include <reactor/reactor.h>
+#include "matrix_handler.h"
+#include <wiringPi.h>
+#include <stdio.h>
+
+static void press(matrix_handler* ev, int key) {
+	printf("Press %d\n", key);
+}
+
+static void release(matrix_handler* ev, int key) {
+	printf("Release %d\n", key);
+}
+
+int main() {
+    int rows[] = { 4, 17, 27, 22 };
+    int cols[] = { 18, 23, 24, 25 };
+    wiringPiSetupGpio();
+    reactor* r = reactor_new();
+    reactor_add(r, (event_handler*) matrix_handler_new(rows, sizeof(rows),
+                                                       cols, sizeof(cols),
+                                                       press, release));
+    reactor_run(r);
+    return 0;
+}
+```
 
 ## Control remoto de SuperCollider
 
 Es el momento de aprender algo sobre *SuperCollider* y de su control
 remoto en [doc.sccode.org](http://doc.sccode.org).  El control remoto
 utiliza una versión simplificada del protocolo
-[*Open Sound Control*](http://cnmat.berkeley.edu/user/adrian_freed/blog/2008/10/06/open_sound_control_1_1_specification).
-Describiremos la versión TCP, que es la que vamos a usar.
+[*Open Sound Control*](http://opensoundcontrol.org/spec-1_1).
 
 * Todos los datos se codifican en *big-endian* (*network byte order*).
 
@@ -171,10 +247,10 @@ carpeta accesible por `scsynth`.
   </figcaption>
 </figure>
 
-Antes de nada hemos hecho pruebas para asegurarnos del funcionamiento
-de los mensajes.  Arranca `wireshark` y empieza una captura de
-paquetes en la interfaz de *loopback* `lo`.  Después arranca
-`sonic-pi` y escribe el siguiente programa:
+Antes de nada vamos a hacer pruebas para asegurarnos del
+funcionamiento de los mensajes.  Arranca `wireshark` y empieza una
+captura de paquetes en la interfaz de *loopback* `lo`.  Después
+arranca `sonic-pi` y escribe el siguiente programa:
 
 ```
 use_synth :piano
@@ -282,26 +358,20 @@ al destruirse envía el mensaje `/quit` a `sc_synth` luego destruye el
 especializados para enviar y recibir mensajes OSC.  Ahora ya podemos
 sentarnos a escribir código.
 
-> **Info** Es importante sentarse un poco a valorar el proceso de
+> **Info** Es conveniente recapacitar un poco sobre el proceso de
 > diseño que hemos seguido.  Nuestro problema era la síntesis de
 > sonido y ha terminado siendo las comunicaciones con un servidor.
-> Esto es muy frecuente en la vida real,**lo que vemos como problema no
-> siempre es el problema si aplicamos ciertas dosis de imaginación y
-> *pensamiento lateral***.
-
-Todo el código de este ejemplo lo tienes disponible en la carpeta
-`src/c/ejemplos/piano`.  Vamos a describir por encima sus módulos.
-
-### Codificación y decodificación de OSC
+> Esto es muy frecuente en la vida real,**lo que vemos como problema
+> no siempre es el problema si aplicamos ciertas dosis de imaginación
+> y *pensamiento lateral***.
 
 La mayor parte del trabajo tiene que ver con la codificación de
 mensajes OSC iguales que los que tenemos en la captura de *Wireshark*.
 En general optaría por utilizar una implementación de OSC ya
-disponible, como [liblo](http://liblo.sourceforge.net/).  Esto es una
-inversión a largo plazo porque permite integrar nuestro piano con
-otras aplicaciones OSC.  Pero para este ejemplo ilustrativo vamos a
-implementar lo mínimo de OSC necesario.  Lo que queremos es ser
-capaces de ejecutar algo como esto:
+disponible, como [*liblo*](http://liblo.sourceforge.net/).  Esto es
+una inversión a largo plazo porque permite integrar nuestro piano con
+otras aplicaciones OSC.  Lo que queremos es ser capaces de ejecutar
+algo como esto:
 
 ```C
 synth_handler_send(synth, "/d_loadDir",
@@ -314,46 +384,40 @@ de argumentos, como `printf`.  Echa un vistazo a la página de manual
 de `stdarg` y al archivo `synth_handler.c` para ver cómo se
 implementa.  El caso es que los argumentos acabarán en una lista de
 tipo `va_list` que es lo que vamos a usar para componer el mensaje.
-
-La interfaz de programación es muy simple:
+Para facilitar el uso de *liblo* añadiremos algún parámetro para
+indicar tipos y marcar el final de argumentos.  Se trata de medidas
+para detectar posibles errores de programación.  Nuestro ejemplo
+quedaría así:
 
 ```C
-size_t osc_encode_message(char* buf, size_t size,
-			  const char* cmd, va_list* ap);
-size_t osc_decode_message(const char* in, size_t size_in,
-			  char* out, size_t size_out);
-int osc_is_async(const char* command);
-int osc_is_done(const char* command);
+synth_handler_send(synth, "/d_loadDir", "s",
+                   "/opt/sonic-pi/etc/synthdefs/compiled",
+                   LO_ARGS_END);
 ```
 
-La función `osc_encode_message` construye un mensaje OSC a partir de
-sus componentes y `osc_decode_message` hace lo contrario.  Dada una
-orden cualquiera de OSC la función `osc_is_async` nos dice si es
-asíncrona (espera un `/done`) y `osc_is_done` nos dice si corresponde
-a una respuesta a una orden asíncrona (típicamente un `/done`, pero
-podría ser un `/fail`).
-
-> **Warning** Las funciones con número variable de argumentos no son
-> deseables en C porque impiden que el compilador compruebe que los
-> tipos utilizados son correctos (*type safety*).  Sin embargo es la
-> forma de conseguir una implementación de OSC mínima de unas 300
-> líneas.
-
-Con este módulo ya podemos construir el manejador de eventos de
-`scsynth`.  Está en los archivos `synth_handler.h` y
-`synth_handler.c`.  Nuevamente la interfaz de programación es
+En los archivos `synth_handler.h` y `synth_handler.c` se incluye toda
+la implementación de este manejador.  La interfaz de programación es
 extremadamente simple:
 
 ```C
 synth_handler* synth_handler_new(synth_handler_function handler);
 void synth_handler_init(synth_handler* this,
-			synth_handler_function handler);
+			            synth_handler_function handler);
 void synth_handler_destroy(synth_handler* this);
-void synth_handler_send(synth_handler* h, const char* cmd, ...);
-void synth_handler_wait_done(synth_handler* this);
+void synth_handler_send(synth_handler* h, const char* cmd,
+                        const char* types, ...);
+void synth_handler_sync(synth_handler* this);
 ```
 
-La función `synth_handler_wait_done` espera hasta que se han recibido
-respuesta de todas las operaciones asíncronas pendientes.
+La función `synth_handler_sync` espera hasta que se han recibido
+respuesta de todas las operaciones asíncronas pendientes.  Para ello
+simplemente utiliza un mensaje `/sync`.
 
 ## Juntando todo
+
+Con los dos nuevos manejadores terminar la aplicación es francamente
+trivial.  El código de este ejemplo está en `piano.c`.
+
+```C
+
+```

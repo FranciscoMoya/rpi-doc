@@ -448,14 +448,76 @@ En este caso el LED conectado a la pata GPIO18 parpadeará 5 veces con
 un periodo de 400ms (200ms encendido y 200ms apagado).
 
 
-## Programación en red (patrón *acceptor-connector*)
+## Programación en red
 
 Ya hemos visto la interfaz de programación *socket* que ofrece
 GNU/Linux para programar comunicaciones en red.  Solo nos falta
 organizarlo de manera razonable.  Hemos visto que en las
 comunicaciones se pueden identificar dos roles, el rol del *servidor*
 y el rol del *cliente*.  El rol del *servidor* es pasivo, espera hasta
-que ocurra un evento (la conexión) y entonces reacciona.
+que ocurra un evento (la conexión o el envío de datos) y entonces
+reacciona.
+
+Para ello *Reactor* proporciona un manejador denominado *endpoint* que
+abstrae cualquiera de los extremos de la comunicación.  La forma más
+sencilla de comunicación corresponde a los protocolos orientados a
+*datagramas* como UDP.  El intercambio de información se limita al
+envío de mensajes sin ningún tipo de confirmación.  Para este caso nos
+basta utilizar un `endpoint`, que podemos crear con `udp_endpoint_new`
+para el lado del servidor o con `udp_connector_new` para el lado del
+cliente.
+
+Veamos un ejemplo sencillo, un servidor de *echo*.  Se trata de un
+programa que devuelve lo mismo que se le envía.
+
+```C
+#include <reactor/reactor.h>
+#include <reactor/socket_handler.h>
+#include <stdio.h>
+
+void handler(event_handler* ev)
+{
+    endpoint* ep = (endpoint*)ev;
+    char buf[128];
+    size_t len = endpoint_recv(ep, buf, sizeof(buf));
+    endpoint_send(ep, buf, len);
+}
+
+int main() {
+    reactor* r = reactor_new();
+    reactor_add(r, (event_handler*)udp_endpoint_new("8888", handler));
+    reactor_run(r);
+    reactor_destroy(r);
+    return 0;
+}
+
+```
+
+Un cliente es sumamente sencillo.  Simplemente utiliza un `endpoint`
+construido con `udp_connector_new`:
+
+```C
+#include <reactor/socket_handler.h>
+
+int main() {
+    endpoint* ep = udp_connector_new("localhost", "8888", NULL);
+    char buf[] = "Prueba";
+    endpoint_send(ep, buf, sizeof(buf));
+    endpoint_destroy(ep);
+    return 0;
+}
+```
+
+Un `endpoint` puede usarse también para recibir datos como un
+manejador más.  Más adelante veremos un ejemplo.
+
+Los protocolos orientados a conexión son algo más complejos.
+Implementan la ilusión de un flujo continuo de datos, lo que implica
+tratar de forma transparente multitud de problemas de la red.  Este
+modelo de comunicación se divide en dos fases.  Se realiza un
+intercambio de mensajes inicial para establecer la *conexión* única
+entre cliente y servidor y posteriormente se envían los datos
+correspondientes a esa conexión.
 
 Acceptor-Connector es un patrón de diseño propuesto por Douglas
 C. Schmidt {{ "schmidt97:_accep" | cite }} y utilizado extensivamente
@@ -479,9 +541,10 @@ programa que devuelve lo mismo que se le envía por cualquier conexión.
 
 void handle_echo(event_handler* ev)
 {
+    endpoint* ep = (endpoint*)ev;
     char buf[128];
-    int n = event_handler_recv(ev, buf, sizeof(buf));
-    event_handler_send(ev, buf, n);
+    int n = endpoint_recv(ep, buf, sizeof(buf));
+    endpoint_send(ep, buf, n);
 }
 
 int main()
@@ -493,9 +556,14 @@ int main()
 }
 ```
 
+Aparentemente es igual que el caso anterior.  Se diferencian
+internamente y especialmente en las garantías que ofrece.  Un servidor
+UDP puede perder mensajes o incluso recibirlos replicados.  Un
+servidor TCP garantiza la entrega si no hay un problema físico.
+
 El `acceptor` se encargará de llamar a *listen* y *accept* cuando sea
 preciso.  En el momento en que se establezca una nueva conexión se
-creará un `event_handler` que actúa de *service handler* con el
+creará un `endpoint` que actúa de *service handler* con el
 *socket* esclavo y con la función de procesamiento que se le indica.
 En este caso escucha en el puerto TCP 10000.
 
@@ -555,6 +623,9 @@ descriptor correcto, aunque haya sido cerrado por un problema de
 comunicaciones.  Si está cerrado se elevará una excepción y el evento
 periódico también se desinstalará automáticamente, como cabría
 esperar.
+
+Este ejemplo funcionaría también con un servidor UDP cambiando el
+`connector` por un `udp_connector`.
 
 Los sistemas en los que un componente actúa fundamentalmente con el
 rol de servidor, mientras que los otros componentes actúan como
