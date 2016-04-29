@@ -1,4 +1,4 @@
-[//]: # (-*- markdown; coding:utf-8 -*-)
+[//]: # (-*- mode:markdown; coding:utf-8 -*-)
 
 # Uso de SPI
 
@@ -7,16 +7,18 @@ dispositivos. Hoy en día es frecuente encontrar dispositivos que
 implementan tanto I2C como SPI y en ese caso probablemente es mejor
 decantarse por I2C porque utiliza menos pines.
 
-Al igual que con I2C, el primer paso para realizar programas que
-utilizan la interfaz SPI es activarlo con `raspi-config` en el
-apartado \emph{Advanced Configuration}.  Al igual que en el caso de
-I2C el programa ofrece la opción de cargar automáticamente los drivers
-en el arranque, aunque siempre se puede hacer con la utilidad
-`gpio` de \emph{wiringPi}.
+<figure style="float:right;padding:10px">
+  <img src="img/rpicfg-interfaces.png" width="350"/>
+  <figcaption style="font-size:smaller;font-style:italic;text-align:center">
+    Activación de interfaces en la aplicación de configuración.
+  </figcaption>
+</figure>
 
-``` console
-$ gpio load spi
-```
+Al igual que con I2C, el primer paso para realizar programas que
+utilizan la interfaz SPI es activarlo con la aplicación de
+configuración de la Raspberry Pi, en la pestaña *Interfaces*.
+Recuerda que hay que reiniciar la *Raspberry Pi* para que el cambio
+surta efecto.
 
 La programación es sencilla en cuanto que solo utiliza dos funciones,
 pero puede ser realmente enrevesada de entender la comunicación con
@@ -48,9 +50,9 @@ int main (void) {
 }
 ```
 
-La función `wiringPiSPISetup` inicializa la comunicación para
-el canal 0 a 10Mz. Hay dos canales disponibles en el modelo B+ (0 y
-1).
+La función `wiringPiSPISetup` inicializa la comunicación para el canal
+0 a 10Mz. Hay dos canales disponibles (0 y 1) que utilizan las mismas
+patas salvo la de selección `SPI_CE0` y `SPI_CE1` respectivamente.
 
 Las llamadas a `wiringPiSPIDataRW` realizan una transacción SPI
 donde se escribe y se lee de manera concurrente un conjunto de bytes.
@@ -163,6 +165,8 @@ Para buffers mayores de 4KB hay que especificarlo en la carga del
 módulo del kernel para SPI (driver SPI).  Si se usa carga manual con
 wiringPi la orden para ampliar el buffer a 256KB sería:
 
+en /boot/cmdline.txt spidev.bufsiz=262144
+
 ```
 gpio load spi 256
 ```
@@ -182,3 +186,5 @@ cerámico en paralelo con el electrolítico puede ayudar a quitar ruido
 de alta frecuencia.  En cualquier caso el método es mucho más preciso
 que la propuesta original de Adafruit, y no depende del estado de
 carga del sistema.
+
+
