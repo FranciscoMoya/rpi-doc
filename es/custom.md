@@ -34,6 +34,7 @@ han realizado en la tarjeta microSD que se distribuye en el taller.
   install`, y al grupo `wireshark` para que podamos capturar tráfico
   sin ser superusuario.
 * Instalar la biblioteca *wiringPi* para Python con `pip install wiringpi2`.
+* Instalar `pygubu` (editor de interfaces gráficas) con `pip install pygubu`.
 * Descargar las pruebas del sistema del repositorio GitHub del taller con 
   `git clone https://github.com/FranciscoMoya/rpi-src.git src` y 
   `git clone https://github.com/FranciscoMoya/rpi-doc.git doc`.

@@ -1,4 +1,4 @@
-[//]: # (-*- markdown; coding: utf-8 -*-)
+[//]: # (-*- mode: markdown; coding: utf-8 -*-)
 # El sistema GNU/Linux
 
 <figure style="float:right; padding:10px">
@@ -313,8 +313,8 @@ frecuentemente usadas.
 
 Opción&nbsp;&nbsp;&nbsp; | Significado
 -----|----
-`-l` | Utiliza un formato de listado largo, con información de permisos, usuarios, tamaños, fecha, etc.
-`-R` | Lista los subcarpetas de manera recursiva
+`-l` | Formato de listado largo, con información de permisos, usuarios, tamaños, fecha, etc.
+`-R` | Lista las subcarpetas de manera recursiva
 `-1` | No agrupa los resultados, muestra cada archivo en una línea
 `-d` | No muestra el contenido de la carpeta, sino el nombre de la carpeta
 `-a` | Muestra también los archivos ocultos, aquellos que empiezan por `.`
@@ -717,7 +717,7 @@ pi@raspberrypi:~ $ ▂
 
 La orden `ln a.txt b.txt` ha creado un nuevo nombre `b.txt` para el
 mismo archivo `a.txt`.  Por eso cuando escribimos en `b.txt` el
-resultado puede también verse en `a.txt`.
+resultado puede verse también en `a.txt`.
 
 El problema es que esta forma de enlaces no funciona con las carpetas,
 que son también entidades organizativas sin otro contenido que los
@@ -742,9 +742,10 @@ colgando (*dangling link*) y cualquier intento de acceso produciría un
 error.
 
 Los enlaces simbólicos son muy útiles para simplificar la navegación
-por carpetas.  El último ejemplo es ilustrativo de esto.  Si estamos
-trabajando con una carpeta continuamente es lógico dejarla más a mano
-en nuestro *home*.
+por carpetas.  El último ejemplo que mostrábamos líneas arriba es
+ilustrativo de esto.  Si estamos trabajando con una carpeta
+continuamente (`reactor`) es lógico dejarla más a mano en nuestro
+*home*.
 
 
 ## Usuarios y permisos
@@ -1151,9 +1152,9 @@ Para actualizar con los últimos cambios usa `git pull`:
 
 ```
 pi@raspberrypi:~ $ cd src
-pi@raspberrypi:~/src $ git pull -u
+pi@raspberrypi:~/src $ git pull
 pi@raspberrypi:~ $ cd ../doc
-pi@raspberrypi:~/doc $ git pull -u
+pi@raspberrypi:~/doc $ git pull
 pi@raspberrypi:~/doc $ ▂
 ```
 

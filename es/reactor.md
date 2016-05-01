@@ -1,4 +1,4 @@
-[//]: # (-*- markdown; coding: utf-8 -*-)
+[//]: # (-*- mode: markdown; coding: utf-8 -*-)
 
 # La biblioteca `reactor`
 
@@ -720,7 +720,7 @@ al pulsar espacio parará y al pulsar `q` saldrá del programa.
 La biblioteca *reactor* evoluciona. Examina el código porque muy
 probablemente verás manejadores nuevos que no hemos descrito.
 Experimenta con ellos y no tengas miedo de definir tus propios
-manejadores cada vez que surja una necesidad.  
+manejadores cada vez que surja una necesidad.
 
 En esta sección describiremos algunos manejadores incluídos en
 *reactor* que no están pensados para ser usados por el usuario final,
@@ -750,7 +750,7 @@ los eventos es distinto a un archivo Unix, por lo que necesitaremos un
 
 Muchos de los manejadores que hemos visto están hechos con un
 `pipe_handler`.  Los `input_handler`, `music_handler`,
-`timeout_handler`, `delayed_handler` o `blink_handler` son ejemplos de
+`periodic_handler`, `delayed_handler` o `blink_handler` son ejemplos de
 manejadores basados en `pipe_handler`.
 
 ### *Thread handler*
@@ -937,7 +937,7 @@ LDLIBS=-lreactor -lwiringPi -lpthread
 ```
 
 La variable `REACTOR` tiene la ruta relativa o absoluta donde está
-instalado reactor.  Ajusta su valos si la cambias.  El compilador
+instalado reactor.  Ajusta su valor si la cambias.  El compilador
 necesita utilizar la bandera `-pthread` para generar correctamente el
 código de los hilos y la bandera `-I$(REACTOR)` para encontrar los
 archivos de cabecera.  El montador también necesita la bandera
@@ -949,28 +949,5 @@ y la biblioteca de manejo de hilos *pthread*).
 Todos los ejemplos del taller vienen con un `makefile` completamente
 funcional pero deliberadamente simple.  Analízalos en detalle.
 
-## Sensor analógico
-
-Hemos visto cómo puede medirse una magnitud analógica utilizando un
-montaje con la pata MISO de la interfaz SPI y una entrada digital.  Es
-hora de convertir esa técnica en un nuevo manejador de eventos para la
-automatización.
-
-El reto es definir el manejador `analog_handler` para detectar cuando
-se pasan ciertos umbrales previamente configurados.  Debe cumplir los
-siguientes requisitos:
-
-* Debe poder seleccionarse la pata digital, los umbrales de activación
-  y desactivación, el periodo de muestreo y la frecuencia del reloj.
-  
-* Debe medir periódicamente usando el método descrito en el capítulo
-  sobre SPI.
-  
-* Debe notificar cuando se supera el umbral de activación y cuando el
-  valor queda por debajo del umbral de desactivación.
-  
-* Una vez notificada una activación o una desactivación ya no vuelve a
-  notificar nada hasta que cambie el estado (pasa de activado a
-  desactivado o a la inversa).
-  
-En la carpeta `src/c/`
+A continuación veremos una serie de ejemplos que pueden ayudarte a
+entender cómo se trabaja con la biblioteca *Reactor*.
