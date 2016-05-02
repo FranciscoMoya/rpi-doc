@@ -1,2 +1,2 @@
-* [Español](es)
-* [English](en)
+* [C](c)
+* [Python](python)
