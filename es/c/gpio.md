@@ -1,4 +1,4 @@
-[//]: # (-*- markdown; coding: utf-8 -*-)
+[//]: # (-*- mode: markdown; coding: utf-8 -*-)
 
 # GPIO (*General Purpose Input/Output*)
 
@@ -26,7 +26,7 @@ extensión que ofrecen mayor protección a los pines de *GPIO*.
 
 
 <figure style="float:right; padding:10px">
-  <img src="img/rpi-b2-p1p5.svg" width="200"/>
+  <img src="../img/rpi-b2-p1p5.svg" width="200"/>
 
   <figcaption style="font-size:smaller; font-style:italic">
   <div style="width:200px">

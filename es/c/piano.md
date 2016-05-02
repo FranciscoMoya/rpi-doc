@@ -2,7 +2,7 @@
 # Piano de juguete
 
 <figure style="float:right;padding:10px">
-  <img src="img/piano.png" width="350"/>
+  <img src="../img/piano.png" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
 	Piano infantil como el que vamos a modificar.
   </figcaption>
@@ -20,7 +20,7 @@ desmontarlo entero e identificamos el teclado de membrana que hay bajo
 las teclas del piano.
 
 <figure style="float:right;padding:10px">
-  <img src="img/teclas.jpg" width="350"/>
+  <img src="../img/teclas.jpg" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
 	Teclado de membrana bajo las teclas del piano.
   </figcaption>
@@ -43,7 +43,7 @@ conseguir uno resistente al agua por poco más de seis euros en
 [Banggood.com](http://www.banggood.com/Mini-Waterproof-Wireless-Bluetooth-Speaker-For-iPad-iPhone-6-6-p-88071.html).
 
 <figure style="float:right;padding:10px">
-  <img src="img/matrix.png" width="350"/>
+  <img src="../img/matrix.svg" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
 	Disposición matricial del teclado de membrana.
   </figcaption>
@@ -117,7 +117,7 @@ pegamento:
 
 
 <figure style="float:right;padding:10px">
-  <img src="img/button.svg" width="350"/>
+  <img src="../img/button.svg" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
 	Esquema eléctrico de cada tecla.
   </figcaption>
@@ -241,7 +241,7 @@ Previamente hay que configurar los `SynthDef` ya compilados en una
 carpeta accesible por `scsynth`.
 
 <figure style="float:right;padding:10px">
-  <img src="img/wireshark-sonic-pi.png" width="350"/>
+  <img src="../img/wireshark-sonic-pi.png" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
     Captura de *Wireshark* mostrando todo el tráfico OSC de Sonic-Pi.
   </figcaption>
@@ -416,8 +416,47 @@ simplemente utiliza un mensaje `/sync`.
 ## Juntando todo
 
 Con los dos nuevos manejadores terminar la aplicación es francamente
-trivial.  El código de este ejemplo está en `piano.c`.
+trivial.  El código de este ejemplo está en `piano.c`.  Solo mostramos
+aquí la parte más significativa:
 
 ```C
+static void press(matrix_handler* ev, int key)
+{
+    static int n = 100;
+    synth_handler_send(synth,
+	                   "/s_new", "siiisfsi",
+	                   "sonic-pi-piano", n++, 0, 7,
+	                   "note", 48.0 + key,
+	                   "out_bus", 12,
+					   LO_ARGS_END);
+}
 
+int main()
+{
+    int rows[] = { 4, 17, 27, 22 };
+    int cols[] = { 18, 23, 24, 25 };
+
+    wiringPiSetupGpio();
+    synth = synth_handler_new(do_nothing);
+    reactor* r = reactor_new();
+    reactor_add(r, (event_handler*) matrix_handler_new(rows, NELEMS(rows),
+	                                                   cols, NELEMS(cols),
+						                               press, release));
+    reactor_add(r, (event_handler*) synth);
+    init_synth(synth);
+    reactor_run(r);
+    reactor_destroy(r);
+    return 0;
+}
 ```
+
+## Epílogo
+
+Hemos implementado un piano básico, pero las capacidades disponibles
+son ahora muy superiores a las del piano de juguete.  El sonido es de
+mejor calidad, con efecto *aftertouch*, y podemos añadir todos los
+ritmos de fondo que queramos.  Podemos cambiar el instrumento por
+cualquiera de la extensa biblioteca disponible para Sonic-Pi.  Podemos
+sincronizar varios pianos de juguete para que toquen de forma
+coordinada con una única salida de sonido.  Podemos implementar juegos
+del estilo del *Guitar Hero*.  El límite lo marcas tú.

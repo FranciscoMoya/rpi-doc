@@ -1,6 +1,6 @@
 [//]: # (-*- mode: markdown; coding: utf-8 -*-)
 
-# La biblioteca `reactor`
+# La biblioteca *Reactor*
 
 Este capítulo tiene dos objetivos:
 

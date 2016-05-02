@@ -8,7 +8,7 @@ implementan tanto I2C como SPI y en ese caso probablemente es mejor
 decantarse por I2C porque utiliza menos pines.
 
 <figure style="float:right;padding:10px">
-  <img src="img/rpicfg-interfaces.png" width="350"/>
+  <img src="../img/rpicfg-interfaces.png" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
     Activación de interfaces en la aplicación de configuración.
   </figcaption>
@@ -95,7 +95,7 @@ magnetorresistivo, ...  Construimos un circuito RC similar a la
 figura.
 
 <figure style="float:right; padding:10px">
-  <img src="img/analog_bb.png" width="400">
+  <img src="../img/analog_bb.png" width="400">
   <figcaption style="font-size:smaller; font-style:italic">
   <div style="width:350px">
 	Montaje para la medición precisa de una resistencia.

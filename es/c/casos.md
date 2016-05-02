@@ -59,7 +59,7 @@ Bien, el problema está claro, vamos a resolverlo paso a paso.
 
 ### Empezando por el final
 
-No me cansaré de repetir esto: *si quieres que funcione las pruebas
+No me cansaré de repetir esto: *si quieres que funcione, las pruebas
 primero*.  Antes de empezar a hacer nada del nuevo manejador tenemos
 que hacer un caso de prueba típico.  Esto nos ayuda a entender
 completamente la interfaz de programación que se pretende crear y nos
