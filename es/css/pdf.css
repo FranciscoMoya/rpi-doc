@@ -1,0 +1,11 @@
+@import url("global.css");
+
+.section.toc .page {
+    display: inline;
+}
+.section.toc {
+    display: inline;
+}
+iframe {
+    overflow: hidden;
+}

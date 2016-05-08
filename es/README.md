@@ -1,6 +1,6 @@
 [//]: # (-*- mode: markdown; coding: utf-8 -*-)
 
-# Tercera edición del taller de Raspberry Pi
+# Taller de Raspberry Pi
 
 > **Info**
 > <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
@@ -38,7 +38,7 @@ llegar tus sugerencias.
 
 Happy hacking!
 
-<div style="float:right; display:block">
+<div class="float:right; display:block">
 Toledo, {{ file.mtime }}<br/>
 Francisco Moya Fernández
 </div>

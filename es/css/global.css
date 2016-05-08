@@ -1,0 +1,96 @@
+body {
+    font-size: 16px;
+}
+p {
+    font-size: 1.2em;
+    line-height: 1.4em;
+}
+.book .book-body .page-wrapper .page-inner section.normal a {
+    color: #a32e8b;
+}
+.book .book-body .page-wrapper .page-inner section.normal a.glossary-term {
+    color: #32a33b;
+    text-decoration: none;
+}
+img {
+    border-radius: 3px;
+}
+.left {
+    float: left;
+    margin: 0 1em 0.5em 0;
+}
+.right {
+    float: right;
+    margin: 0 0 0.5em 1em;
+}
+.center {
+    text-align: center;
+    margin: 0 auto;
+}
+.topright {
+    float: right;
+    margin: 0.5em 0 0.5em 1em;
+}
+.medium {
+    width: 53%;
+}
+.small {
+    width: 33%;
+}
+h1, h2, h3 {
+    color: #a32e8b;
+    clear: both;
+}
+.book .book-body .page-wrapper .page-inner section.normal blockquote {
+    color: #333;
+}
+.book .book-body .page-wrapper .page-inner section.normal h2 {
+    font-size: 1.5em;
+    }
+.boks {
+    text-align: center;
+    font-size: 1.5em;
+    font-style: italic;
+    width:50%;
+    color: #32a33b;
+    margin: 1em auto 1em;
+    line-height: 1em;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    padding: 0.5em 0 0.5em 0;
+    clear: both;
+    box-sizing: content-box;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal blockquote[id*="fn"] {
+    font-size: 1em;
+    border-top: 1px solid #777;
+    border-left: none;
+    padding-top: 1em;
+    margin-top: 1em;
+}
+.book .book-body .page-wrapper .page-inner section.normal .boks a.glossary-term {
+    color: #32a33b;
+}
+.book .book-body .page-wrapper .page-inner section.normal a.glossary-term {
+    text-decoration: none;
+}
+.caption {
+    border-radius: 5px;
+    line-height: 1em;
+}
+.caption  .caption-text {
+    font-size: 1em;
+    text-align: left;
+    margin: 0 0.4em;
+}
+.caption img {
+    margin: 0 auto;
+    width: 100%;
+}
+.fa-4x {
+    font-size: 4em !important;
+}
+iframe {
+    border-style: none;
+}

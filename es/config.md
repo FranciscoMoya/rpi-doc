@@ -1,6 +1,8 @@
 [//]: # (-*- markdown; coding: utf-8 -*-)
 # Parámetros configurables
 
+Ver https://www.raspberrypi.org/documentation/configuration/
+
 Todos los parámetros de configuración inicial de la Raspberry Pi se
 buscan en un archivo opcional denominado `config.txt` que debe estar
 en la misma partición FAT32 que el *bootloader*. Este fichero es leído

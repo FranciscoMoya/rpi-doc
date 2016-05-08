@@ -18,7 +18,7 @@ han realizado en la tarjeta microSD que se distribuye en el taller.
   configuración de la Raspberry Pi, un terminal, un navegador, un
   editor de textos y el entorno de programación IDLE.
 * Configurar el fondo de escritorio al archivo
-  [`UCLM-EII-bg.png`](img/UCLM-EII-bg.png).
+  [`UCLM-EII-bg.png`](https://github.com/FranciscoMoya/rpi-doc/blob/master/es/img/UCLM-EII-bg.png).
 * Configurar la disposición (*layout*) de teclado en
   castellano por defecto.
 * Ejecutar la aplicación de configuración y en la pestaña de

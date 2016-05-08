@@ -116,7 +116,7 @@ Las opciones más comunes son:
 `-Iruta` | Especifica la *ruta* de una carpeta donde buscar archivos de cabecera
 `-Lruta` | Especifica la *ruta* de una carpeta donde buscar bibliotecas
 `-lXXX` |  Enlaza con la biblioteca de nombre `libXXX.a`
-`-o` *nombre* | Indica el nombre del archivo ejecutable
+`-o`*nombre* | Indica el nombre del archivo ejecutable
 `-v` | Muestra las fases por las que va pasando el compilador
 `-w` | Suprime los mensajes de aviso (*warnings*)
 `-S` | Preprocesa y compila, pero no ensambla ni enlaza

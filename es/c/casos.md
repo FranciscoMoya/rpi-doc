@@ -262,7 +262,7 @@ sus valores con los argumentos en `analog_handler_init_members`.  No
 te olvides de configurar adecuadamente el pin MISO y el pin GPIO.
 
 A continuación solo queda el hilo de exploración.  El código ya lo
-tienes en el [capítulo de SPI](spi.html) pero tienes que asegurarte de
+tienes en el [capítulo de SPI](./spi.md) pero tienes que asegurarte de
 repetir periódicamente la medida.  Usa tantas funciones como sea
 necesario, no hagas funciones muy largas.  Si ves que tienes que usar
 un `for` y dentro un `if` y dentro otro `if` eso es ya señal de que
@@ -286,7 +286,7 @@ static void* analog_handler_thread(thread_handler* h)
 
 Esto es evidentemente incompleto.  Hay que definir
 `analog_handler_poll`.  Pero su contenido es directamente lo que vimos
-en el [capítulo de SPI](spi.html).
+en el [capítulo de SPI](./spi.md).
 
 ## Generalizando
 

@@ -1,4 +1,4 @@
-[//]: # (-*- markdown; coding: utf-8 -*-)
+[//]: # (-*- mode: markdown; coding: utf-8 -*-)
 # Alimentación de Raspberry Pi
 
 Todos los modelos de Raspberry Pi con la única excepción del *Compute
@@ -111,3 +111,6 @@ añade un circuito protector para la alimentación especialmente
 diseñado para permitir las conexiones y desconexiones en caliente.  En
 cambio, a partir de la revisión 2 del modelo original ya no se incluye
 limitación de corriente de alimentación.
+
+
+https://es.scribd.com/doc/101830961/GPIO-Pads-Control2

@@ -1,7 +1,7 @@
-[//]: # (-*- markdown; coding: utf-8 -*-)
+[//]: # (-*- mode: markdown; coding: utf-8 -*-)
 # La Raspberry Pi
 
-<figure style="float:right;padding:10px">
+<figure class="right">
   <img src="img/pi3.jpg" width="350"/>
 
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
@@ -20,7 +20,9 @@ una iniciativa de bajo coste para promover la experimentación con la
 programación desde edades tempranas, aunque no por ello se trata de un
 mero juguete.
 
+{% if output.name == "website" %}
 <iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1O_kx6KaHBA3DeTRGWc1XvJHzJGTVgV95dR1xLzW9eu4&font=Default&lang=es&initial_zoom=2&height=500' width='100%' height='500' frameborder='0'></iframe>
+{% endif %}
 
 ## La familia Raspberry Pi
 
@@ -29,7 +31,7 @@ más significativos relacionados con Raspberry Pi.  En la corta
 historia de la *Raspberry Pi Foundation* ya se han generado un
 respetable número de modelos:
 
-<figure style="float:right; padding:10px">
+<figure class="right">
   <img src="img/bcm2835sideview.jpg" width="300"/>
   <figcaption style="font-size:smaller; font-style:italic">
   <div style="width:300px">
@@ -63,23 +65,21 @@ respetable número de modelos:
   pensada para aplicaciones finales donde el consumo y/o el coste sean
   factores importantes.
 
+<div style="page-break-after: always;"></div>
+
 > **Info**
-> [<img src="img/Raspi_Colour_R.png" height="80" style="float:right"/>](http://www.raspberrypi.org/)
+> [<img src="img/Raspi_Colour_R.png" height="70" class="topright"/>](http://www.raspberrypi.org/)
+
 > La logomarca de Raspberry Pi es una marca registrada de la
 > *Raspberry Pi Foundation*.  Fue diseñada por Paul Bleech, que ganó
-> el concurso de logos que organizó la fundación en 2011.
+> la competición de logos que organizó la fundación en 2011.
 
-<figure style="float:right; padding:10px">
-  <img src="img/cm-io.jpg" width="350"/>
+> La mayoría de los candidatos siguen estando disponibles en el
+> [foro](https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=329)
+> de la fundación.  Cuidado con la logomarca, tiene unas
+> [normas de uso](https://www.raspberrypi.org/trademark-rules/)
+> bastante estrictas.  No puedes usarla donde te parezca.
 
-  <figcaption style="font-size:smaller; font-style:italic">
-  <div style="width:350px">
-  Compute Module IO Board con el módulo
-  insertado. Fuente: blog de
-  <a href="http://www.raspberrypi.org/raspberry-pi-compute-module-new-product/">raspberrypi.org</a>.
-  </div>
-  </figcaption>
-</figure>
 
 * En abril de 2014 se anuncia la *Raspberry Pi Compute Module*. Es
   similar al modelo B, pero en lugar de ranura SD incorpora 4GB de
@@ -99,15 +99,15 @@ respetable número de modelos:
   [Sphinx](http://dock2office.com/raspberry-pi/) que sirve para
   utilizar una tableta como un ordenador de escritorio, etc.
 
-<figure style="float:right; padding:10px"> <img
-  src="https://www.raspberrypi.org/wp-content/uploads/2014/07/HAT-Pi-Flexis-500x298.jpg"
-  width="350"/>
+<figure class="right">
+  <img src="img/cm-io.jpg" width="350"/>
 
   <figcaption style="font-size:smaller; font-style:italic">
-	<div style="width:300px">
-	Plantilla de la especificación mecánica de HAT. Fuente: <a
-	href="https://www.raspberrypi.org/blog/introducing-raspberry-pi-hats/">raspberrypi.org</a>.
-	</div>
+  <div style="width:350px">
+  Compute Module IO Board con el módulo
+  insertado. Fuente: blog de
+  <a href="http://www.raspberrypi.org/raspberry-pi-compute-module-new-product/">raspberrypi.org</a>.
+  </div>
   </figcaption>
 </figure>
 
@@ -134,14 +134,14 @@ respetable número de modelos:
   [Pimoroni](https://shop.pimoroni.com/collections/hats) y de
   [The Pi Hut](https://thepihut.com/collections/raspberry-pi-hats)).
 
-<figure style="float:right; padding:10px">
-  <img src="img/CM_and_pi.jpg" width="350"/>
+<figure class="right">
+  <img src="https://www.raspberrypi.org/wp-content/uploads/2014/07/HAT-Pi-Flexis-500x298.jpg" width="350"/>
 
   <figcaption style="font-size:smaller; font-style:italic">
-  <div style="width:350px">
-  Compute Module y Raspberry Pi modelo B. Fuente: blog de
-  <a href="http://www.raspberrypi.org/raspberry-pi-compute-module-new-product/">raspberrypi.org</a>.
-  </div>
+	<div style="width:300px">
+	Plantilla de la especificación mecánica de HAT. Fuente: <a
+	href="https://www.raspberrypi.org/blog/introducing-raspberry-pi-hats/">raspberrypi.org</a>.
+	</div>
   </figcaption>
 </figure>
 
@@ -151,6 +151,19 @@ respetable número de modelos:
   forma se consigue reducir sensiblemente el tamaño y con ello el
   precio.  Incorpora la cabecera HAT, que ya estará presente en todos
   los modelos posteriores, y se reduce significativamente el consumo.
+
+<!--
+<figure class="right">
+  <img src="img/CM_and_pi.jpg" width="350"/>
+
+  <figcaption style="font-size:smaller; font-style:italic">
+  <div style="width:350px">
+  Compute Module y Raspberry Pi modelo B. Fuente: blog de
+  <a href="http://www.raspberrypi.org/raspberry-pi-compute-module-new-product/">raspberrypi.org</a>.
+  </div>
+  </figcaption>
+</figure>
+-->
 
 * En febrero de 2015, casi en el tercer aniversario de la Raspberry Pi
   original, se anuncia la *Raspberry Pi 2 modelo B*.  Actualiza el
@@ -180,12 +193,13 @@ respetable número de modelos:
   bits, aunque la compatibilidad hacia atrás sigue siendo total.
 
 > **Info**
-> [<img src="img/themagpi-logo.png" height="50" style="float:right"/>](http://www.raspberrypi.org/magpi/)
+> [<img src="img/themagpi-logo.png" height="48" class="topright"/>](http://www.raspberrypi.org/magpi/)
 > Si quieres conocer más sobre la historia de Raspberry Pi y su
 > comunidad te recomendamos que visites el sitio web de la revista
 > [*The MagPi*](http://www.raspberrypi.org/magpi/). Se trata de una
 > revista de gran calidad y completamente gratuita en su versión
-> electrónica.
+> electrónica.  Además es una fuente muy interesante de proveedores de
+> productos relacionados con Raspberry Pi.
 
 |              | **CM** | **A+** | **B+** | **2B** | **Zero** | **3B** |
 |--------------|:------:|:------:|:------:|:------:|:--------:|:------:|
@@ -197,17 +211,17 @@ respetable número de modelos:
 |Memoria Flash | 4GB    | microSD| microSD| microSD| microSD  | microSD|
 |GPIO pins     | 54     | 26     | 26     | 26     | 26       | 26     |
 |Puertos USB   | 1      | 1      | 4      | 4      | 1        | 4      |
-|Ethernet 10/100 | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-check-square-o"/> |
-|WiFi            | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-check-square-o"/> |
-|Bluetooth       | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-square-o"/> | <i class="fa fa-check-square-o"/> |
-|HDMI          | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> | <i class="fa fa-check-square-o"/> |
+|Ethernet 10/100 | {{ book.unck }} | {{ book.unck }} | {{ book.ck }} | {{ book.ck }} | {{ book.unck }} | {{ book.ck }} |
+|WiFi            | {{ book.unck }} | {{ book.unck }} | {{ book.unck }} | {{ book.unck }} | {{ book.unck }} | {{ book.ck }} |
+|Bluetooth       | {{ book.unck }} | {{ book.unck }} | {{ book.unck }} | {{ book.unck }} | {{ book.unck }} | {{ book.ck }} |
+|HDMI          | {{ book.ck }} | {{ book.ck }} | {{ book.ck }} | {{ book.ck }} | {{ book.ck }} | {{ book.ck }} |
 |DSI ports     | 2      | 1      | 1      | 1      | 0        | 1      |
 |Cam ports     | 2      | 1      | 1      | 1      | 0        | 1      |
 
 
 ## Los sistemas en chip de Broadcom
 
-<figure style="float:right; padding:10px">
+<figure class="right">
   <img src="img/Package_on_Package.png" width="350"/>
 
   <figcaption style="font-size:smaller; font-style:italic">
@@ -253,8 +267,8 @@ incorpora un amplio conjunto de periféricos:
 * Interfaz HDMI
 
 > **Info**
-> <img src="img/hermanhermitage.jpg" height="150"
-> style="float:right;margin:10px"/> Aplicando técnicas de ingeniería
+> <img src="img/hermanhermitage.jpg" height="70" class="topright"/>
+> Aplicando técnicas de ingeniería
 > inversa se documentó una parte sustancial de la GPU en el
 > [repositorio GitHub de Herman Hermitage](https://github.com/hermanhermitage).
 > Es posible que este trabajo haya influido en la
@@ -277,6 +291,17 @@ diseñado específicamente para este modelo de Raspberry Pi.  Actualiza
 el procesador por cuatro cores Cortex-A53 de 64 bits, pero sigue
 incorporando la GPU Videocore IV porque se trata de una de las pocas
 GPUs con documentación pública del fabricante.
+
+<figure class="right">
+  <img src="img/brcm2835plusmemory.jpg" width="350"/>
+
+  <figcaption style="font-size:smaller; font-style:italic">
+  <div style="width:350px">
+  Memoria RAM (izquierda) y BCM2835 (derecha). Foto tomada del blog de
+  <a href="http://www.raspberrypi.org/libraries-codecs-oss/">raspberrypi.org</a>.
+  </div>
+  </figcaption>
+</figure>
 
 El ARM Cortex-A53 tiene como nombre interno *Apollo* y suele usarse en
 procesadores de alto rendimiento en combinación con el ARM Cortex-A57
@@ -301,16 +326,6 @@ La Raspberry Pi Foundation solo distribuye de momento un sistema
 operativo (Raspbian GNU/Linux) de 32 bits, y no tiene planes a corto
 plazo de mantener una versión de 64 bits.
 
-<figure style="float:right; padding:10px">
-  <img src="img/brcm2835plusmemory.jpg" width="350"/>
-
-  <figcaption style="font-size:smaller; font-style:italic">
-  <div style="width:350px">
-  Memoria RAM (izquierda) y BCM2835 (derecha). Foto tomada del blog de
-  <a href="http://www.raspberrypi.org/libraries-codecs-oss/">raspberrypi.org</a>.
-  </div>
-  </figcaption>
-</figure>
 
 ## Una Raspberry Pi para el taller
 

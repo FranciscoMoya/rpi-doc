@@ -1,7 +1,7 @@
 [//]: # (-*- mode: markdown; coding: utf-8 -*-)
 # Piano de juguete
 
-<figure style="float:right;padding:10px">
+<figure class="right">
   <img src="../img/piano.png" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
 	Piano infantil como el que vamos a modificar.
@@ -19,7 +19,7 @@ Armados con un destornillador y un poco de paciencia conseguimos
 desmontarlo entero e identificamos el teclado de membrana que hay bajo
 las teclas del piano.
 
-<figure style="float:right;padding:10px">
+<figure class="right">
   <img src="../img/teclas.jpg" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
 	Teclado de membrana bajo las teclas del piano.
@@ -42,7 +42,7 @@ altavoz Bluetooth, que puede ser externo si queremos.  Se puede
 conseguir uno resistente al agua por poco más de seis euros en
 [Banggood.com](http://www.banggood.com/Mini-Waterproof-Wireless-Bluetooth-Speaker-For-iPad-iPhone-6-6-p-88071.html).
 
-<figure style="float:right;padding:10px">
+<figure class="right">
   <img src="../img/matrix.svg" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
 	Disposición matricial del teclado de membrana.
@@ -116,7 +116,7 @@ pegamento:
 ## Exploración del teclado
 
 
-<figure style="float:right;padding:10px">
+<figure class="right">
   <img src="../img/button.svg" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
 	Esquema eléctrico de cada tecla.
@@ -240,7 +240,7 @@ el momento en que se pulsa una tecla enviaremos una orden `/s_new`.
 Previamente hay que configurar los `SynthDef` ya compilados en una
 carpeta accesible por `scsynth`.
 
-<figure style="float:right;padding:10px">
+<figure class="right">
   <img src="../img/wireshark-sonic-pi.png" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
     Captura de *Wireshark* mostrando todo el tráfico OSC de Sonic-Pi.

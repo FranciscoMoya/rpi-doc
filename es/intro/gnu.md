@@ -1,7 +1,8 @@
 [//]: # (-*- mode: markdown; coding: utf-8 -*-)
+
 # El sistema GNU/Linux
 
-<figure style="float:right; padding:10px">
+<figure class="right">
   <img src="img/raspbian1.png" width="400">
 
   <figcaption style="font-size:smaller; font-style:italic">
@@ -41,7 +42,7 @@ ahí (Linux, FreeBSD, NetBSD, etc.)
 
 > **Info**
 
-> <img src="img/rms.jpg" height="200" style="float:right;margin:10px"/>
+> <img src="img/rms.jpg" height="200" class="topright"/>
 > En 1983 Richard M. Stallman, que trabajaba como
 > investigador en el AI Lab del MIT, decidió empezar el proyecto GNU
 > con el objetivo de hacer innecesario el uso de cualquiero otro
@@ -77,7 +78,7 @@ del taller.
 
 ## El sistema de archivos
 
-<figure style="float:right; padding:10px">
+<figure class="right">
   <img src="img/raspbian2.png" width="400">
 
   <figcaption style="font-size:smaller; font-style:italic">
@@ -792,7 +793,7 @@ modificación.  Sin embargo antes de la fecha hay mucha más información.
 `55` | Tamaño en bytes
 `Apr 11 08:26` | Fecha y hora
 
-<figure style="float:right;padding:10px">
+<figure class="right">
   <img src="img/permisos.svg" width="350"/>
 
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
@@ -1116,7 +1117,7 @@ Las carpetas `src` y `doc` de tu *home* son dos repositorios GIT que
 contienen lo mismo que en los repositorios oficiales de
 [github.com](http://github.com/FranciscoMoya/).  Fueron creados como
 se indica en el apéndice que describe
-[nuestra personalización de Raspbian](custom.html).  Cuando una
+[nuestra personalización de Raspbian](../custom.md).  Cuando una
 carpeta es un repositorio GIT contiene una subcarpeta oculta llamada
 `.git`.
 
