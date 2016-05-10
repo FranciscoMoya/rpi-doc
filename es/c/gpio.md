@@ -2,8 +2,10 @@
 
 
 Para la programación de entradas y salidas digitales en C tenemos tres
-bibliotecas disponibles: *wiringPi* de FIXME, *bcm2835* de FIXME y
-*pigpio* de FIXME.  Todas ellas son más o menos equivalentes para los
+bibliotecas disponibles: [*wiringPi*](http://wiringpi.com/) de Gordon
+Henderson, [*bcm2835*](http://www.airspayce.com/mikem/bcm2835/) de
+Mike McCauley y [*pigpio*](http://abyz.co.uk/rpi/pigpio/index.html) de
+joan@abyz.co.uk.  Todas ellas son más o menos equivalentes para los
 propósitos del taller, aunque cada una tiene sus ventajas e
 inconvenientes.  Veamos ejemplos con las tres.
 
@@ -53,27 +55,6 @@ incluso la integridad física del sistema.
 Sin emabrgo esto es un 
 
 ### Uso de PWM
-
-*Pulse Width Modulation* (PWM) es una técnica que consiste en la variación del
-*duty cycle* de una señal digital periódica, fundamentalmente con dos posibles
-objetivos:
-
-* Por un lado se puede utilizar como mecanismo para transmitir
-  información.  Por ejemplo, los servo-motores tienen una entrada
-  digital por la que se transmite el ángulo deseado codificado en PWM.
-
-* Por otro lado se puede utilizar para regular la cantidad de potencia
-  suministrada a la carga.  Por ejemplo, las luminarias LED
-  frecuentemente utilizan reguladores PWM para permitir el control de
-  intensidad.
-
-La Raspberry Pi tiene una sola pata de GPIO (GPIO 18) que puede
-configurarse como salida PWM. El propio BCM2835 se encarga de
-gestionar la generación de la señal, liberando completamente al
-procesador principal. El usuario puede configurar el rango de valores
-disponible (hasta 1024) y posteriormente sacar un valor determinado,
-de forma que el módulo PWM se encarga de mantener el *duty cycle* en
-la relación valor/rango.
 
 También podemos programar la generación de señales PWM con la ayuda de
 la biblioteca *wiringPi*. La frecuencia base para PWM en Raspberry Pi
