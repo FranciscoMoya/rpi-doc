@@ -133,6 +133,9 @@ respetable número de modelos:
   [Adafruit](https://www.adafruit.com/categories/405), de
   [Pimoroni](https://shop.pimoroni.com/collections/hats) y de
   [The Pi Hut](https://thepihut.com/collections/raspberry-pi-hats)).
+  Además del BCM2835 el modelo B+ incorpora un SMSC LAN9514 que
+  incorpora la interfaz Ethernet y el *hub USB* ocupando un único
+  puerto USB del BCM2835.
 
 <figure class="right">
   <img src="https://www.raspberrypi.org/wp-content/uploads/2014/07/HAT-Pi-Flexis-500x298.jpg" width="350"/>
@@ -146,11 +149,12 @@ respetable número de modelos:
 </figure>
 
 * En noviembre de 2014 se anuncia la *Raspberry Pi A+* como el
-  rediseño equivalente del modelo A.  Un cambio significativo es que
-  se abandona la idea de usar el mismo circuito impreso.  De esta
-  forma se consigue reducir sensiblemente el tamaño y con ello el
-  precio.  Incorpora la cabecera HAT, que ya estará presente en todos
-  los modelos posteriores, y se reduce significativamente el consumo.
+  rediseño equivalente del modelo A, sin SMSC LAN9514.  Un cambio
+  significativo es que se abandona la idea de usar el mismo circuito
+  impreso.  De esta forma se consigue reducir sensiblemente el tamaño
+  y con ello el precio.  Incorpora la cabecera HAT, que ya estará
+  presente en todos los modelos posteriores, y se reduce
+  significativamente el consumo.
 
 <!--
 <figure class="right">
@@ -182,15 +186,27 @@ respetable número de modelos:
   Raspberry Pi Zero de regalo.  Parece que la presión de Google tras
   una reunión de Eric Schmidt y Eben Upton fue
   [decisiva](https://www.raspberrypi.org/magpi/making-pi-zero/) en su
-  desarrollo.
+  desarrollo.  Sin embargo se trata de un modelo producido
+  directamente por Raspberry Pi Trading, que tiene una capacidad de
+  producción relativamente limitada, por lo que resulta dificil de
+  conseguir.
 
 * En febrero de 2016 se anuncia la *Raspberry Pi 3 modelo B*,
   coincidiendo con el cuarto cumpleaños de la *Raspberry Pi modelo B*
   original.  Se vuelve a actualizar el procesador por un BCM2837
   diseñado específicamente para la Raspberry Pi 3 (quad-core
-  Cortex-A53) a 1.2GHz, incluye un BCM WiFi 802.11n y Bluetooth 4.1.  El
-  cambio es muy importante, porque se pasa a una arquitectura de 64
-  bits, aunque la compatibilidad hacia atrás sigue siendo total.
+  Cortex-A53) a 1.2GHz, incluye un BCM WiFi 802.11n, Bluetooth LE y
+  Bluetooth 4.1 Classic.  El cambio es muy importante, porque se pasa
+  a una arquitectura de 64 bits, aunque la compatibilidad hacia atrás
+  sigue siendo total.  Además del BCM2837 incorpora un BCM43438 que
+  implementa todas las nuevas capacidades de comunicación inalámbrica.
+  Tan solo se deja sin conectar el receptor de radio FM.
+
+* En febrero de 2016 Eben Upton ha anunciado en diversos foros que se
+  está preparando un *Compute Module 3* y habrá una *Raspberry Pi 3
+  modelo A*.  Las especificaciones no son públicas aún, pero ya hay
+  versiones beta disponibles para
+  [algunos ingenieros](https://www.raspberrypi.org/forums/viewtopic.php?f=98&t=137952).
 
 > **Info**
 > [<img src="img/themagpi-logo.png" height="48" class="topright"/>](http://www.raspberrypi.org/magpi/)

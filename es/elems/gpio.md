@@ -257,6 +257,52 @@ entrada con *Schmitt trigger* no se realiza pin a pin sino en bloques
 (GPIO0-27, GPIO28-45, GPIO46-53).  Para los intereses del taller no
 debería haber problemas con la configuración por defecto.
 
+Es posible examinar el estado y configuración de Para ello vamos a
+utilizar la utilidad `gpio` que incluye la biblioteca *wiringPi*.
+
+```
+pi@raspberrypi:~ $ gpio readall
+ +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
+ | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
+ +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
+ |     |     |    3.3v |      |   |  1 || 2  |   |      | 5v      |     |     |
+ |   2 |   8 |   SDA.1 | ALT0 | 1 |  3 || 4  |   |      | 5V      |     |     |
+ |   3 |   9 |   SCL.1 | ALT0 | 1 |  5 || 6  |   |      | 0v      |     |     |
+ |   4 |   7 | GPIO. 7 |   IN | 1 |  7 || 8  | 1 | ALT0 | TxD     | 15  | 14  |
+ |     |     |      0v |      |   |  9 || 10 | 1 | ALT0 | RxD     | 16  | 15  |
+ |  17 |   0 | GPIO. 0 |   IN | 0 | 11 || 12 | 0 | IN   | GPIO. 1 | 1   | 18  |
+ |  27 |   2 | GPIO. 2 |   IN | 0 | 13 || 14 |   |      | 0v      |     |     |
+ |  22 |   3 | GPIO. 3 |   IN | 0 | 15 || 16 | 0 | IN   | GPIO. 4 | 4   | 23  |
+ |     |     |    3.3v |      |   | 17 || 18 | 0 | IN   | GPIO. 5 | 5   | 24  |
+ |  10 |  12 |    MOSI | ALT0 | 0 | 19 || 20 |   |      | 0v      |     |     |
+ |   9 |  13 |    MISO | ALT0 | 0 | 21 || 22 | 0 | IN   | GPIO. 6 | 6   | 25  |
+ |  11 |  14 |    SCLK | ALT0 | 0 | 23 || 24 | 1 | OUT  | CE0     | 10  | 8   |
+ |     |     |      0v |      |   | 25 || 26 | 1 | OUT  | CE1     | 11  | 7   |
+ |   0 |  30 |   SDA.0 |   IN | 1 | 27 || 28 | 1 | IN   | SCL.0   | 31  | 1   |
+ |   5 |  21 | GPIO.21 |   IN | 1 | 29 || 30 |   |      | 0v      |     |     |
+ |   6 |  22 | GPIO.22 |   IN | 1 | 31 || 32 | 0 | IN   | GPIO.26 | 26  | 12  |
+ |  13 |  23 | GPIO.23 |   IN | 0 | 33 || 34 |   |      | 0v      |     |     |
+ |  19 |  24 | GPIO.24 |   IN | 0 | 35 || 36 | 0 | IN   | GPIO.27 | 27  | 16  |
+ |  26 |  25 | GPIO.25 |   IN | 0 | 37 || 38 | 0 | IN   | GPIO.28 | 28  | 20  |
+ |     |     |      0v |      |   | 39 || 40 | 0 | IN   | GPIO.29 | 29  | 21  |
+ +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
+ | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
+ +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
+pi@raspberrypi:~ $ ▂
+```
+
+La columna *BCM* indica la numeración de Broadcom (*GPIO n*).  La
+columna *Physical* contiene el número de pin en el conector J8 y la
+columna *V* contiene el valor leído.  La columna *Name* representa la
+función del pin pero debes tener cuidado porque cuando aparece
+`GPIO.21` no se refiere a la nomenclatura de Broadcom, que es la
+usual, sino a una nomenclatura propia de la biblioteca *wiringPi*.
+Para interpretarlo correctamente debes mirar en el número
+correspondiente de la columna `BCM`, así que `GPIO.21` es en realidad
+*GPIO 5*.  Esta confusión artificial ha sido objeto de numerosas
+críticas a la biblioteca *wiringPi* pero parece que los usuarios de
+Arduino lo ven como algo natural.
+
 ## Funciones alternativas
 
 Todos los pines de GPIO tienen la posibilidad de ser usados con otras
@@ -267,16 +313,27 @@ consulta {{ "12:_bcm28_arm_perip" | cite }} para mayor detalle.
 
 Junto a tu kit de iniciación en el taller recibirás una tarjeta que
 resume las funciones que a nosotros nos interesan.  Para mayor detalle
-consulta el *flyer* que también te proporcionamos.  Si no encuentras
-ejemplos de alguno de los periféricos y no consigues hacerlo funcionar
-pregunta en el
+consulta el *flyer* que también te proporcionamos o la documentación
+de [elinux.org](http://elinux.org/RPi_BCM2835_GPIOs) que incluye toda
+la información dispersa.  Si no encuentras ejemplos de alguno de los
+periféricos y no consigues hacerlo funcionar pregunta en el
 [foro del taller](https://sites.google.com/site/tallerraspberrypi/).
 
 Este esquema puede resultarte útil para usos avanzados:
 
 ![Funciones alternativas de GPIO](../img/cheat-full.svg)
 
-Algunos elementos no pueden utilizarse
+De todas formas debes tener presente que algunos elementos no pueden
+seleccionarse con seguridad porque ya se han utilizado en otras partes
+de la Raspberry Pi.  Por ejemplo, el BCM2837 tiene dos interfaces SD y
+dos UART.  Sin embargo ambas interfaces SD están ocupadas (una para la
+tarjeta microSD y otra para la comunicación WiFi.  Análogamente UART0
+se destina a la interfaz Bluetooth en la Raspberry Pi 3 y solo se
+expone UART1 en los pines 8 y 10.  Otro ejemplo son los relojes de
+propósito general (*GPCLKx*) que permiten generar relojes de
+frecuencia programable en determinadas patas.  *GPCLK1* está reservado
+para uso interno y si se intenta usar lo más probable es que se
+cuelgue la *Raspberry Pi*.
 
 ## Modulación de anchura de pulsos
 
@@ -296,7 +353,16 @@ objetivos:
 La Raspberry Pi tiene una varias patas de GPIO (GPIO12, GPIO13, GPIO18
 y GPIO19) que puede configurarse como salida de alguno de los dos
 canales PWM. El propio BCM2835 se encarga de gestionar la generación
-de la señal, liberando completamente al procesador principal. El
+de la señal, liberando completamente al procesador principal.
+
+El periférico PWM de la Raspberry Pi es muy flexible
+
+
+
+
+
+
+El
 usuario puede configurar el rango de valores disponible (hasta 1024) y
 posteriormente sacar un valor determinado, de forma que el módulo PWM
 se encarga de mantener el *duty cycle* en la relación valor/rango.
@@ -360,3 +426,6 @@ del servo depende del modelo concreto.  Teóricamente debería ser entre
 habrá que probar el servo concreto, nuestros experimentos dan un rango
 útil entre 29 y 123 para el microservo de TowerPro disponible en el
 laboratorio.
+
+
+Como puedes observar aparecen todos los datos del conector 
