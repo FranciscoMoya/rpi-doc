@@ -4,7 +4,8 @@
 	"_ck": "<i class='fa fa-check-square-o'/>",
 	"_unck": "<i class='fa fa-square-o'/>",
 	"ck": "&#9745;",
-	"unck": "&#9744;"
+	"unck": "&#9744;",
+	"output": "webpage"
     },
     "styles": {
         "website": "css/website.css",

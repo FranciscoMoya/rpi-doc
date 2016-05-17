@@ -2,8 +2,11 @@
 
 # Los elementos de la RPi
 
-La Raspberry Pi cuenta con un enorme número de periféricos y no nos va
-a dar tiempo a verlos todos.  En las siguientes secciones veremos los
-conceptos fundamentales de la mayoría.  En la página web del taller
-iremos añadiendo información que incorporaremos a ediciones futuras de
-este manual.
+Vamos a ver ahora una serie de ejemplos de programación en C de los
+elementos que hemos visto en el capítulo 2.  Nuestro objetivo es
+ofrecer un panorama de toda la gama de posibilidades que tenemos a
+nuestra disposición usando lenguaje C.  Eso implica que no nos vamos a
+limitar a usar una biblioteca, sino todas las que en este momento
+conozco.
+
+

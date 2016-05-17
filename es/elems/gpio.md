@@ -2,11 +2,12 @@
 
 # Entradas y salidas digitales
 
-Puede que te fijaras en la línea de tiempo cómo ha evolucionado el
-concepto de la Raspberry Pi.  Inicialmente parecía que iba a ser un
-pincho USB, similar a los mediacenters que se enchufan directamente en
-el televisor.  Si el objetivo era reducir coste ¿por qué terminó
-siendo mucho más grande?
+La versión online de este libro incorpora una línea de tiempo
+interactiva con la historia de la Raspberry Pi.  Repasa un poco la
+evolución del concepto de la Raspberry Pi.  Inicialmente parecía que
+iba a ser un pincho USB, similar a los mediacenters que se enchufan
+directamente en el televisor.  Si el objetivo era reducir coste ¿por
+qué terminó siendo mucho más grande?
 
 La respuesta la tenemos que buscar en los objetivos del proyecto.  Sus
 diseñadores querían que fuera una plataforma docente, no simplemente
@@ -121,7 +122,8 @@ cualquier tipo hay que poner mucho cuidado para no dañar la propia
 Raspberry Pi.  Es muy importante comprobar los niveles de tensión y la
 corriente solicitada.  Los pines de GPIO pueden generar y consumir
 tensiones compatibles con los circuitos de 3.3V (no son tolerantes a
-5V) y pueden sacar hasta 16 mA.
+5V) y pueden sacar hasta 16 mA.  Eso es suficiente para iluminar un
+LED, pero para poco más.
 
 Sin embargo hay que tener presente que la corriente que sale de esos
 pines proviene de la fuente de alimentación de 3.3V y esta fuente está
@@ -141,7 +143,7 @@ límite, pero no funcionará.
 
 Para evitar problemas se han fabricado una amplia variedad de tarjetas
 de expansión, que protegen de diversas formas los pines de GPIO.  Las
-más conocidas son
+más conocidas son:
 
 * [Pi-Face Digital](http://www.piface.org.uk/products/piface_digital/)
 
@@ -332,8 +334,16 @@ se destina a la interfaz Bluetooth en la Raspberry Pi 3 y solo se
 expone UART1 en los pines 8 y 10.  Otro ejemplo son los relojes de
 propósito general (*GPCLKx*) que permiten generar relojes de
 frecuencia programable en determinadas patas.  *GPCLK1* está reservado
-para uso interno y si se intenta usar lo más probable es que se
-cuelgue la *Raspberry Pi*.
+para uso interno (Ethernet) y si se intenta usar lo más probable es
+que se cuelgue la *Raspberry Pi*.  Nada grave, pero tampoco es
+agradable.
+
+
+## Manipulando pines en la consola
+
+Vamos a empezar a usar los componentes sin escribir ni una línea de
+código, empleando programas que tienes disponibles. 
+
 
 ## Modulación de anchura de pulsos
 
@@ -355,17 +365,21 @@ y GPIO19) que puede configurarse como salida de alguno de los dos
 canales PWM. El propio BCM2835 se encarga de gestionar la generación
 de la señal, liberando completamente al procesador principal.
 
-El periférico PWM de la Raspberry Pi es muy flexible
+El periférico PWM de la Raspberry Pi es muy flexible pero solo dispone
+de dos canales (*PWM0* y *PWM1*).  Puede funcionar en modo PWM o en
+modo serializador.  En el modo serializador simplemente saca por la
+pata correspondiente los bits de las palabras que se escriben en un
+*buffer*.  Veamos primero el modo PWM.
+
+En el modo PWM puede funcionar en dos submodos
 
 
 
 
-
-
-El
-usuario puede configurar el rango de valores disponible (hasta 1024) y
-posteriormente sacar un valor determinado, de forma que el módulo PWM
-se encarga de mantener el *duty cycle* en la relación valor/rango.
+El usuario puede configurar el rango de valores disponible (hasta
+1024) y posteriormente sacar un valor determinado, de forma que el
+módulo PWM se encarga de mantener el *duty cycle* en la relación
+valor/rango.
 
 La frecuencia base para PWM en Raspberry Pi es de 19.2Mhz.  Esta
 frecuencia puede ser dividida mediante el uso de un divisor indicado

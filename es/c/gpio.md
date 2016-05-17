@@ -1,5 +1,6 @@
 [//]: # (-*- mode: markdown; coding: utf-8 -*-)
 
+# Entradas y salidas digitales en C
 
 Para la programación de entradas y salidas digitales en C tenemos tres
 bibliotecas disponibles: [*wiringPi*](http://wiringpi.com/) de Gordon
@@ -9,8 +10,8 @@ joan@abyz.co.uk.  Todas ellas son más o menos equivalentes para los
 propósitos del taller, aunque cada una tiene sus ventajas e
 inconvenientes.  Veamos ejemplos con las tres.
 
+## Entradas y salidas digitales con *wiringPi*
 
-### Entradas y salidas digitales con *wiringPi*
 
 Echa un vistazo al
 [manual de referencia de `wiringPi`](http://wiringpi.com/reference/)

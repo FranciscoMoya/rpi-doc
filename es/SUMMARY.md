@@ -8,7 +8,7 @@
   * [La Raspberry Pi](intro/rpi.md)
   * [El sistema GNU/Linux](intro/gnu.md)
 
-* [Los elementos de la RPi](elems/README.md)
+* [Los periféricos de la RPi](elems/README.md)
   * [Entradas y salidas digitales](elems/gpio.md)
   * [Comunicaciones I2C](elems/i2c.md)
   * [SPI](elems/spi.md)

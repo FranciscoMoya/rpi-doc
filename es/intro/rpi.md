@@ -20,7 +20,7 @@ una iniciativa de bajo coste para promover la experimentación con la
 programación desde edades tempranas, aunque no por ello se trata de un
 mero juguete.
 
-{% if output.name == "website" %}
+{% if book.output == "webpage" %}
 <iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1O_kx6KaHBA3DeTRGWc1XvJHzJGTVgV95dR1xLzW9eu4&font=Default&lang=es&initial_zoom=2&height=500' width='100%' height='500' frameborder='0'></iframe>
 {% endif %}
 
