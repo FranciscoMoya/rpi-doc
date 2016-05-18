@@ -342,8 +342,73 @@ agradable.
 ## Manipulando pines en la consola
 
 Vamos a empezar a usar los componentes sin escribir ni una línea de
-código, empleando programas que tienes disponibles. 
+código, empleando programas que tienes disponibles.  Conecta un LED a
+una de las patitas (por ejemplo GPIO18) con una resistencia para
+limitar la corriente a 15mA.  Para ello te puedes ayudar de esta tabla
+tomada de [theledlight.com](http://www.theledlight.com/LED101.html)
+corrigiendo el valor para los LEDs azules de Banggood.
 
+*Tipo*   | *Caída* | *Resistencia* (15mA)
+---------|---------|---------------------
+Rojo     | 1.7V    | 100 Ohm
+Amarillo | 2V      | 87 Ohm
+Verde    | 2.1V    | 80 Ohm
+Azul     | 2.9V    | 27 Ohm
+Blanco   | 3.4V    | --
+
+El kit tiene un conjunto de componentes discretos que incluye LEDs y
+resistencias.  En teoría se incluyen tres de cada uno de los colores
+rojo, amarillo, verde y blanco.  En la práctica dependiendo de la
+disponibilidad pueden incluir otro tipo de LEDs e incluso otro número.
+Por ejemplo, en un pedido de prueba que realizamos al comenzar el año
+recibimos 15 LEDs (5 rojos, 5 amarillos y 5 azules).  Los objetivos
+del taller no se ven afectados en absoluto, así que esto nos parece
+una anécdota menor.
+
+Los LEDs del kit no están coloreados, así que es difícil saber de qué
+color son.  De todas formas si ponemos una resistencia de 100 Ohm
+estamos seguros de no superar los límites y se enciende sin problemas
+hasta el LED azul.  Veamos cómo encender y apagar el LED conectado a
+la pata GPIO18:
+
+```
+pi@raspberrypi:~ $ gpio -g mode 18 out
+pi@raspberrypi:~ $ gpio -g write 18 1
+pi@raspberrypi:~ $ gpio -g write 18 0
+pi@raspberrypi:~ $ ▂
+```
+
+En la primera línea hemos configurado la pata como salida.  En las
+siguientes simplemente escribimos un valor en esa pata (1 y 0).  La
+opción `-g` le indica a `gpio` que use la numeración de patas normal.
+
+> **Nota**
+> Por desgracia, una consecuencia de la caída de tensión en
+> los diodos blancos es que no podemos encenderlos con salidas
+> de 3.3V. Puedes usar el *level shifter* o un transistor, pero ¿es
+> necesario?  Aquí tienes el reto, si has tenido la suerte de tener un
+> LED blanco usa los mismos componentes que antes pero configura el
+> circuito para que se encienda sin problemas con una pata de GPIO.
+
+[//]: # ( solución: no conectar a masa sino a 5V y usar lógica inversa)
+
+El siguiente paso es utilizar las patas de GPIO como entradas
+digitales.  Para ello conecta uno de los pulsadores entre otra pata
+de GPIO y masa.  Lo normal es además poner una resistencia de
+*pull-up* de 10K entre la pata y 3.3V para que la entrada no este
+flotando mientras el pulsador no está apretado.  Puedes hacerlo, pero
+te recordamos que también puedes usar el *pull-up* interno.
+
+```
+pi@raspberrypi:~ $ gpio -g mode 23 in
+pi@raspberrypi:~ $ gpio -g mode 23 up
+pi@raspberrypi:~ $ gpio -g read 23
+1
+pi@raspberrypi:~ $ ▂
+```
+
+Cada vez que ejecutemos `gpio -g read 23` nos devolverá el estado (0
+para el conmutador *pulsado* y 1 para *no pulsado*).
 
 ## Modulación de anchura de pulsos
 
