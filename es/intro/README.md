@@ -142,3 +142,25 @@ terminal de órdenes y escribe:
 cd src
 git pull -u
 ```
+
+## Organización de este manual
+
+Este pequeño libro se ha dividido en tres partes:
+
+* La primera parte se dedica al material de fundamentos e introducción
+  necesario. Lo ideal sería que el alumno tuviera ya al menos estos
+  conocimientos al empezar el taller, pero dedicaremos el primer día a
+  revisarlos.
+* La segunda parte introduce los periféricos y la programación de los
+  periféricos desde un punto de vista agnóstico respecto al lenguaje.
+  Se utilizan herramientas de línea de órdenes para interactuar con
+  ellos.
+* La tercera parte se dedica a la programación de la Raspberry Pi. Se
+  ofrecen dos versiones, una en C y otra en Python.  Incluye material
+  de fundamentos, ejemplos sencillos equivalentes a la segunda parte,
+  y casos de estudio.
+
+Obviamente esta organización está influida por aspectos prácticos.
+Dejamos para la segunda parte todo el material común que podemos, para
+no repetirlo en las terceras partes C y Python.  En el taller vemos
+todo junto, presentando en paralelo versiones C y Python.

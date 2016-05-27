@@ -2,24 +2,6 @@
 
 # Uso de SPI
 
-SPI es un protocolo alternativo a I2C que utilizan algunos
-dispositivos. Hoy en día es frecuente encontrar dispositivos que
-implementan tanto I2C como SPI y en ese caso probablemente es mejor
-decantarse por I2C porque utiliza menos pines.
-
-<figure style="float:right;padding:10px">
-  <img src="../img/rpicfg-interfaces.png" width="350"/>
-  <figcaption style="font-size:smaller;font-style:italic;text-align:center">
-    Activación de interfaces en la aplicación de configuración.
-  </figcaption>
-</figure>
-
-Al igual que con I2C, el primer paso para realizar programas que
-utilizan la interfaz SPI es activarlo con la aplicación de
-configuración de la Raspberry Pi, en la pestaña *Interfaces*.
-Recuerda que hay que reiniciar la *Raspberry Pi* para que el cambio
-surta efecto.
-
 La programación es sencilla en cuanto que solo utiliza dos funciones,
 pero puede ser realmente enrevesada de entender la comunicación con
 algunos dispositivos SPI.  El motivo es que en SPI para poder leer

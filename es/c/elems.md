@@ -10,3 +10,9 @@ limitar a usar una biblioteca, sino todas las que en este momento
 conozco.
 
 
+* [Entradas y salidas digitales](gpio.md)
+* [Comunicaciones I2C](i2c.md)
+* [SPI](spi.md)
+* [UART](uart.md)
+* [Sonido](snd.md)
+* [Red](net.md)

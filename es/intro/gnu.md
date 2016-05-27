@@ -312,7 +312,7 @@ entender que la fecha es lo que aparece antes del nombre (`Apr 11
 En la siguiente tabla se muestra un conjunto de opciones
 frecuentemente usadas.
 
-Opción&nbsp;&nbsp;&nbsp; | Significado
+<div style="width:80px;">Opción</div> | Significado
 -----|----
 `-l` | Formato de listado largo, con información de permisos, usuarios, tamaños, fecha, etc.
 `-R` | Lista las subcarpetas de manera recursiva
@@ -405,7 +405,7 @@ pi@raspberrypi:~ $ ▂
 
 Entre opciones que acepta esta orden, destacamos las siguientes:
 
-Opción&nbsp;&nbsp;&nbsp; | Significado
+<div style="width:80px;">Opción</div> | Significado
 -----|----
 `-r` | Procesa subcarpetas de forma recursiva
 `-i` | Pide confirmación para cada borrado
@@ -520,7 +520,7 @@ La lista completa de secciones la tienes en la página de manual de
 
 Algunas opciones de `man` que merece la pena destacar:
 
-Opción&nbsp;&nbsp;&nbsp; | Significado
+<div style="width:80px;">Opción</div> | Significado
 -----|----
 `-k` | Busca la palabra clave indicada en las páginas de manual y muestra las que la contienen
 `-a` | Muestra todas las páginas de manual que correspondan
@@ -784,7 +784,7 @@ pi@raspberrypi:~ $ ▂
 Hasta ahora solo habíamos visto la fecha y hora de la última
 modificación.  Sin embargo antes de la fecha hay mucha más información.
 
-**Campo** | **Significado**
+Campo | Significado
 ----------|----------------
 `-rw-r--r--` | Permisos
 `1`  | Número de referencias al archivo (nombres o enlaces)
@@ -817,7 +817,7 @@ Cada bloque de tres letras representa cuatro posibles permisos según
 la siguiente tabla.  Un guión `-` en cualquiera de las letras
 representa ausencia del permiso correspondiente.
 
-**Permiso** | **Representación**
+Permiso     | Representación
 ------------|-------------------
 Lectura     | `r` en la primera letra
 Escritura   | `w` en la segunda letra
@@ -885,7 +885,7 @@ añadir permisos (con `+`) o eliminarlos (con `-`) para el usuario
 dueño (con `u`), el grupo dueño (con `g`), otros (con `o`) o todos
 (con `a` de *all*).
 
-*Permiso `chown`** | **Significado**
+Permiso `chown` | Significado
 -------------------|----------------
 `u+r` | Añadir permiso de lectura al usuario dueño
 `u+w` | Añadir permiso de escritura al usuario dueño
@@ -991,7 +991,7 @@ pi@raspberrypi:~ $ ▂
 
 En un formato tabular se muestra información básica:
 
-**Campo** | **Significado**
+Campo     | Significado
 ----------|----------------
 `PID`     | Identificador de proceso
 `TTY`     | Terminal 

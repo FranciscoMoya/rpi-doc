@@ -346,15 +346,15 @@ código, empleando programas que tienes disponibles.  Conecta un LED a
 una de las patitas (por ejemplo GPIO18) con una resistencia para
 limitar la corriente a 15mA.  Para ello te puedes ayudar de esta tabla
 tomada de [theledlight.com](http://www.theledlight.com/LED101.html)
-corrigiendo el valor para los LEDs azules de Banggood.
+corrigiendo el valor para los LEDs de Banggood que tenemos en el kit.
 
 *Tipo*   | *Caída* | *Resistencia* (15mA)
 ---------|---------|---------------------
 Rojo     | 1.7V    | 100 Ohm
 Amarillo | 2V      | 87 Ohm
 Verde    | 2.1V    | 80 Ohm
+Blanco   | 2.7V    | 40 Ohm
 Azul     | 2.9V    | 27 Ohm
-Blanco   | 3.4V    | --
 
 El kit tiene un conjunto de componentes discretos que incluye LEDs y
 resistencias.  En teoría se incluyen tres de cada uno de los colores
@@ -366,10 +366,11 @@ del taller no se ven afectados en absoluto, así que esto nos parece
 una anécdota menor.
 
 Los LEDs del kit no están coloreados, así que es difícil saber de qué
-color son.  De todas formas si ponemos una resistencia de 100 Ohm
-estamos seguros de no superar los límites y se enciende sin problemas
-hasta el LED azul.  Veamos cómo encender y apagar el LED conectado a
-la pata GPIO18:
+color son.  En las bolsitas suelen tener una letra (R, G, Y, W) para
+indicar el color, pero no siempre.  De todas formas si ponemos una
+resistencia de 100 Ohm estamos seguros de no superar los límites y se
+enciende sin problemas hasta el LED azul.  Veamos cómo encender y
+apagar el LED conectado a la pata GPIO18:
 
 ```
 pi@raspberrypi:~ $ gpio -g mode 18 out
@@ -383,11 +384,14 @@ siguientes simplemente escribimos un valor en esa pata (1 y 0).  La
 opción `-g` le indica a `gpio` que use la numeración de patas normal.
 
 > **Nota**
-> Por desgracia, una consecuencia de la caída de tensión en
-> los diodos blancos es que no podemos encenderlos con salidas
-> de 3.3V. Puedes usar el *level shifter* o un transistor, pero ¿es
-> necesario?  Aquí tienes el reto, si has tenido la suerte de tener un
-> LED blanco usa los mismos componentes que antes pero configura el
+> Estamos de suerte en el kit de BangGood porque los diodos
+> blancos tienen una caída de tensión moderada.  Por desgracia, en
+> muchas otras ocasiones esto no es así y es frecuente tener caídas de
+> tensión de 3.4V en un LED blanco.  Una consecuencia de esto es que
+> no podemos encenderlos con salidas de 3.3V.  En esos casos puedes
+> usar el *level shifter* o un transistor, pero ¿es necesario?  Aquí
+> tienes el reto, si tuvieras un LED blanco con caída de 3.4V ¿qué
+> harías? Usa los mismos componentes que antes pero configura el
 > circuito para que se encienda sin problemas con una pata de GPIO.
 
 [//]: # ( solución: no conectar a masa sino a 5V y usar lógica inversa)
@@ -409,6 +413,9 @@ pi@raspberrypi:~ $ ▂
 
 Cada vez que ejecutemos `gpio -g read 23` nos devolverá el estado (0
 para el conmutador *pulsado* y 1 para *no pulsado*).
+
+[//]: # ( comentar uso de sysfs? )
+
 
 ## Modulación de anchura de pulsos
 
@@ -436,15 +443,11 @@ modo serializador.  En el modo serializador simplemente saca por la
 pata correspondiente los bits de las palabras que se escriben en un
 *buffer*.  Veamos primero el modo PWM.
 
-En el modo PWM puede funcionar en dos submodos
+El usuario puede configurar dos valores:
 
-
-
-
-El usuario puede configurar el rango de valores disponible (hasta
-1024) y posteriormente sacar un valor determinado, de forma que el
-módulo PWM se encarga de mantener el *duty cycle* en la relación
-valor/rango.
+* Un *rango* de valores disponible (hasta 1024).
+* Un *valor* que determina el *duty cycle*. El módulo PWM se encarga de
+mantener el *duty cycle* en la relación valor/rango.
 
 La frecuencia base para PWM en Raspberry Pi es de 19.2Mhz.  Esta
 frecuencia puede ser dividida mediante el uso de un divisor indicado
@@ -461,7 +464,7 @@ En el modo *mark and space* el módulo PWM incrementará un contador
 interno hasta llegar a un límite configurable, el rango de PWM, que
 puede ser de como máximo 1024. Al comienzo del ciclo el pin se pondrá
 a 1 lógico, y se mantendrá hasta que el contador interno llegue al
-valor puesto por el usuario.  En ese momento el pin se pondrá a 0
+*valor* puesto por el usuario.  En ese momento el pin se pondrá a 0
 lógico y se mantendrá hasta el final del ciclo.
 
 Veamos su aplicación al control de un servomotor. Un servomotor tiene
@@ -502,9 +505,39 @@ $$
 Es decir, el divisor habría que configurarlo a 390.  El rango completo
 del servo depende del modelo concreto.  Teóricamente debería ser entre
 52 y 102, siendo el valor completamente centrado 77.  En la práctica
-habrá que probar el servo concreto, nuestros experimentos dan un rango
-útil entre 29 y 123 para el microservo de TowerPro disponible en el
-laboratorio.
+habrá que probar el servo concreto porque los límites de 1ms y 2ms no
+son estrictos.  Nuestros experimentos dan un rango útil entre 29 y 123
+para el microservo de TowerPro disponible en el kit del alumno.
+
+Veamos cómo se puede controlar sin programar nada. Primero
+configuramos la pata GPIO18 como habíamos calculado:
+
+```
+pi@raspberrypi:~ $ gpio -g mode 18 pwm
+pi@raspberrypi:~ $ gpio pwm-ms
+pi@raspberrypi:~ $ gpio pwmr 1024
+pi@raspberrypi:~ $ gpio pwmc 390
+pi@raspberrypi:~ $ ▂
+```
+
+Ahora podemos cambiar el valor correspondiente para que gire a la
+posición deseada.
+
+```
+pi@raspberrypi:~ $ gpio -g pwm 18 52
+pi@raspberrypi:~ $ gpio -g pwm 18 102
+pi@raspberrypi:~ $ ▂
+```
+
+> **Warning** Recuerda que solo hay dos canales PWM disponibles y que
+> estos canales solo se pueden asignar a ciertas patas (PWM0 en GPIO12
+> y GPIO18, PWM1 en GPIO13 y GPIO19).
 
 
-Como puedes observar aparecen todos los datos del conector 
+## Más sobre PWM
+
+Para los propósitos del taller no nos detendremos más en el módulo
+PWM, pero tened en cuenta que la gama de posibilidades es mucho mayor.
+No descartamos incorporar a esta sección en el futuro más información
+sobre los otros modos de funcionamiento.  De momento preferimos
+avanzar para conocer otros periféricos.

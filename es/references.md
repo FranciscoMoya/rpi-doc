@@ -1,4 +1,4 @@
-[//]: # (-*- markdown -*-)
+[//]: # (-*- mode: markdown; coding: utf-8 -*-)
 
 # Referencias
 

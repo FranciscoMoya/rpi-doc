@@ -1,4 +1,5 @@
 {
+    "gitbook": "2.x.x",
     "author": "Francisco Moya",
     "variables": {
 	"_ck": "<i class='fa fa-check-square-o'/>",
