@@ -14,7 +14,7 @@
   * [Comunicaciones SPI](elems/spi.md)
   * [UART](elems/uart.md)
   * [Sonido](elems/snd.md)
-  * [Red](elems/net.md)
+  * [Comunicaciones en red](elems/net.md)
 
 * [Desarrollo en C](c/README.md)
   * [Programando los periféricos](c/elems.md)
