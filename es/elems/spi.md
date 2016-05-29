@@ -107,16 +107,16 @@ Primero ejecutamos el servidor `pigpiod`:
 
 ```
 pi@raspberrypi:~ $ sudo gpiod
+pi@raspberrypi:~ $ ▂
 ```
 
 Utilizamos `sudo` para que se ejecute con permisos de superusuario.
 Se llama servidor porque atiende peticiones de los clientes.  Por sí
 mismo no hace nada, sino que espera a que un cliente le solicite
-operaciones concretas.  Puedes salir cuando quieras pulsando
-*Control-C*.
+operaciones concretas.
 
 El cliente se llama `pigs` y puede ejecutarse como usuario normal.
-Utiliza otra ventana de terminal para ejecutarlo. Por ejemplo:
+Por ejemplo:
 
 ```
 pi@raspberrypi:~ $ pigs help
@@ -163,23 +163,62 @@ solo hay que cambiar el modo SPI.
 
 ```
 pi@raspberrypi:~ $ pigs spio 0 4000000 1
-...
+0
 pi@raspberrypi:~ $ ▂
 ```
 
 Ahora tenemos que configurar el módulo con las entradas referidas a
 masa, en modo continuo a 64 SPS y con rango de medida (FSR) de
-±4.096V.  El ADS1118 escribe su configuración a la vez que 
+±4.096V.  El ADS1118 escribe su configuración a la vez que lee datos.
+Si no se desea escribir el registro de configuración simplemente hay
+que escribir ceros.  Este es el formato del registro de configuración:
 
+15   | 14-12 | 11-9 | 8    | 7-5 | 4       | 3   | 2-0 
+:---:|:-----:|:----:|:----:|:---:|:-------:|:---:|:---:
+SS   | MUX   | PGA  | MODE | DR  | TS_MODE | PU  | NOP
+
+Donde cada campo corresponde a lo siguiente:
+
+Campo    | Significado
+---------|------------
+SS       | A 1 para empezar una conversión cuando está en modo *single shot*.
+MUX      | Configura el multiplexor de la entrada de conversor. Para señales referidas a masa es *1xx* con *xx* correspondiente a la entrada que se desea.
+PGA      | Define el rango a plena escala del amplificador de ganancia programable. *000* para ±6.144V, *001* para ±4.096V, *010* para ±2.048V, *011* para ±1.024V, *100* para ±0.512V y el resto para ±0.256V.
+MODE     | 0 para *modo continuo*, 1 para modo *single shot*.
+DR       | Tasa de muestreo. Desde 8 hasta 860 SPS. 8·2ⁿ SPS.
+TS_MODE  | 0 = Modo ADC, 1 = modo sensor de temperatura.
+PU       | Habilita *pull-up* en DOUT.
+NOP      | Siempre *xx1*. *011* = Actualizar registro de configuración.
+
+En nuestro caso escribimos `0100 0000 0100 1011`.  Es decir,
+selecciona la primera entrada analógica referida a masa, con el máximo
+rango a plena escala, en modo *single shot* a 32 muestras por segundo y
+habilitando el *pull-up*.
 
 ```
-pi@raspberrypi:~ $ pigs spio 0 4000000 1
-...
+pi@raspberrypi:~ $ pigs spix 0x80 0x4b 0x80 0x4b
+4 0 0 128 75 
 pi@raspberrypi:~ $ ▂
 ```
 
+Para leer el valor del potenciómetro basta volver a repetir la
+orden. Con esto iniciamos otra conversión y leemos la anterior.
 
-luego config register como single-ended, 64 SPS, continuous mode y FSR +-4.096V
+```
+pi@raspberrypi:~ $ pigs spix 0x80 0x4b 0x80 0x4b
+4 75 230 128 75 
+pi@raspberrypi:~ $ ▂
+```
 
-Es MSB first
+Para interpretarlo hay que imprimir los dos primeros octetos como un
+número de 16 bits en complemento a 2 y multiplicar el resultado por
+los voltios que suponen cada bit (rango a plena escala dividido por el
+valor máximo, es decir, 6.144/32768).
+
+```
+pi@raspberrypi:~ $ V=$(printf "0x%02x%02x" 75 230)
+pi@raspberrypi:~ $ echo "$(($V))/32768*6.144" | bc -l
+3.64312500000000000000
+pi@raspberrypi:~ $ ▂
+```
 
