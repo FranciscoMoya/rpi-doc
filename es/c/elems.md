@@ -12,7 +12,5 @@ conozco.
 
 * [Entradas y salidas digitales](gpio.md)
 * [Comunicaciones I2C](i2c.md)
-* [SPI](spi.md)
-* [UART](uart.md)
-* [Sonido](snd.md)
-* [Red](net.md)
+* [Comunicaciones SPI](spi.md)
+* [Comunicaciones en red](net.md)

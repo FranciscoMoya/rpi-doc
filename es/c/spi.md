@@ -1,6 +1,6 @@
 [//]: # (-*- mode: markdown; coding: utf-8 -*-)
 
-# Uso de SPI
+## Programación de SPI con *wiringPi*
 
 La programación es sencilla en cuanto que solo utiliza dos funciones,
 pero puede ser realmente enrevesada de entender la comunicación con
@@ -9,7 +9,8 @@ datos hay que escribir datos, de hecho se lee a la vez que se escribe.
 Esto hace que en los dispositivos reales haya que hacer muchas
 transacciones que se descartan por completo.
 
-Este ejemplo escribe en una memoria EEPROM 25LC010A de Microchip.
+Este ejemplo escribe en una memoria EEPROM 25LC010A de Microchip
+usando *wiringPi*.
 
 ``` C
 #include <stdio.h>
@@ -43,8 +44,41 @@ dispositivo y en algunos casos puede requerir descartar parte o toda
 la información.  En este caso el primer byte es la orden y a
 continuación se envían los argumentos.
 
+Un resumen de las funciones involucradas:
+
+Función                                   | Descripción
+------------------------------------------|----------------------
+`wiringPiSPISetup(canal, velocidad)`      | Prepara un canal SPI y lo configura a una velocidad determinada.
+`wiringPiSPIDataRW(canal, bytes, long)`   | Escribe y lee a la vex un conjunto de bytes.
+
+La simplicidad es máxima pero también se pierden las capacidades del
+hardware para poder acomodar todos los modos de transferencia de SPI.
 Pueden consultarse más detalles en el artículo de Gordon Henderson
-disponible en [projects.drogon.net](https://projects.drogon.net/understanding-spi-on-the-raspberry-pi/).
+disponible en
+[projects.drogon.net](https://projects.drogon.net/understanding-spi-on-the-raspberry-pi/).
+
+## Programación de SPI con *bcm2835*
+
+En la biblioteca *bcm2835* contamos con una gama de funciones más
+próxima al hardware.  Algunas funciones son similares a *wiringPi*
+pero añade muchas más para configurar el modo de transferencia.
+
+
+Un resumen de las funciones involucradas:
+
+Función                                   | Descripción
+------------------------------------------|----------------------
+`bcm2835_spi_begin`                       | Inicializa el módulo de SPI.
+`bcm2835_spi_end`                         | Libera los recursos empleados en la inicialización.
+`bcm2835_spi_setClockDivider(div)`        | Define el divisor del reloj.
+`bcm2835_spi_setDataMode(modo)`           | Modo SPI según se comentó en capítulo 2.
+`bcm2835_spi_chipSelect(cs)`              | Pin de CS (0, 1, 2), 3 = ninguno.
+`bcm2835_spi_setChipSelectPolarity(cs, v)` | Define la polaridad del pin *cs* como activa a valor *v*.
+`bcm2835_spi_transfer(v)`                 | Transmite y recibe (devuelve) un byte.
+`bcm2835_spi_transfernb(tbuf, rbuf, len)` | Transmite y recibe *len* bytes.
+`bcm2835_spi_transfern (buf, len)`        | Transmite y recibe *len* bytes en el mismo buffer.
+`bcm2835_spi_writenb (buf, len)`          | Transmite *len* bytes.
+
 
 ## Medir tiempos de forma precisa
 
@@ -169,4 +203,9 @@ de alta frecuencia.  En cualquier caso el método es mucho más preciso
 que la propuesta original de Adafruit, y no depende del estado de
 carga del sistema.
 
+
+## Retos para la semana
+
+1. **Fácil** Diseña un mecanismo para poder controlar tiras de LEDs
+  empleando la interfaz SPI.
 

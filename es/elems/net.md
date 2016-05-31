@@ -561,3 +561,98 @@ archivos.  Estos archivos especiales se denominan *sockets*.
 La interfaz de programación basada en *sockets* (API socket) sigue
 siendo la dominante hoy en día para tratar con redes de comunicaciones
 y es la que que veremos en el capítulo correspondiente.
+
+De todas formas conviene dar unas pequeñas nociones de los fundamentos
+generales antes de escribir código.  En la introducción a GNU, en el
+capítulo 1 de este manual, ya hablamos de los *descriptores de
+archivo*.  Son números que representan a los archivos desde el punto
+de vista del sistema operativo.  Básicamente proporcionan una interfaz
+basada en cuatro operaciones básicas, que corresponden a *llamadas al
+sistema* (servicios del sistema operativo):
+
+* La llamada *open* abre un archivo.  Busca el archivo en el sistema
+  de archivos usando un nombre jerárquico que se denomina *ruta del
+  archivo* y asigna un nuevo descriptor de archivo.  A partir de este
+  momento nos podemos olvidar de la ruta.  El sistema operativo solo
+  necesita el descriptor.
+* La llamada *close* cierra el archivo.  Con esto el sistema operativo
+  termina todas las operaciones en curso que afectan al archivo y
+  libera su descriptor para que pueda ser reutilizado con otro
+  archivo.
+* La llamada *write* escribe en el archivo un conjunto de octetos y la
+  llamada *read* lee del archivo un conjunto de octetos.
+
+Esta interfaz de programación se utiliza en GNU para multitud de
+operaciones, las operaciones con archivos del disco, la escritura de
+mensajes en el terminal, la lectura de datos del teclado, la lectura
+de eventos del ratón, etc.  Parece lógico que se extienda también a la
+programación de comunicaciones en red y eso es lo que hace la interfaz
+*socket*.
+
+Una conexión de red no tiene ningún elemento en el disco que la
+represente.  Por tanto no queda más remedio que sustituir la llamada
+*open* por otra equivalente que proporcione la información necesaria
+para la comunicación.  Esa llamada se llama *socket* y es la que da
+nombre a la interfaz de programación.  La llamada *socket* asigna un
+descriptor de archivo a un canal de comunicación.  Pero el canal de
+comunicación no basta, necesitamos proporcionar los datos acerca del
+destinatario o el origen de cada mensaje (direcciones IP que utiliza,
+puertos TCP o UDP, etc.).  Esto se hace con una nueva llamada
+*connect* para el lado del cliente o *bind* para el lado del servidor.
+Cuando el *socket* está conectado ya funciona como un descriptor de
+archivo normal.
+
+A partir de ese momento todas las llamadas de descriptores de archivo
+son también válidas (*read*, *write* y *close* son también operaciones
+que se pueden realizar sobre *sockets* una vez que están conectados).
+
+Las comunicaciones UDP no necesitan más llamadas, esto es todo.  Es
+tan similar que en algunos sistemas operativos como Plan9 o 2k los
+*sockets* se crean con llamadas a *open* usando una ruta de archivo
+especial.  A pesar de todo GNU proporciona otras llamadas *sendto* o
+*recvfrom* que no hacen sino combinar la llamada *write* con la
+llamada *connect* y la llamada *read* con la llamada *bind*.  No las
+usaremos en absoluto.
+
+Sin embargo TCP es mas complejo.  Para proporcionar las garantías
+adicionales necesita que se implemente el concepto de *conexión* como
+el establecimiento de un nuevo canal único entre los dos procesos que
+se comunican.  En el lado del cliente es sencillo, basta con que
+*connect* haga este trabajo.  La conexión en este caso no es
+simplemente asignar la dirección destino, sino reservar una serie de
+recursos para la comunicación con el destino.
+
+El lado del servidor TCP es el más complejo.  Cada cliente que se
+conecte con el servidor tiene que disponer de su propia conexión.  Con
+*socket* y *bind* podemos crear un socket que atiende mensajes
+destinados a una dirección concreta y a un puerto concreto, pero solo
+uno.  La solución pasa por una llamada más, *accept*, que crea otro
+nuevo socket en cada conexión desde un proceso cliente.  La API se
+completa con una llamada *listen* que es preciso invocar para
+configurar cuantas conexiones casi simultáneas es posible atender.
+
+Aunque hay muchos más detalles que ni hemos mencionado creo que puede
+servir para entender cómo se programan las comunicaciones.  Estas
+tablas pueden servir para entender la secuencia de operaciones que se
+debe realizar.
+
+
+Servidor UDP  | Cliente UDP   | Descripción
+--------------|---------------|------------
+`socket`      | `socket`      | Crea canal de comunicación.
+`bind`        | `connect`     | Configura direcciones origen/destino.
+`read`        | `read`        | Recibe datos del otro extremo.
+`write`       | `write`       | Envía datos al otro extremo.
+`close`       | `close`       | Cierra el canal de comunicación.
+
+
+Servidor TCP  | Cliente TCP   | Descripción
+--------------|---------------|------------
+`socket`      | `socket`      | Crea canal de comunicación.
+`bind`        | `connect`     | Configura direcciones origen/destino.
+`listen`      |               | Configura el número de conexiones simultáneas.
+`accept`      |               | Crea socket esclavo para atender conexión.
+`read`        | `read`        | Recibe datos del otro extremo.
+`write`       | `write`       | Envía datos al otro extremo.
+`close`       | `close`       | Cierra el canal de comunicación.
+
