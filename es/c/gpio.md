@@ -365,8 +365,59 @@ notar.  Lo notarás por ejemplo cuando uses `gpioSetAlertFunc` de
 
 ### Modulación PWM con *pigpio*
 
-La modulación PWM con *pigpio* puede hacerse con funciones de bajo nivel de forma equivalente a como se hace en
+La modulación PWM con *pigpio* puede hacerse con funciones de bajo
+nivel de forma equivalente a como se hace en *bcm2835* pero soporta
+además una interfaz de alto nivel mucho más sencilla.  Existe una
+función para controlar servos con PWM y otra para controlar el
+*duty-cycle* y con ello la potencia entregada a una carga.
 
+Veamos el ejemplo usando esta interfaz:
+
+``` C
+#include <pigpio.h>
+#include <stdio.h>
+
+int main(int argc, char* argv[])
+{
+	if (argc < 5) {
+		printf("Usage: %s min max\n", argv[0]);
+		exit(0);
+	}
+
+	int min = atoi(argv[1]);
+	int max = atoi(argv[2]);
+
+    gpioInitialise();
+	for(;;) {
+		gpioServo(18, min);
+		gpioDelay(1000000);
+		gpioServo(18, max)
+		gpioDelay(1000000);
+	}
+    gpioTerminate();
+    return 0;
+}
+```
+
+No es necesario especificar los parámetros de bajo nivel, tan solo la
+anchura del pulso en milisegundos.  Un ancho de cero para la señal
+PWM.  El resto de valores válidos están entre 500 y 2500, aunque el
+rango real del servo depende del modelo concreto.
+
+Otra característica interesante de pigpio es que estas funciones se
+pueden aplicar sobre cualquier pin.  Si es uno de los que soportan PWM
+por hardware lo utilizará de forma transparente y si no lo simulará
+con un hilo independiente.  La frecuencia de la señal PWM que genera
+es en todos los casos de 50Hz.
+
+Un resumen de las funciones de alto nivel en pigpio:
+
+Función                     | Descripción
+----------------------------|----------------------
+`gpioServo(pin, ancho)`     | Señal PWM para controlar servo con una anchura de pulso dada.
+`gpioPWM(pin, duty)`        | Genera una señal PWM con un *duty-cycle* determinado (hasta *rango*).
+`gpioSetPWMrange(pin,rango)`| Cambia el rango de la señal PWM generada.
+`gpioSetPWMfrequency(pin,f)`| Cambia la frecuencia de la señal PWM generada.
 
 ## Ejercicios
 

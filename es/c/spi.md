@@ -9,26 +9,30 @@ datos hay que escribir datos, de hecho se lee a la vez que se escribe.
 Esto hace que en los dispositivos reales haya que hacer muchas
 transacciones que se descartan por completo.
 
-Este ejemplo escribe en una memoria EEPROM 25LC010A de Microchip
-usando *wiringPi*.
+Este ejemplo reproduce el que describíamos en el capítulo anterior
+utilizando la herramienta `pigs`, esta vez empleando *wiringPi*.
 
 ``` C
 #include <stdio.h>
+#include <stdlib.h>
 #include <wiringPiSPI.h>
-#include "25LC010A.h"
+
+void ads1118_rw(int ch, char buf[4]) {
+	buf[0] = 0x80; buf[1] = 0x4b;
+	buf[0] = 0x80; buf[1] = 0x4b;
+    wiringPiSPIDataRW (0, buf, 4);
+}
 
 int main (void) {
-    wiringPiSPISetup(0, 10000000);
+    wiringPiSPISetup(0, 4000000);
 
-    char enable = _25LC010_WREN;
-    wiringPiSPIDataRW (0, &enable, 1);
-
-    char cmd[] = {
-      _25LC010_WRITE, 0,
-      1, 2, 3, 4, 5
-    };
-    wiringPiSPIDataRW (0, cmd, sizeof(cmd));
-
+	char data[4];
+	ads1118_rw(0, data);
+	printf("Control reg = %02x%02x\n", data[2], data[3]);
+	delay(100);
+	ads1118_rw(0, data);
+	short v = data[0] << 8 | data[1];
+	printf("AD0 = %02x%02x (%d)\n", data[0], data[1], v);
     return 0;
 }
 ```
@@ -57,19 +61,59 @@ Pueden consultarse más detalles en el artículo de Gordon Henderson
 disponible en
 [projects.drogon.net](https://projects.drogon.net/understanding-spi-on-the-raspberry-pi/).
 
+El problema de *wiringPi* es que para transferencias SPI no permite
+seleccionar el modo.  Su autor considera que la gran mayoría de los
+módulos SPI usan el modo 0.  Puede ser cierto, pero los ADS1118 que
+usamos en el taller son modo 1.
+
+> **Warning** La biblioteca *wiringPi* asume que utilizamos SPI0 con
+> el modo 0.  Por este motivo no la recomendamos, porque el módulo
+> CJMCU-1118 utiliza el modo 1.
+
 ## Programación de SPI con *bcm2835*
 
 En la biblioteca *bcm2835* contamos con una gama de funciones más
 próxima al hardware.  Algunas funciones son similares a *wiringPi*
-pero añade muchas más para configurar el modo de transferencia.
+pero añade muchas más para configurar el modo de transferencia y la
+interfaz SPI.
 
+``` C
+#include <stdio.h>
+#include <bcm2835.h>
+
+int main (void) {
+    bcm2835_init();
+    bcm2835_spi_begin();
+    bcm2835_spi_setDataMode(1);
+    bcm2835_spi_setClockDivider(5); // 19.2MHz / 5 ~ 4MHz
+    bcm2835_spi_chipSelect(0);
+    
+	char tdata[4] = { 0x80, 0x4b, 0x80, 0x4b };
+	char rdata[4];
+    bcm2835_spi_transfernb(tdata, rdata, 4)
+	printf("Control reg = %02x%02x\n", rdata[2], rdata[3]);
+	bcm2835_delay(100);
+    bcm2835_spi_transfernb(tdata, rdata, 4)
+	short v = rdata[0] << 8 | rdata[1];
+	printf("AD0 = %02x%02x (%d)\n", rdata[0], rdata[1], v);
+
+	bcm2835_spi_end();
+	bcm2835_close();
+    return 0;
+}
+```
+
+Aunque parece más complejo realmente se debe al mayor control de la
+inicialización.  La inicialización es más larga, pero la posibilidad
+de usar buffers distintos de transmisión y recepción simplifica muchos
+casos frecuentes.
 
 Un resumen de las funciones involucradas:
 
 Función                                   | Descripción
 ------------------------------------------|----------------------
-`bcm2835_spi_begin`                       | Inicializa el módulo de SPI.
-`bcm2835_spi_end`                         | Libera los recursos empleados en la inicialización.
+`bcm2835_spi_begin()`                     | Inicializa el módulo de SPI.
+`bcm2835_spi_end()`                       | Libera los recursos empleados en la inicialización.
 `bcm2835_spi_setClockDivider(div)`        | Define el divisor del reloj.
 `bcm2835_spi_setDataMode(modo)`           | Modo SPI según se comentó en capítulo 2.
 `bcm2835_spi_chipSelect(cs)`              | Pin de CS (0, 1, 2), 3 = ninguno.
@@ -79,6 +123,48 @@ Función                                   | Descripción
 `bcm2835_spi_transfern (buf, len)`        | Transmite y recibe *len* bytes en el mismo buffer.
 `bcm2835_spi_writenb (buf, len)`          | Transmite *len* bytes.
 
+
+## Programación de SPI con *pigpio*
+
+Con *pigpio* es posible utilizar el periférico auxiliar SPI (SPI1)
+además del principal (ver bandera *A* del campo de banderas en
+*spiOpen*).  La ventaja es que esta otra interfaz SPI tiene tamaño de
+palabra configurable y tres líneas de *chip select* disponibles (en
+lugar de dos).  Por otro lado la interfaz principal es sensiblemente
+más rápida, por lo que utilizaremos esa normalmente.
+
+``` C
+#include <stdio.h>
+#include <pigpio.h>
+
+int main (void) {
+	gpioInitialise();
+	int spi = spiOpen(0, 4000000, 1);
+	char tdata[4] = { 0x80, 0x4b, 0x80, 0x4b };
+	char rdata[4];
+    spiXfer(spi, tdata, rdata, 4)
+	printf("Control reg = %02x%02x\n", rdata[2], rdata[3]);
+	bcm2835_delay(100);
+    spiXfer(spi, tdata, rdata, 4)
+	short v = rdata[0] << 8 | rdata[1];
+	printf("AD0 = %02x%02x (%d)\n", rdata[0], rdata[1], v);
+	spiClose(spi);
+	gpioTerminate();
+    return 0;
+}
+```
+
+Al igual que *bcm2835* utiliza buffers diferentes para la transmisión
+y la recepción, lo que en muchos casos simplifica el trabajo y permite
+usar buffers constantes en la transmisión.
+
+Función                       | Descripción
+------------------------------|----------------------
+`spiOpen(ch, b, f)`           | Abre un canal SPI con una frecuencia *b* y banderas *f* (ver capítulo 2).
+`spiClose(spi)`               | Cierra canal SPI.
+`spiRead(spi, buf, n)`        | Lee *n* bytes del canal SPI.
+`spiWrite(spi, buf, n)`       | Escribe *n* bytes por el canal SPI.
+`spiXfer(spi, tbuf, rbuf, n)` | Lee y escribe simultáneamente *n* bytes del canal SPI.
 
 ## Medir tiempos de forma precisa
 
@@ -131,7 +217,8 @@ cargado. Este tiempo es proporcional a RC y por tanto a R.  Se puede
 realizar un calibrado para medir con precisión absoluta, pero en
 cualquier caso tenemos una medida precisa que nos permite comparar.
 
-El código es sumamente sencillo:
+El código es sumamente sencillo. Lo proporcionamos solamente en
+*wiringPi*.
 
 ``` C
 #include <stdio.h>
