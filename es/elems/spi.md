@@ -89,11 +89,11 @@ Las diferentes combinaciones de CPOL y CPHA dan lugar a los cuatro
 modos posibles:
 
 Modo | CPOL | CPHA
----------|----------|---------
-0 | 0 | 0
-1 | 0 | 1
-2 | 1 | 0
-3 | 1 | 1
+-----|------|------
+  0  |   0  |   0
+  1  |   0  |   1
+  2  |   1  |   0
+  3  |   1  |   1
 
 De la hoja de datos del ADS1118 podemos ver que el dispositivo es
 compatible con el modo 1 (CPOL=0, CPHA=1), la polaridad de CE es
@@ -210,10 +210,14 @@ pi@raspberrypi:~ $ pigs spix 0x80 0x4b 0x80 0x4b
 pi@raspberrypi:~ $ ▂
 ```
 
-Para interpretarlo hay que imprimir los dos primeros octetos como un
-número de 16 bits en complemento a 2 y multiplicar el resultado por
-los voltios que suponen cada bit (rango a plena escala dividido por el
-valor máximo, es decir, 6.144/32768).
+Enviando dos veces el registro de control devuelve cuatro octetos: la
+última muestra y un eco del registro de control (128 es 0x80 en
+hexadecimal y 75 es 0x4b en hexadecimal).
+
+Para interpretar la muestra hay que imprimir los dos primeros octetos
+como un número de 16 bits en complemento a 2 y multiplicar el
+resultado por los voltios que suponen cada bit (rango a plena escala
+dividido por el valor máximo, es decir, 6.144/32768).
 
 ```
 pi@raspberrypi:~ $ V=$(printf "0x%02x%02x" 75 230)
@@ -222,3 +226,10 @@ pi@raspberrypi:~ $ echo "$(($V))/32768*6.144" | bc -l
 pi@raspberrypi:~ $ ▂
 ```
 
+Con el programa `printf` podemos imprimir valores de forma similar a
+como lo hace la función `printf` de C.  El operador `$(orden)` de la
+*shell* simplemente devuelve la salida estándar de la orden que
+encierra.  En este caso la utilizamos para meter la muestra en
+hexadecimal en la variable `V`.  A continuación usamos el operador
+`$((expr))` de la *shell* para transformar ese número hexadecimal en
+decimal y componemos una expresión que es calculada por `bc`.

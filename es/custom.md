@@ -26,14 +26,18 @@ han realizado en la tarjeta microSD que se distribuye en el taller.
   *Localisation* seleccionar *Locale* `es/ES`.  Además seleccionar la
   zona horaria (*Timezone*) `Europe/Madrid`, el teclado
   como `Spain/Spanish` y finalmente la zona WiFi como `ES/Spain`.
-* Instalar algunos paquetes adicionales: `tmux`, `bc`, `i2c-tools`,
-  `python-smbus`, `ipython`, `zile`, `python-dev`, `python-gpiozero`,
-  `mpg123`, `manpages-es`, `gcc-4.9-doc`, `gdb-doc`, `wireshark`,
-  `liblo-dev`, `python-liblo`.
+* Instalar algunos paquetes adicionales: `tmux`, `screen`, `bc`,
+  `i2c-tools`, `python-smbus`, `ipython`, `zile`, `python-dev`,
+  `python-gpiozero`, `mpg123`, `manpages-es`, `gcc-4.9-doc`,
+  `gdb-doc`, `wireshark`, `liblo-dev`, `python-liblo`.
 * Añadir el usuario `pi` al grupo `staff` para que funcione `pip
   install`, y al grupo `wireshark` para que podamos capturar tráfico
   sin ser superusuario.
 * Instalar la biblioteca *wiringPi* para Python con `pip install wiringpi2`.
+* Instalar la biblioteca *bcm2835* con `wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.50.tar.gz`, `tar xzvf bcm2835*tar.gz`, `cd bcm2835-1.50 ; ./configure ; make ; sudo make install`.
+* Instalar la biblioteca *pigpio* con `wget
+  https://github.com/joan2937/pigpio/archive/master.zip`, `unzip
+  master.zip`, `cd pigpio-master ; make ; sudo make install`.
 * Instalar `pygubu` (editor de interfaces gráficas) con `pip install pygubu`.
 * Descargar las pruebas del sistema del repositorio GitHub del taller con 
   `git clone https://github.com/FranciscoMoya/rpi-src.git src` y 
@@ -41,3 +45,4 @@ han realizado en la tarjeta microSD que se distribuye en el taller.
 * Instalar `nodejs`, `npm` y `node-semver`.
 * Instalar `gitbook` con `sudo npm install gitbook-cli -g`.
 * Compilar la documentación con `gitbook install`, `gitbook build`.
+* Actualizar firmware con `rpi-update`.

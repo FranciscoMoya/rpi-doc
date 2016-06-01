@@ -541,3 +541,9 @@ PWM, pero tened en cuenta que la gama de posibilidades es mucho mayor.
 No descartamos incorporar a esta sección en el futuro más información
 sobre los otros modos de funcionamiento.  De momento preferimos
 avanzar para conocer otros periféricos.
+
+Ten presente que el audio analógico incluido en la Raspberry Pi
+utiliza los dos canales PWM, así que si usas sonido analógico procura
+evitar el uso de PWM.  Nuestra recomendación es que uses un altavoz
+Bluetooth o bien puedes emplear una placa de audio externa
+(*HiFi-Berry*, por ejemplo).
