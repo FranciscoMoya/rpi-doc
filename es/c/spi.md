@@ -264,24 +264,21 @@ hemos empleado un reloj de 500KHz, pero puede subirse hasta 32MHz con
 seguridad.  El problema es que a mayor reloj, mayor es el buffer que
 tenemos que usar en la transferencia SPI.
 
-Para buffers mayores de 4KB hay que especificarlo en la carga del
-módulo del kernel para SPI (driver SPI).  Si se usa carga manual con
-wiringPi la orden para ampliar el buffer a 256KB sería:
-
-en /boot/cmdline.txt spidev.bufsiz=262144
+Para buffers mayores de 4KB hay que especificarlo en la línea de
+órdenes del kernel (`/boot/cmdline.txt`) y reiniciar la Raspberry Pi.
+Por ejemplo, para 256KB se añadiría:
 
 ```
-gpio load spi 256
+spidev.bufsiz=262144
 ```
 
 Puede mejorarse el código haciendo búsqueda por bisección. Es
 deliberadamente simple para que se entienda desde el punto de vista
-conceptual.
-
-El resultado es que podríamos medir RC con una precisión de hasta 1/32
-us. Si usamos un condensador de 1uF esto implica que podemos medir R
-con una precisión de 1/32 Ohm. Incluso si usamos el reloj de 500KHz
-tendremos una precisión de 2 Ohm, que tampoco está nada mal.
+conceptual.  El resultado es que podríamos medir RC con una precisión
+de hasta 1/32 us. Si usamos un condensador de 1uF esto implica que
+podemos medir R con una precisión de 1/32 Ohm. Incluso si usamos el
+reloj de 500KHz tendremos una precisión de 2 Ohm, que tampoco está
+nada mal.
 
 Los resultados reales pueden ser algo peores por *jitter* o
 inestabilidad en SCLK o ruido en la resistencia. Un condensador
@@ -295,4 +292,3 @@ carga del sistema.
 
 1. **Fácil** Diseña un mecanismo para poder controlar tiras de LEDs
   empleando la interfaz SPI.
-
