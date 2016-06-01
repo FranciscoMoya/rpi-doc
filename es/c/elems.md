@@ -9,8 +9,8 @@ nuestra disposición usando lenguaje C.  Eso implica que no nos vamos a
 limitar a usar una biblioteca, sino todas las que en este momento
 conozco.
 
-
-* [Entradas y salidas digitales](gpio.md)
-* [Comunicaciones I2C](i2c.md)
-* [Comunicaciones SPI](spi.md)
-* [Comunicaciones en red](net.md)
+No tomes estos ejemplos como una muestra de cómo se debe programar,
+eso lo veremos más adelante.  Se trata de que aprendas a usar los
+periféricos desde tu lenguaje de programación favorito.  Por tanto
+intentamos que el código sea lo más simple y directo posible, no el
+más mantenible.

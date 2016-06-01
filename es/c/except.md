@@ -1,5 +1,6 @@
-[//]: # (-*- markdown; coding: utf-8 -*-)
-# Manejo de errores
+[//]: # (-*- mode: markdown; coding: utf-8 -*-)
+
+# Tratamiento de errores
 
 Antes de empezar a escribir programas relativamente complejos en C
 conviene hacer una pequeña reflexión sobre la gestión de errores en C.
