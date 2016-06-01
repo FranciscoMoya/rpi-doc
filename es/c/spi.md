@@ -1,5 +1,12 @@
 [//]: # (-*- mode: markdown; coding: utf-8 -*-)
 
+# Programación en C de SPI
+
+Las tres bibliotecas que hemos usado para la programación de entradas
+y salidas digitales soportan también el uso de la interfaz SPI.  Los
+módulos SPI se benefician de la capacidad de envío y recepción
+concurrente y pueden conseguirse tasas muy razonables (30MHz).
+
 ## Programación de SPI con *wiringPi*
 
 La programación es sencilla en cuanto que solo utiliza dos funciones,
