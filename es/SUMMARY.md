@@ -32,9 +32,11 @@
 
 * [Desarrollo en Python](py/README.md)
   * [Programando los periféricos](py/elems.md)
+	* [Entradas y salidas digitales](py/gpio.md)
+	* [Comunicaciones I2C](py/i2c.md)
+	* [Comunicaciones SPI](py/spi.md)
+	* [Comunicaciones en red](py/net.md)
   * [Arquitectura de software](py/sw.md)
-	* [Programación orientada a objetos](py/poo.md)
-	* [La biblioteca reactor](py/reactor.md)
 	* [Casos de estudio](py/casos.md)
       * [Dispositivo MP3](py/mp3.md)
 	  * [Piano de juguete](py/piano.md)

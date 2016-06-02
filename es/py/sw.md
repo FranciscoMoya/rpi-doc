@@ -25,3 +25,13 @@ con su función de equilibrar la eficiencia con la simplicidad y la
 facilidad de uso por programadores principiantes.  Pero si tienes
 sugerencias sobre posibles mejoras no te las guardes, envianos
 realimentación para mejorar las próximas ediciones.
+
+A diferencia de la versión C en Python tenemos soporte del lenguaje
+para todas las técnicas básicas.  Programación orientada a objetos con
+clases y excepciones son elementos que vamos a usar extensivamente.
+El soporte nativo de constructores y destructores en el lenguaje abre
+la puerta de una técnica muy importante en el software actual: RAII
+(*Resource Acquisition Is Initialization*) que usaremos
+extensivamente.  Sin embargo no necesitamos contar todo esto, porque
+hay muchos libros libres que lo cuentan.  Usa tu libro favorito de
+Python si hay algun detalle que no entiendes.
