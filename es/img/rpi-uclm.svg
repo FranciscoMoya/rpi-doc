@@ -23,7 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -41,7 +41,7 @@
      id="namedview10"
      showgrid="false"
      inkscape:zoom="0.53636363"
-     inkscape:cx="237.43544"
+     inkscape:cx="208.53713"
      inkscape:cy="407.51648"
      inkscape:window-x="0"
      inkscape:window-y="27"
@@ -155,5 +155,80 @@
        d="m 146.25,124.57227 c -2.47926,2.10903 -1.9188,11.47654 0,17.99609 l 0,-17.99609 z m 6.5,3.65429 0,19.06836 c 3.69143,-4.5563 4.81261,-13.00156 0,-19.06836 z"
        style="fill:#bc1142"
        inkscape:connector-curvature="0" />
+  </g>
+  <g
+     transform="matrix(0.14797127,0,0,0.14797127,94.368877,-566.14531)"
+     class="Group"
+     id="g3602">
+    <g
+       class="com.sun.star.drawing.TextShape"
+       id="g3604">
+      <g
+         id="id6">
+        <rect
+           style="fill:none;stroke:none"
+           class="BoundingBox"
+           x="966"
+           y="8252"
+           width="2601"
+           height="676"
+           id="rect3607" />
+        <text
+           class="TextShape"
+           id="text3609">
+          <tspan
+             style="font-weight:400;font-size:423px;font-family:'Gillius ADF No2 Cd'"
+             class="TextParagraph"
+             font-size="423px"
+             font-weight="400"
+             id="tspan3611">
+            <tspan
+               class="TextPosition"
+               x="1216"
+               y="8695"
+               id="tspan3613">
+              <tspan
+                 style="fill:#000000;stroke:none"
+                 id="tspan3615">Raspberry Pi</tspan>
+            </tspan>
+          </tspan>
+        </text>
+      </g>
+    </g>
+    <g
+       class="com.sun.star.drawing.TextShape"
+       id="g3617">
+      <g
+         id="id7">
+        <rect
+           style="fill:none;stroke:none"
+           class="BoundingBox"
+           x="966"
+           y="8000"
+           width="1801"
+           height="540"
+           id="rect3620" />
+        <text
+           class="TextShape"
+           id="text3622">
+          <tspan
+             style="font-weight:400;font-size:282px;font-family:'Gillius ADF No2 Cd'"
+             class="TextParagraph"
+             font-size="282px"
+             font-weight="400"
+             id="tspan3624">
+            <tspan
+               class="TextPosition"
+               x="1216"
+               y="8341"
+               id="tspan3626">
+              <tspan
+                 style="fill:#666666;stroke:none"
+                 id="tspan3628">Taller de</tspan>
+            </tspan>
+          </tspan>
+        </text>
+      </g>
+    </g>
   </g>
 </svg>

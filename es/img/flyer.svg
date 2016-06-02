@@ -33,12 +33,12 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1600"
-     inkscape:window-height="836"
+     inkscape:window-height="844"
      id="namedview3638"
      showgrid="false"
      inkscape:zoom="1.2686561"
-     inkscape:cx="319.03395"
-     inkscape:cy="175.08011"
+     inkscape:cx="233.21719"
+     inkscape:cy="167.82572"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -566,7 +566,8 @@
            id="g249"><g
              class="Graphic"
              id="g251"
-             clip-path="url(#clipPath7259)"><g
+             clip-path="url(#clipPath7259)"
+             transform="scale(1,0.53260877)"><g
                id="g253"><rect
                  class="BoundingBox"
                  x="400"
@@ -574,8 +575,7 @@
                  width="1737"
                  height="1073"
                  id="rect255"
-                 stroke="none"
-                 fill="none" /><image
+                 style="fill:none;stroke:none" /><image
                  x="400"
                  y="0"
                  width="1737"
