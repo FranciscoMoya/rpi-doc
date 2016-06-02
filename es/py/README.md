@@ -26,3 +26,13 @@ suficiente porque en la actualidad no implementa ni mucho menos todas
 las capacidades necesarias.  Eso nos lleva a describir otras
 alternativas solo en aquellos aspectos que no son cubiertos por *GPIO
 Zero*.
+
+## Entorno de desarrollo
+
+En general te recomendamos que utilices el entorno de desarrollo
+*IDLE*, que viene incluido en Python.  Por comodidad tienes un botón
+en la barra de tareas.  Ten en cuenta que el botón corresponde a
+*IDLE* de Python 3.  Si prefieres usar la versión 2 utiliza la barra
+de menús.
+
+

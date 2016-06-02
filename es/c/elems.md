@@ -9,6 +9,13 @@ nuestra disposición usando lenguaje C.  Eso implica que no nos vamos a
 limitar a usar una biblioteca, sino todas las que en este momento
 conozco.
 
+Cuando te enfrentas a un nuevo proyecto tienes que entender bien todos
+los elementos involucrados.  Esto normalmente implica explorar, probar
+y leer.  Tu primer objetivo tiene que ser reducir la incertidumbre,
+tener los detalles suficientes para no tener que mirar la hoja de
+datos de los dispositivos a cada paso cuando estemos diseñando la
+aplicación.
+
 No tomes estos ejemplos como una muestra de cómo se debe programar,
 eso lo veremos más adelante.  Se trata de que aprendas a usar los
 periféricos desde tu lenguaje de programación favorito.  Por tanto

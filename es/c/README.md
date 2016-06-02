@@ -107,7 +107,7 @@ comercial.
 Las opciones más comunes son:
 
 
-**Opción**&nbsp;&nbsp;&nbsp;&nbsp; | **Significado**
+<div style="width:100px;">Opción</div> | Significado
 -----------|----------------
 `-c` | Compila o ensambla, pero no enlaza, obteniéndose un archivo en código objeto con extensión `.o`
 `-Wall` | Emite todos los avisos que el compilador pueda generar
@@ -492,7 +492,7 @@ contra-intuitivo, tendemos de forma natural a saltar pasos esenciales.
 Los errores en los programas se pueden clasificar de varias formas.
 Es muy habitual clasificarlos según su visibilidad y su persistencia:
 
-&nbsp;          | **Visble** | **Oculto**
+&nbsp;          | Visible    | Oculto
 ----------------|------------|------------
 **Persistente** | Ideal      | Desconocido
 **Transitorio** | Difícil    | Muy difícil
@@ -583,7 +583,7 @@ Reading symbols from hola...done.
 Muestra el *prompt* de GDB indicando que espera una orden.  Muy
 resumidas, estas son las órdenes más frecuentes:
 
-**Orden&nbsp;(abreviatura)** | **Significado**
+<div style="width:170px">Orden (abreviatura)</div> | Significado
 ----------|----------------
 `list` (`l`) | Lista el código del programa o de una función.  Sin argumentos muestra desde la posición actual. El argumento puede ser una función, un archivo o incluso un rango de líneas (dos números separados por comas).
 `break` (`b`) |  Coloca un punto de ruptura en la función, línea o archivo indicado.  El depurador interrumpe automáticamente la ejecución del programa al llegar a un punto de ruptura.
@@ -603,7 +603,7 @@ Un *watchpoint* es una indicación al depurador para interrumpir la
 ejecución del programa cada vez que se lea o se modifique el valor de
 una variable.  Varias órdenes de GDB nos permiten trabajar con ellos.
 
-**Orden&nbsp;(abreviatura)** | **Significado**
+<div style="width:100px">Orden (abreviatura)</div> | Significado
 ----------|----------------
 `watch` *var*  | Interrupe cuando *var* cambia.
 `rwatch` *var* | Interrumpe  cuando *var* es leída.
@@ -619,7 +619,7 @@ encontrar otro sin necesidad de recompilar.  Con GDB es posible fijar
 valores a variables o alterar la secuencia normal de ejecución.
 
 
-**Orden&nbsp;(abreviatura)** | **Significado**
+<div style="width:100px">Orden (abreviatura)</div>| Significado
 ----------|----------------
 `set` *var*=*valor* | Cambia el valor de *var* al indicado.
 `return`*valor* | Termina la función actual y devuelve el valor indicado.
@@ -631,7 +631,7 @@ Algunos de nuestros programas serán multiproceso.  GDB permite
 trabajar con múltiples procesos simultáneamente, incluso si
 corresponden a distintos ejecutables.  Las siguientes órdenes permiten 
 
-**Orden&nbsp;(abreviatura)** | **Significado**
+<div style="width:250px">Orden (abreviatura)</div> | Significado
 ----------|----------------
 `set follow-fork-mode`*modo* | Si *modo* es `parent` cuando se crean nuevos procesos no se ejecutan bajo el control de GDB.  Si es `child` al crearse un proceso nuevo GDB pasa a controlar al hijo en lugar de al padre.
 `set detach-on-fork`*modo* | Si *modo* es `on` (valor por defecto) el proceso no gestionado por GDB (hijo o padre según el valor de `follow-fork-mode`) se desasocia de GDB.  Si *modo* es `off` ambos procesos pasan a ser gestionados por GDB (múltiples procesos *inferiores*).
@@ -646,7 +646,7 @@ También usaremos en ocasiones los *hilos*.  Se trata de un mecanismo
 de concurrencia mucho más eficiente que los procesos, pero
 sensiblemente más propenso a errores difíciles de encontrar.
 
-**Orden&nbsp;(abreviatura)** | **Significado**
+<div style="width:200px">Orden (abreviatura)</div> | Significado
 ----------|----------------
 `info threads` (`i th`) | Lista de los hilos actualmente en ejecución.
 `thread`*n* (`t`*n*) | Conmuta al hilo *n*.
