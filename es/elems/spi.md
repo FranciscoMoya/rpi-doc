@@ -190,14 +190,14 @@ TS_MODE  | 0 = Modo ADC, 1 = modo sensor de temperatura.
 PU       | Habilita *pull-up* en DOUT.
 NOP      | Siempre *xx1*. *011* = Actualizar registro de configuración.
 
-En nuestro caso escribimos `0100 0000 0100 1011`.  Es decir,
+En nuestro caso escribimos `1100 0000 0100 1011`.  Es decir,
 selecciona la primera entrada analógica referida a masa, con el máximo
 rango a plena escala, en modo *single shot* a 32 muestras por segundo y
 habilitando el *pull-up*.
 
 ```
-pi@raspberrypi:~ $ pigs spix 0x80 0x4b 0x80 0x4b
-4 0 0 128 75 
+pi@raspberrypi:~ $ pigs spix 0xc0 0x4b 0x80 0x4b
+4 0 0 192 75 
 pi@raspberrypi:~ $ ▂
 ```
 
@@ -205,8 +205,8 @@ Para leer el valor del potenciómetro basta volver a repetir la
 orden. Con esto iniciamos otra conversión y leemos la anterior.
 
 ```
-pi@raspberrypi:~ $ pigs spix 0x80 0x4b 0x80 0x4b
-4 75 230 128 75 
+pi@raspberrypi:~ $ pigs spix 0xc0 0x4b 0x80 0x4b
+4 75 230 192 75 
 pi@raspberrypi:~ $ ▂
 ```
 

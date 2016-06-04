@@ -139,24 +139,24 @@ short swap(short n) { return (n << 8) | (n >> 8) & 0xff; }
 
 int main()
 {
-	gpioInitialise();
-	int i2c = i2cOpen(1, 0x68, 0);
+    gpioInitialise();
+    int i2c = i2cOpen(1, 0x68, 0);
     if (0x68 != i2cReadByteData(i2c, 117)) {
-		puts("No se encuentra el dispositivo");
-		return 1;
-	}
-	i2cWriteByteData(i2c, 107, 0);
+        puts("No se encuentra el dispositivo");
+        return 1;
+    }
+    i2cWriteByteData(i2c, 107, 0);
     for(;;) {
 	short data[7];
-		i2cReadI2CBlockData(i2c, 59, (char*)data, 14);
-		printf("temperatura: %f\n", swap(data[3])/340. + 36.53);
-		printf("ax=%d, ay=%d, az=%d\n",
-			   swap(data[0]), swap(data[1]), swap(data[2]));
-		delay(500);
+        i2cReadI2CBlockData(i2c, 59, (char*)data, 14);
+        printf("temperatura: %f\n", swap(data[3])/340. + 36.53);
+        printf("ax=%d, ay=%d, az=%d\n",
+               swap(data[0]), swap(data[1]), swap(data[2]));
+        delay(500);
     }
-	i2cClose(i2c)
-	gpioTerminate();
-	return 0;
+    i2cClose(i2c)
+    gpioTerminate();
+    return 0;
 }
 ```
 
