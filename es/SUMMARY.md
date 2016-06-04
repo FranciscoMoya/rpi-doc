@@ -20,7 +20,6 @@
 	* [Entradas y salidas digitales](c/gpio.md)
 	* [Comunicaciones I2C](c/i2c.md)
 	* [Comunicaciones SPI](c/spi.md)
-	* [Comunicaciones en red](c/net.md)
   * [Arquitectura de software](c/sw.md)
 	* [Tratamiento de errores en C](c/except.md)
 	* [Programación orientada a objetos](c/poo.md)
@@ -28,7 +27,6 @@
   * [Casos de estudio](c/casos.md)
     * [Dispositivo MP3](c/mp3.md)
 	* [Piano de juguete](c/piano.md)
-	* [Control de accesos](c/ac.md)
 
 * [Desarrollo en Python](py/README.md)
   * [Programando los periféricos](py/elems.md)
@@ -39,7 +37,7 @@
   * [Arquitectura de software](py/sw.md)
 	* [Casos de estudio](py/casos.md)
       * [Dispositivo MP3](py/mp3.md)
-	  * [Piano de juguete](py/piano.md)
+	  * [Acelerómetro](py/ac.md)
 	  * [Control de accesos](py/ac.md)
 
 * [Apéndices](apendices/README.md)
