@@ -655,4 +655,3 @@ Servidor TCP  | Cliente TCP   | Descripción
 `read`        | `read`        | Recibe datos del otro extremo.
 `write`       | `write`       | Envía datos al otro extremo.
 `close`       | `close`       | Cierra el canal de comunicación.
-
