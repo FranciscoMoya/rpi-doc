@@ -1,5 +1,5 @@
 [//]: # (-*- mode: markdown; coding: utf-8 -*-)
-# Red
+# Comunicaciones en red
 
 Tanto los modelos B+ como la 2B y la 3B incluyen interfaz Ethernet.
 La Raspberry Pi 3 modelo B que utilizamos en este taller incluye WiFi
