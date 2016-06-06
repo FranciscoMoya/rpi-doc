@@ -20,6 +20,7 @@
 	* [Entradas y salidas digitales](c/gpio.md)
 	* [Comunicaciones I2C](c/i2c.md)
 	* [Comunicaciones SPI](c/spi.md)
+	* [Comunicaciones en red](c/net.md)
   * [Arquitectura de software](c/sw.md)
 	* [Tratamiento de errores en C](c/except.md)
 	* [Programación orientada a objetos](c/poo.md)
