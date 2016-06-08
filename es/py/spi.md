@@ -65,8 +65,8 @@ class ADS1118(AnalogInputDevice):
         self._bits = 16
         self._differential = bool(differential)
         super(ADS1118, self).__init__(16, **spi_args)
-	self._spi.clock_mode = 1
-	data = self._spi.transfer(2 * self._config_reg())
+        self._spi.clock_mode = 1
+        data = self._spi.transfer(2 * self._config_reg())
 
     @property
     def channel(self):
@@ -85,22 +85,22 @@ class ADS1118(AnalogInputDevice):
         return result
 
     def _config_reg(self):
-       	''' Configuración en modo continuo a 128 SPS y con rango a
-    	    plena escala de +-2.048V'''
-	#     Byte        0        1
+        ''' Configuración en modo continuo a 128 SPS y con rango a
+            plena escala de +-2.048V'''
+        #     Byte        0        1
         #     ==== ======== ========
         #          sMCCGGGS rrrTP011
         #
-	#   s = start single shot conversion
-	#   M = differential (1 = single-ended, 0 = differential)
-	#   C = channel
-	#   G = gain
-	#   S = single shot mode (1 = single shot, 0 = continuous)
-	#   r = sample rate
-	#   T = temperature sensor
-	#   P = pull-up in DOUT
-        return [0b01000100 + (self.channel << 4) + [64, 0][self.differential],
-	       	0b10001011]
+        #   s = start single shot conversion
+        #   M = differential (1 = single-ended, 0 = differential)
+        #   C = channel
+        #   G = gain
+        #   S = single shot mode (1 = single shot, 0 = continuous)
+        #   r = sample rate
+        #   T = temperature sensor
+        #   P = pull-up in DOUT
+        return [0b00000100 + (self.channel << 4) + [0b01000000, 0][self.differential],
+                0b10001011]
 ```
 
 Ya está, no hay más, con esto ya se puede usar como cualquiera de los

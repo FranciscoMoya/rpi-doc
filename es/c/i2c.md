@@ -26,22 +26,22 @@ int main()
 {
     int fd = wiringPiI2CSetup(0x68);
     if (0x68 != wiringPiI2CReadReg8(fd, 117)) {
-		puts("No se encuentra el dispositivo");
-		return 1;
-	}
+        puts("No se encuentra el dispositivo");
+        return 1;
+    }
     wiringPiI2CWriteReg8(fd, 107, 0);
     for(;;) {
-		short t = wiringPiI2CReadReg16(fd, 65);
-		printf("temperatura: %f\n", swap(t)/340. + 36.53);
-		
-		short ax = wiringPiI2CReadReg16(fd, 59);
-		short ay = wiringPiI2CReadReg16(fd, 61);
-		short az = wiringPiI2CReadReg16(fd, 63);
-		printf("ax=%d, ay=%d, az=%d\n", ax, ay, az);
-		delay(500);
+        short t = wiringPiI2CReadReg16(fd, 65);
+        printf("temperatura: %f\n", swap(t)/340. + 36.53);
+        
+        short ax = wiringPiI2CReadReg16(fd, 59);
+        short ay = wiringPiI2CReadReg16(fd, 61);
+        short az = wiringPiI2CReadReg16(fd, 63);
+        printf("ax=%d, ay=%d, az=%d\n", ax, ay, az);
+        delay(500);
     }
     close(fd);
-	return 0;
+    return 0;
 }
 ```
 
@@ -80,32 +80,32 @@ short swap(short n) { return (n << 8) | (n >> 8) & 0xff; }
 
 int main()
 {
-	bcm2835_init();
-	bcm2835_i2c_begin();
-	bcm2835_i2c_setSlaveAddress(0x68);
-	bcm2835_i2c_set_baudrate(100000);
-	char dir = 117;
-	bcm2835_i2c_write(&dir, 1);
-	bcm2835_i2c_read(&dir, 1);
+    bcm2835_init();
+    bcm2835_i2c_begin();
+    bcm2835_i2c_setSlaveAddress(0x68);
+    bcm2835_i2c_set_baudrate(100000);
+    char dir = 117;
+    bcm2835_i2c_write(&dir, 1);
+    bcm2835_i2c_read(&dir, 1);
     if (0x68 != dir) {
-		puts("No se encuentra el dispositivo");
-		return 1;
-	}
-	char cfg[] = {107, 0};	
-	bcm2835_i2c_write(cfg, 2);
-    for(;;) {
-		dir = 59;
-		bcm2835_i2c_write(&dir, 1);
-		short data[7];
-		bcm2835_i2c_read(data, 14);
-		printf("temperatura: %f\n", swap(data[3])/340. + 36.53);
-		printf("ax=%d, ay=%d, az=%d\n",
-			   swap(data[0]), swap(data[1]), swap(data[2]));
-		delay(500);
+        puts("No se encuentra el dispositivo");
+        return 1;
     }
-	bcm2835_i2c_end();
-	bcm2835_close();
-	return 0;
+    char cfg[] = {107, 0};
+    bcm2835_i2c_write(cfg, 2);
+    for(;;) {
+        dir = 59;
+        bcm2835_i2c_write(&dir, 1);
+        short data[7];
+        bcm2835_i2c_read(data, 14);
+        printf("temperatura: %f\n", swap(data[3])/340. + 36.53);
+        printf("ax=%d, ay=%d, az=%d\n",
+               swap(data[0]), swap(data[1]), swap(data[2]));
+        delay(500);
+    }
+    bcm2835_i2c_end();
+    bcm2835_close();
+    return 0;
 }
 ```
 
@@ -147,7 +147,7 @@ int main()
     }
     i2cWriteByteData(i2c, 107, 0);
     for(;;) {
-	short data[7];
+        short data[7];
         i2cReadI2CBlockData(i2c, 59, (char*)data, 14);
         printf("temperatura: %f\n", swap(data[3])/340. + 36.53);
         printf("ax=%d, ay=%d, az=%d\n",

@@ -37,12 +37,12 @@ static int udp_server_socket(const char* service);
 int main() {
     int fd = udp_server_socket("9999");
     for(;;) {
-	char buf[1024];
-	int n = read(fd, buf, sizeof(buf));
-	assert(n >= 0);
-	if (n == 0) break;
-	buf[n]='\0';
-	printf("%s", buf);
+        char buf[1024];
+        int n = read(fd, buf, sizeof(buf));
+        assert(n >= 0);
+        if (n == 0) break;
+        buf[n]='\0';
+        printf("%s", buf);
     }
     close(fd);
     return 0;
@@ -55,8 +55,8 @@ donde escucha mensajes.
 
 ``` C
 static struct sockaddr_in ip_address(const char* host, 
-				     const char* service, 
-				     const char* proto);
+                     const char* service, 
+                     const char* proto);
 
 static int udp_server_socket(const char* service)
 {
@@ -128,8 +128,8 @@ destino de los mensajes.
 
 ``` C
 static struct sockaddr_in ip_address(const char* host, 
-				     const char* service, 
-				     const char* proto);
+                     const char* service, 
+                     const char* proto);
 
 static int udp_client_socket(const char* host, const char* service)
 {
@@ -193,8 +193,8 @@ a *bind* y a *listen*.
 
 ``` C
 static struct sockaddr_in ip_address(const char* host, 
-				     const char* service, 
-				     const char* proto);
+                     const char* service, 
+                     const char* proto);
 
 static int tcp_master_socket(const char* service)
 {
@@ -252,7 +252,7 @@ homóloga en UDP.
 ``` C
 static struct sockaddr_in ip_address(const char* host,
                                      const char* service,
-				     const char* proto);
+                                     const char* proto);
 
 static int tcp_client_socket(const char* host, const char* service)
 {

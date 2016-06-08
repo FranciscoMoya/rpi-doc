@@ -200,7 +200,7 @@ int main() {
     bcm2835_init();
     bcm2835_gpio_fsel(18, BCM2835_GPIO_FSEL_OUTP);
     for(int v = 0;;v = !v) {
-		bcm2835_gpio_write(18, v);
+        bcm2835_gpio_write(18, v);
         bcm2835_delay(1000);
     }
     bcm2835_close();
@@ -264,15 +264,15 @@ trabajamos con el canal, no con el pin.
 
 int main(int argc, char* argv[])
 {
-	if (argc < 5) {
-		printf("Usage: %s divisor rango min max\n", argv[0]);
-		exit(0);
-	}
+    if (argc < 5) {
+        printf("Usage: %s divisor rango min max\n", argv[0]);
+        exit(0);
+    }
 
-	int div = atoi(argv[1]);
-	int range = atoi(argv[2]);
-	int min = atoi(argv[3]);
-	int max = atoi(argv[4]);
+    int div = atoi(argv[1]);
+    int range = atoi(argv[2]);
+    int min = atoi(argv[3]);
+    int max = atoi(argv[4]);
 
     bcm2835_init();
     bcm2835_gpio_fsel(18, BCM2835_GPIO_FSEL_ALT5);
@@ -280,12 +280,12 @@ int main(int argc, char* argv[])
     bcm2835_pwm_set_mode(0, 1, 1);
     bcm2835_pwm_set_range(0, range);
 
-	for(;;) {
-		bcm2835_pwm_set_data(0, min);
-		bcm2835_delay(1000);
-		bcm2835_pwm_set_data(0, max);
-		bcm2835_delay(1000);
-	}
+    for(;;) {
+        bcm2835_pwm_set_data(0, min);
+        bcm2835_delay(1000);
+        bcm2835_pwm_set_data(0, max);
+        bcm2835_delay(1000);
+    }
     bcm2835_close();
     return 0;
 }
@@ -321,7 +321,7 @@ int main() {
     gpioInitialise();
     gpioSetMode(18, PI_OUTPUT);
     for(int v = 0;;v = !v) {
-		gpioWrite(18, v);
+        gpioWrite(18, v);
         gpioDelay(1000000);
     }
     gpioTerminate();
@@ -379,21 +379,21 @@ Veamos el ejemplo usando esta interfaz:
 
 int main(int argc, char* argv[])
 {
-	if (argc < 5) {
-		printf("Usage: %s min max\n", argv[0]);
-		exit(0);
-	}
+    if (argc < 5) {
+        printf("Usage: %s min max\n", argv[0]);
+        exit(0);
+    }
 
-	int min = atoi(argv[1]);
-	int max = atoi(argv[2]);
+    int min = atoi(argv[1]);
+    int max = atoi(argv[2]);
 
     gpioInitialise();
-	for(;;) {
-		gpioServo(18, min);
-		gpioDelay(1000000);
-		gpioServo(18, max)
-		gpioDelay(1000000);
-	}
+    for(;;) {
+        gpioServo(18, min);
+        gpioDelay(1000000);
+        gpioServo(18, max)
+        gpioDelay(1000000);
+    }
     gpioTerminate();
     return 0;
 }

@@ -25,21 +25,21 @@ utilizando la herramienta `pigs`, esta vez empleando *wiringPi*.
 #include <wiringPiSPI.h>
 
 void ads1118_rw(int ch, char buf[4]) {
-	buf[0] = 0x80; buf[1] = 0x4b;
-	buf[0] = 0x80; buf[1] = 0x4b;
+    buf[0] = 0x80; buf[1] = 0x4b;
+    buf[0] = 0x80; buf[1] = 0x4b;
     wiringPiSPIDataRW (0, buf, 4);
 }
 
 int main (void) {
     wiringPiSPISetup(0, 4000000);
 
-	char data[4];
-	ads1118_rw(0, data);
-	printf("Control reg = %02x%02x\n", data[2], data[3]);
-	delay(100);
-	ads1118_rw(0, data);
-	short v = data[0] << 8 | data[1];
-	printf("AD0 = %02x%02x (%d)\n", data[0], data[1], v);
+    char data[4];
+    ads1118_rw(0, data);
+    printf("Control reg = %02x%02x\n", data[2], data[3]);
+    delay(100);
+    ads1118_rw(0, data);
+    short v = data[0] << 8 | data[1];
+    printf("AD0 = %02x%02x (%d)\n", data[0], data[1], v);
     return 0;
 }
 ```
@@ -95,17 +95,17 @@ int main (void) {
     bcm2835_spi_setClockDivider(5); // 19.2MHz / 5 ~ 4MHz
     bcm2835_spi_chipSelect(0);
     
-	char tdata[4] = { 0x80, 0x4b, 0x80, 0x4b };
-	char rdata[4];
+    char tdata[4] = { 0x80, 0x4b, 0x80, 0x4b };
+    char rdata[4];
     bcm2835_spi_transfernb(tdata, rdata, 4)
-	printf("Control reg = %02x%02x\n", rdata[2], rdata[3]);
-	bcm2835_delay(100);
+    printf("Control reg = %02x%02x\n", rdata[2], rdata[3]);
+    bcm2835_delay(100);
     bcm2835_spi_transfernb(tdata, rdata, 4)
-	short v = rdata[0] << 8 | rdata[1];
-	printf("AD0 = %02x%02x (%d)\n", rdata[0], rdata[1], v);
+    short v = rdata[0] << 8 | rdata[1];
+    printf("AD0 = %02x%02x (%d)\n", rdata[0], rdata[1], v);
 
-	bcm2835_spi_end();
-	bcm2835_close();
+    bcm2835_spi_end();
+    bcm2835_close();
     return 0;
 }
 ```
@@ -145,18 +145,18 @@ más rápida, por lo que utilizaremos esa normalmente.
 #include <pigpio.h>
 
 int main (void) {
-	gpioInitialise();
-	int spi = spiOpen(0, 4000000, 1);
-	char tdata[4] = { 0x80, 0x4b, 0x80, 0x4b };
-	char rdata[4];
+    gpioInitialise();
+    int spi = spiOpen(0, 4000000, 1);
+    char tdata[4] = { 0x80, 0x4b, 0x80, 0x4b };
+    char rdata[4];
     spiXfer(spi, tdata, rdata, 4)
-	printf("Control reg = %02x%02x\n", rdata[2], rdata[3]);
-	bcm2835_delay(100);
+    printf("Control reg = %02x%02x\n", rdata[2], rdata[3]);
+    bcm2835_delay(100);
     spiXfer(spi, tdata, rdata, 4)
-	short v = rdata[0] << 8 | rdata[1];
-	printf("AD0 = %02x%02x (%d)\n", rdata[0], rdata[1], v);
-	spiClose(spi);
-	gpioTerminate();
+    short v = rdata[0] << 8 | rdata[1];
+    printf("AD0 = %02x%02x (%d)\n", rdata[0], rdata[1], v);
+    spiClose(spi);
+    gpioTerminate();
     return 0;
 }
 ```
@@ -207,7 +207,7 @@ figura.
   <img src="../img/analog_bb.png" width="400">
   <figcaption style="font-size:smaller; font-style:italic">
   <div style="width:350px">
-	Montaje para la medición precisa de una resistencia.
+    Montaje para la medición precisa de una resistencia.
   </div>
   </figcaption>
 </figure>
