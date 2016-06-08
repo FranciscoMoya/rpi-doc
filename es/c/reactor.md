@@ -930,7 +930,7 @@ biblioteca estática `libreactor.a`.  Para poder compilar programas que
 la usan solo hay que añadir las siguientes banderas al `makefile`:
 
 ``` makefile
-REACTOR=/home/pi/git/rpi-src/c/reactor
+REACTOR=/home/pi/git/src/c/reactor
 CFLAGS=-pthread -ggdb -I$(REACTOR)
 LDFLAGS=-pthread -L$(REACTOR)/reactor
 LDLIBS=-lreactor -lwiringPi -lpthread
