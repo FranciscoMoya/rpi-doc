@@ -1,4 +1,5 @@
-[//]: # (-*- markdown; coding: utf-8 -*-)
+[//]: # (-*- mode:markdown; coding: utf-8 -*-)
+
 # Parámetros configurables
 
 Todos los parámetros de configuración inicial de la Raspberry Pi se
@@ -27,4 +28,3 @@ que no hace sino editar de forma interactiva este archivo.
 Actuamente los detalles de configuración están plenamente documentados
 por la Raspberry Pi Foundation en
 [raspberrypi.org](https://www.raspberrypi.org/documentation/configuration/).
-

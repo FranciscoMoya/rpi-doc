@@ -106,7 +106,7 @@ de órdenes `pigs`.
 Primero ejecutamos el servidor `pigpiod`:
 
 ```
-pi@raspberrypi:~ $ sudo gpiod
+pi@raspberrypi:~ $ sudo pigpiod
 pi@raspberrypi:~ $ ▂
 ```
 
@@ -168,8 +168,8 @@ pi@raspberrypi:~ $ ▂
 ```
 
 Ahora tenemos que configurar el módulo con las entradas referidas a
-masa, en modo continuo a 64 SPS y con rango de medida (FSR) de
-±4.096V.  El ADS1118 escribe su configuración a la vez que lee datos.
+masa, en modo continuo a 128 SPS y con rango de medida (FSR) de
+±2.048V.  El ADS1118 escribe su configuración a la vez que lee datos.
 Si no se desea escribir el registro de configuración simplemente hay
 que escribir ceros.  Este es el formato del registro de configuración:
 
@@ -190,39 +190,36 @@ TS_MODE  | 0 = Modo ADC, 1 = modo sensor de temperatura.
 PU       | Habilita *pull-up* en DOUT.
 NOP      | Siempre *xx1*. *011* = Actualizar registro de configuración.
 
-En nuestro caso escribimos `1100 0000 0100 1011`.  Es decir,
-selecciona la primera entrada analógica referida a masa, con el máximo
-rango a plena escala, en modo *single shot* a 32 muestras por segundo y
-habilitando el *pull-up*.
+En nuestro caso escribimos `0100 0100 1000 1011`.
 
 ```
-pi@raspberrypi:~ $ pigs spix 0xc0 0x4b 0x80 0x4b
-4 0 0 192 75 
+pi@raspberrypi:~ $ pigs spix 0 0x44 0x8b 0x44 0x8b
+4 0 0 68 139 
 pi@raspberrypi:~ $ ▂
 ```
 
-Para leer el valor del potenciómetro basta volver a repetir la
-orden. Con esto iniciamos otra conversión y leemos la anterior.
+Para leer el valor del potenciómetro basta volver a repetir la orden
+pero en este caso no es necesario enviar un registro de control
+válido.
 
 ```
-pi@raspberrypi:~ $ pigs spix 0xc0 0x4b 0x80 0x4b
-4 75 230 192 75 
+pi@raspberrypi:~ $ pigs spix 0 0 0 0 0
+4 75 230 68 139 
 pi@raspberrypi:~ $ ▂
 ```
 
-Enviando dos veces el registro de control devuelve cuatro octetos: la
-última muestra y un eco del registro de control (128 es 0x80 en
-hexadecimal y 75 es 0x4b en hexadecimal).
+Enviando cuatro octetos devuelve cuatro octetos: la última muestra y
+un eco del registro de control.
 
 Para interpretar la muestra hay que imprimir los dos primeros octetos
 como un número de 16 bits en complemento a 2 y multiplicar el
 resultado por los voltios que suponen cada bit (rango a plena escala
-dividido por el valor máximo, es decir, 6.144/32768).
+dividido por el valor máximo, es decir, 2.048/32768).
 
 ```
 pi@raspberrypi:~ $ V=$(printf "0x%02x%02x" 75 230)
-pi@raspberrypi:~ $ echo "$(($V))/32768*6.144" | bc -l
-3.64312500000000000000
+pi@raspberrypi:~ $ echo "$(($V))/32768*2.048" | bc -l
+1.21437500000000000000
 pi@raspberrypi:~ $ ▂
 ```
 

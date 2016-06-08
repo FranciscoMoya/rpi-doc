@@ -190,8 +190,8 @@ A continuación hacemos lo mismo con `analog_handler.c`:
 // FIXME: declaraciones de funciones estáticas específicas
 
 analog_handler* analog_handler_new (int pin, int low, int high,
-	                                analog_handler_function low_handler,
-				                    analog_handler_function high_handler)
+                                    analog_handler_function low_handler,
+                                    analog_handler_function high_handler)
 {
     analog_handler* h = malloc(sizeof(analog_handler));
     analog_handler_init_members(h, pin, low, high, low_handler, high_handler);
@@ -203,9 +203,9 @@ analog_handler* analog_handler_new (int pin, int low, int high,
 
 
 void analog_handler_init (analog_handler* this,
-	                      int pin, int low, int high,
-	                      analog_handler_function low_handler,
-	                      analog_handler_function high_handler)
+                          int pin, int low, int high,
+                          analog_handler_function low_handler,
+                          analog_handler_function high_handler)
 {
     analog_handler_init_members(this, pin, low, high, low_handler, high_handler);
     thread_handler_start (&this->parent, analog_handler_thread);
@@ -279,7 +279,7 @@ static void* analog_handler_thread(thread_handler* h)
 {
     analog_handler* in = (analog_handler*) h;
     while(!h->cancel)
-	    analog_handler_poll(in);
+        analog_handler_poll(in);
     return NULL;
 }
 ```

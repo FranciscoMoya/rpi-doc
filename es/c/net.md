@@ -75,17 +75,17 @@ dirección completa de un servicio IP (host, puerto y protocolo).
 
 ``` C
 static struct sockaddr_in ip_address(const char* host, 
-				     const char* service, 
-				     const char* proto)
+                                     const char* service, 
+                                     const char* proto)
 {
     struct sockaddr_in sin;
     memset(&sin, 0, sizeof(sin));
     sin.sin_family = AF_INET;
     struct hostent* he = gethostbyname(host);
     if (he != NULL)
-	memcpy(&sin.sin_addr, he->h_addr_list[0], he->h_length);
+        memcpy(&sin.sin_addr, he->h_addr_list[0], he->h_length);
     else
-	sin.sin_addr.s_addr = inet_addr(host);
+        sin.sin_addr.s_addr = inet_addr(host);
     struct servent* se = getservbyname(service, proto);
     sin.sin_port = (se != NULL? se->s_port : htons(atoi(service)));
     return sin;
@@ -111,11 +111,11 @@ static int udp_client_socket(const char* host, const char* service);
 int main() {
     int fd = udp_client_socket("localhost", "9999");
     for(;;) {
-	char buf[1024];
-	fgets(buf, sizeof(buf), stdin);
-	int n = write(fd, buf, strlen(buf));
-	assert(n >= 0);
-	if (n == 0) break;
+        char buf[1024];
+        fgets(buf, sizeof(buf), stdin);
+        int n = write(fd, buf, strlen(buf));
+        assert(n >= 0);
+        if (n == 0) break;
     }
     close(fd);
     return 0;
@@ -167,17 +167,17 @@ static int tcp_master_socket(const char* service);
 int main() {
     int master = tcp_master_socket("9999");
     for(;;) {
-	int fd = accept(master, (struct sockaddr*) NULL, NULL);
-	assert (fd >= 0);
-	for(;;) {
-	    char buf[1024];
-	    int n = read(fd, buf, sizeof(buf));
-	    assert(n >= 0);
-	    if (n == 0) break;
-	    buf[n]='\0';
-	    printf("%s", buf);
-	}
-	close(fd);
+        int fd = accept(master, (struct sockaddr*) NULL, NULL);
+        assert (fd >= 0);
+        for(;;) {
+            char buf[1024];
+            int n = read(fd, buf, sizeof(buf));
+            assert(n >= 0);
+            if (n == 0) break;
+            buf[n]='\0';
+            printf("%s", buf);
+        }
+        close(fd);
     }
     close(master);
     return 0;
@@ -235,11 +235,11 @@ static int tcp_client_socket(const char* host, const char* service);
 int main() {
     int fd = tcp_client_socket("localhost", "9999");
     for(;;) {
-	char buf[1024];
-	fgets(buf, sizeof(buf), stdin);
-	int n = write(fd, buf, strlen(buf));
-	assert(n >= 0);
-	if (n == 0) break;
+        char buf[1024];
+        fgets(buf, sizeof(buf), stdin);
+        int n = write(fd, buf, strlen(buf));
+        assert(n >= 0);
+        if (n == 0) break;
     }
     close(fd);
     return 0;
