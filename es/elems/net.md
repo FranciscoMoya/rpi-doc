@@ -40,8 +40,8 @@ que cuenta en este momento tu Raspberry Pi.  En mi caso `lo`, `eth0` y
 `wlan0`.
 
 *   `lo` es la interfaz de *loopback*, una interfaz virtual que
-	conecta el ordenador consigo mismo.  Es muy útil para trabajar con
-	programas de red sin necesidad de usar una red física.
+    conecta el ordenador consigo mismo.  Es muy útil para trabajar con
+    programas de red sin necesidad de usar una red física.
 *   `eth0` es la interfaz Ethernet cableada (IEEE 802.3). Tanto el
     modelo B original como los modelos B+, 2B y 3B disponen de una
     interfaz Ethernet integrada.  Los demás modelos pueden

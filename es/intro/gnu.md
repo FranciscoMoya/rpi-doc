@@ -489,7 +489,7 @@ gpio: Unknown command --help.
 pi@raspberrypi:~ $ gpio -h
 gpio: Usage: gpio -v
        gpio -h
-	   ...
+       ...
 pi@raspberrypi:~ $ ▂
 ```
 
@@ -1134,15 +1134,15 @@ particular el archivo `config`:
 pi@raspberrypi:~ $ cat src/.git/config
 [core]
         repositoryformatversion = 0
-		filemode = true
-		bare = false
-		logallrefupdates = true
+        filemode = true
+        bare = false
+        logallrefupdates = true
 [remote "origin"]
         url = https://github.com/FranciscoMoya/rpi-src.git
-		fetch = +refs/heads/*:refs/remotes/origin/*
+        fetch = +refs/heads/*:refs/remotes/origin/*
 [branch "master"]
         remote = rigin
-		merge = refs/heads/master
+        merge = refs/heads/master
 pi@raspberrypi:~ $ ▂
 ```
 

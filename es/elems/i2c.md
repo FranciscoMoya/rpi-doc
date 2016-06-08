@@ -46,7 +46,7 @@ mismo ejecutando `i2cdetect`:
 
 ```
 pi@raspberrypi:~ $ i2cdetect -l
-i2c-1	i2c       	3f804000.i2c                    	I2C adapter
+i2c-1    i2c           3f804000.i2c                   I2C adapter
 pi@raspberrypi:~ $ ▂
 ```
 

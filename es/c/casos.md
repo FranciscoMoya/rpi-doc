@@ -83,7 +83,7 @@ cualquier usuario de tu código encuentre las cosas más fácilmente.
 static void bajo(analog_handler* this) {
     puts("Bajo limite inferior");
 }
-		 
+
 static void alto(analog_handler* this) {
     puts("Sobre limite superior");
 }
@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
     wiringPiSetupGpio();
     reactor* r = reactor_new();
     analog_handler* in = analog_handler_new(25, 100, 200,
-					    bajo, alto);
+                                            bajo, alto);
     reactor_add(r, (event_handler*)in);
     reactor_run(r);
     reactor_destroy(r);
@@ -108,7 +108,7 @@ compilarlo con un `makefile`.  Como verás en la carpeta
 
 ```
 CFLAGS=-pthread -std=c11 -Wall -D_POSIX_C_SOURCE=200809L -I../../reactor -ggdb \
-	-fasynchronous-unwind-tables 
+    -fasynchronous-unwind-tables 
 LDFLAGS=-L../../reactor/reactor -pthread -rdynamic
 LDLIBS=-lreactor -lwiringPi -lpthread
 CC=gcc
@@ -118,7 +118,7 @@ all: test_analog_handler
 test_analog_handler: test_analog_handler.o analog_handler.o
 
 clean:
-	$(RM) *~ *.o test_analog_handler
+    $(RM) *~ *.o test_analog_handler
 ```
 
 ## Esqueleto del manejador
@@ -157,19 +157,19 @@ typedef void (*analog_handler_function)(analog_handler* this);
 
 typedef struct analog_handler_ analog_handler;
 struct analog_handler_ {
-	thread_handler parent;
-	event_handler_function destroy_parent_members;
+    thread_handler parent;
+    event_handler_function destroy_parent_members;
 
-	// FIXME: Añade todos los atributos que necesites
+    // FIXME: Añade todos los atributos que necesites
 };
 
 analog_handler* analog_handler_new (int pin, int low, int high,
                                     analog_handler_function low_handler,
-	                                analog_handler_function high_handler);
+                                    analog_handler_function high_handler);
 void analog_handler_init (analog_handler* this,
-	                      int pin, int low, int high,
-	                      analog_handler_function low_handler,
-	                      analog_handler_function high_handler);
+                          int pin, int low, int high,
+                          analog_handler_function low_handler,
+                          analog_handler_function high_handler);
 void analog_handler_destroy (analog_handler* ev);
 
 #endif

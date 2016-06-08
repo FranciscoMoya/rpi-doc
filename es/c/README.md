@@ -172,7 +172,7 @@ Ahora el archivo `hola.c` sería algo así:
 void decir_hola(void);
 
 int main() {
-	decir_hola();
+    decir_hola();
     return 0;
 }
 ```

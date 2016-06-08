@@ -237,7 +237,7 @@ int main()
     reactor_add(r, keyboard_handler_new());
     reactor_run(r);
     console_restore(0, state);
-	return 0;
+    return 0;
 }
 ```
 
@@ -309,7 +309,7 @@ int main()
     wiringPiSetupGpio();
     reactor* r = reactor_new();
     reactor_add(r, (event_handler*) input_handler_new(buttons, 4,
-						      press, release));
+                                                      press, release));
     reactor_run(r);
 }
 ```
@@ -370,9 +370,9 @@ número de veces podemos hacerlo contando el número de disparos.
 void handler(event_handler* ev)
 {
     static int i = 0;
-	puts("Tick");
+    puts("Tick");
     if (++i >= 5)
-	    Throw Exception(0,"");
+        Throw Exception(0,"");
 }
 
 int main()
@@ -593,10 +593,10 @@ int main()
     
     void producer(event_handler* ev)
     {
-	    static int i;
-		char buf[128];
-		snprintf(buf, 128, "Prueba %d", i++);
-		connector_send(&c_aux, buf, strlen(buf));
+        static int i;
+        char buf[128];
+        snprintf(buf, 128, "Prueba %d", i++);
+        connector_send(&c_aux, buf, strlen(buf));
     }
 
     reactor_add(r, (event_handler*)periodic_handler_new(1000, producer));
@@ -793,8 +793,8 @@ Veamos un ejemplo sencillo de `thread_handler`:
 static void* productor(thread_handler* h) {
     struct timespec t = { .tv_sec = 0, .tv_nsec = 500000000 };
     for(int i = 1; !h->cancel; ++i) {
-    	pipe_handler_write_ne(&h->parent, &i, sizeof(i));
-	    nanosleep(&t, NULL);
+        pipe_handler_write_ne(&h->parent, &i, sizeof(i));
+        nanosleep(&t, NULL);
     }
     return NULL;
 }
@@ -802,10 +802,10 @@ static void* productor(thread_handler* h) {
 static void consumidor(event_handler* ev)
 {
     int n;
-	pipe_handler_read((pipe_handler*)ev, &n, sizeof(n));
+    pipe_handler_read((pipe_handler*)ev, &n, sizeof(n));
     printf("Got %d\n", n);
     if (n > 9)
-    	reactor_quit(ev->r);
+        reactor_quit(ev->r);
 }
 
 int main()
