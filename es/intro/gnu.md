@@ -1117,7 +1117,7 @@ Las carpetas `src` y `doc` de tu *home* son dos repositorios GIT que
 contienen lo mismo que en los repositorios oficiales de
 [github.com](http://github.com/FranciscoMoya/).  Fueron creados como
 se indica en el apéndice que describe
-[nuestra personalización de Raspbian](../custom.md).  Cuando una
+[nuestra personalización de Raspbian](../apend/custom.md).  Cuando una
 carpeta es un repositorio GIT contiene una subcarpeta oculta llamada
 `.git`.
 
