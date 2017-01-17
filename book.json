@@ -1,5 +1,5 @@
 {
-    "gitbook": "2.x.x",
+    "gitbook": "3.x.x",
     "author": "Francisco Moya",
     "variables": {
 	"_ck": "<i class='fa fa-check-square-o'/>",
@@ -10,27 +10,29 @@
     },
     "styles": {
         "website": "css/website.css",
-        "pdf": "css/pdf.css",
-        "epub": "css/epub.css"
+        "pdf":     "css/pdf.css",
+        "epub":    "css/epub.css"
     },
     "plugins": [
-        "mathjax",
+        "katex",
         "richquotes",
         "include-codeblock",
+        "ace",
+        "search",
         "bibtex-citation",
-	"prism", "-highlight"
+        "prism", "-highlight"
     ],
     "pdf": {
         "fontSize": 12,
-	"paperSize": "a4",
-	"pageNumbers": true,
+        "paperSize": "a4",
+        "pageNumbers": true,
         "margin": {
             "right": 72,
             "left": 72,
             "top": 60,
             "bottom": 60
         },
-	"headerTemplate": "<p class='header even_page' style='color: #777;text-align:right'>Taller de Raspberry Pi</p><p class='header odd_page' style='color: #777;text-align:left'>_SECTION_</p>",
+        "headerTemplate": "<p class='header even_page' style='color: #777;text-align:right'>Taller de Raspberry Pi</p><p class='header odd_page' style='color: #777;text-align:left'>_SECTION_</p>",
         "footerTemplate": "<p class='footer even_page' style='text-align:right'>_PAGENUM_</p><p class='footer odd_page' style='text-align:left'>_PAGENUM_</p>"
     }
 }
