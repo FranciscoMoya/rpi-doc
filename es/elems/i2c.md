@@ -46,7 +46,7 @@ mismo ejecutando `i2cdetect`:
 
 ```
 pi@raspberrypi:~ $ i2cdetect -l
-i2c-1	i2c       	3f804000.i2c                    	I2C adapter
+i2c-1    i2c           3f804000.i2c                   I2C adapter
 pi@raspberrypi:~ $ ▂
 ```
 
@@ -158,7 +158,7 @@ bytes están cambiados!  La lectura hay que interpretarla como
 
 ```
 pi@raspberrypi:~ $ T=$(i2cget -y 1 0x68 65 w)
-pi@raspberrypi:~ $ echo "0x$T{4:2}$T{2:2}"
+pi@raspberrypi:~ $ echo "0x${T:4:2}${T:2:2}"
 0xf230
 pi@raspberrypi:~ $ ▂
 ```

@@ -4,7 +4,7 @@
 <figure class="right">
   <img src="../img/piano.png" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
-	Piano infantil como el que vamos a modificar.
+    Piano infantil como el que vamos a modificar.
   </figcaption>
 </figure>
 
@@ -22,7 +22,7 @@ las teclas del piano.
 <figure class="right">
   <img src="../img/teclas.jpg" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
-	Teclado de membrana bajo las teclas del piano.
+    Teclado de membrana bajo las teclas del piano.
   </figcaption>
 </figure>
 
@@ -45,7 +45,7 @@ conseguir uno resistente al agua por poco más de seis euros en
 <figure class="right">
   <img src="../img/matrix.svg" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
-	Disposición matricial del teclado de membrana.
+    Disposición matricial del teclado de membrana.
   </figcaption>
 </figure>
 
@@ -119,7 +119,7 @@ pegamento:
 <figure class="right">
   <img src="../img/button.svg" width="350"/>
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
-	Esquema eléctrico de cada tecla.
+    Esquema eléctrico de cada tecla.
   </figcaption>
 </figure>
 
@@ -181,11 +181,11 @@ Hasta la prueba del teclado es casi idéntica a la de `input_handler`.
 #include <stdio.h>
 
 static void press(matrix_handler* ev, int key) {
-	printf("Press %d\n", key);
+    printf("Press %d\n", key);
 }
 
 static void release(matrix_handler* ev, int key) {
-	printf("Release %d\n", key);
+    printf("Release %d\n", key);
 }
 
 int main() {
@@ -297,17 +297,17 @@ Guarda la captura entera para consultarla cuando sea necesario.
 [ "/sync", 1 ]
 [ "/g_new", 7, 1, 4 ]
 [ "/s_new", "sonic-pi-basic_mixer", 8, 0, 2,
-	  "amp", 1,
-	  "amp_slide", 0.1,
-	  "amp_slide_shape", 1,
-	  "amp_slide_curve", 0,
-	  "in_bus", 12,
-	  "amp", 0.3,
-	  "out_bus", 10 ]
+      "amp", 1,
+      "amp_slide", 0.1,
+      "amp_slide_shape", 1,
+      "amp_slide_curve", 0,
+      "in_bus", 12,
+      "amp", 0.3,
+      "out_bus", 10 ]
 [ "#bundle"
-	[ "/s_new", "sonic-pi-piano", 9, 0, 7,
-		  "note", 28.0
-		  "out_bus", 12 ]]
+    [ "/s_new", "sonic-pi-piano", 9, 0, 7,
+          "note", 28.0
+          "out_bus", 12 ]]
 [ "/n_set", 8, "amp_slide", 1.0 ]
 [ "/n_set", 8, "amp", 0 ]
 [ "/n_free", 8 ]
@@ -375,7 +375,7 @@ algo como esto:
 
 ```C
 synth_handler_send(synth, "/d_loadDir",
-	               "/opt/sonic-pi/etc/synthdefs/compiled");
+                   "/opt/sonic-pi/etc/synthdefs/compiled");
 ```
 
 Dado que los mensajes OSC tienen número variable de argumentos nuestra
@@ -402,7 +402,7 @@ extremadamente simple:
 ```C
 synth_handler* synth_handler_new(synth_handler_function handler);
 void synth_handler_init(synth_handler* this,
-			            synth_handler_function handler);
+                        synth_handler_function handler);
 void synth_handler_destroy(synth_handler* this);
 void synth_handler_send(synth_handler* h, const char* cmd,
                         const char* types, ...);
@@ -424,11 +424,11 @@ static void press(matrix_handler* ev, int key)
 {
     static int n = 100;
     synth_handler_send(synth,
-	                   "/s_new", "siiisfsi",
-	                   "sonic-pi-piano", n++, 0, 7,
-	                   "note", 48.0 + key,
-	                   "out_bus", 12,
-					   LO_ARGS_END);
+                       "/s_new", "siiisfsi",
+                       "sonic-pi-piano", n++, 0, 7,
+                       "note", 48.0 + key,
+                       "out_bus", 12,
+                       LO_ARGS_END);
 }
 
 int main()
@@ -440,8 +440,8 @@ int main()
     synth = synth_handler_new(do_nothing);
     reactor* r = reactor_new();
     reactor_add(r, (event_handler*) matrix_handler_new(rows, NELEMS(rows),
-	                                                   cols, NELEMS(cols),
-						                               press, release));
+                                                       cols, NELEMS(cols),
+                                                       press, release));
     reactor_add(r, (event_handler*) synth);
     init_synth(synth);
     reactor_run(r);

@@ -5,8 +5,8 @@
   <img src="img/pi3.jpg" width="350"/>
 
   <figcaption style="font-size:smaller;font-style:italic;text-align:center">
-	Raspberry Pi 3 modelo B. Foto de <a
-	href="https://www.raspberrypi.org/wp-content/uploads/2016/03/pi3.jpg">raspberrypi.org</a>.
+    Raspberry Pi 3 modelo B. Foto de <a
+    href="https://www.raspberrypi.org/wp-content/uploads/2016/03/pi3.jpg">raspberrypi.org</a>.
   </figcaption>
 </figure>
 
@@ -35,9 +35,9 @@ respetable número de modelos:
   <img src="img/bcm2835sideview.jpg" width="300"/>
   <figcaption style="font-size:smaller; font-style:italic">
   <div style="width:300px">
-	Vista lateral amplificada del montaje del BCM2835 y la memoria
-	de los modelos originales de Raspberry Pi. Foto tomada del blog de
-	<a href="http://www.raspberrypi.org/factory-pictures-from-south-wales/">raspberrypi.org</a>.
+    Vista lateral amplificada del montaje del BCM2835 y la memoria
+    de los modelos originales de Raspberry Pi. Foto tomada del blog de
+    <a href="http://www.raspberrypi.org/factory-pictures-from-south-wales/">raspberrypi.org</a>.
   </div>
   </figcaption>
 </figure>
@@ -141,10 +141,10 @@ respetable número de modelos:
   <img src="https://www.raspberrypi.org/wp-content/uploads/2014/07/HAT-Pi-Flexis-500x298.jpg" width="350"/>
 
   <figcaption style="font-size:smaller; font-style:italic">
-	<div style="width:300px">
-	Plantilla de la especificación mecánica de HAT. Fuente: <a
-	href="https://www.raspberrypi.org/blog/introducing-raspberry-pi-hats/">raspberrypi.org</a>.
-	</div>
+    <div style="width:300px">
+    Plantilla de la especificación mecánica de HAT. Fuente: <a
+    href="https://www.raspberrypi.org/blog/introducing-raspberry-pi-hats/">raspberrypi.org</a>.
+    </div>
   </figcaption>
 </figure>
 

@@ -35,7 +35,7 @@ pi@raspberrypi:~/test $ ▂
 Utiliza un editor de texto para escribir el siguiente programa en un
 archivo de nombre `hola.c`.  Como editor de textos puede usarse
 *leafpad*, simplemente pulsando sobre el icono
-![Editor](../img/raspbian1-edit.png) o desde la línea de órdenes con
+![Editor](../intro/img/raspbian1-edit.png) o desde la línea de órdenes con
 `leafpad hola.c`.
 
 ```C
@@ -172,7 +172,7 @@ Ahora el archivo `hola.c` sería algo así:
 void decir_hola(void);
 
 int main() {
-	decir_hola();
+    decir_hola();
     return 0;
 }
 ```

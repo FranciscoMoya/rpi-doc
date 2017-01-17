@@ -217,11 +217,11 @@ no ser así porque muchas bibliotecas no utilizan aún `/dev/gpiomem`.
 <figure style="float:right; padding:10px">
   <img src="http://www.mosaic-industries.com/embedded-systems/_media/microcontroller-projects/raspberry-pi/raspberry-pi-circuit-gpio-input-pins.png" width="230"/>
   <figcaption style="font-size:smaller; font-style:italic">
-	<div style="width:230px"> Circuito equivalente de un pin de GPIO
-		(Fuente: <a
-		href="http://www.mosaic-industries.com/embedded-systems/microcontroller-projects/raspberry-pi/gpio-pin-electrical-specifications">Mosaic
-		Industries</a>).
-	</div>
+    <div style="width:230px"> Circuito equivalente de un pin de GPIO
+        (Fuente: <a
+        href="http://www.mosaic-industries.com/embedded-systems/microcontroller-projects/raspberry-pi/gpio-pin-electrical-specifications">Mosaic
+        Industries</a>).
+    </div>
   </figcaption>
 </figure>
 

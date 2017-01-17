@@ -32,10 +32,10 @@ posible esqueleto.
 #include <reactor/input_handler.h>
 
 enum {
-	NEXT= 18,
-	PREV = 23,
-	PLAY = 24,
-	PAUSE = 25
+    NEXT= 18,
+    PREV = 23,
+    PLAY = 24,
+    PAUSE = 25
 };
 
 int main(int argc, char* argv[])
@@ -45,15 +45,15 @@ int main(int argc, char* argv[])
                   : "/usr/share/scratch/Media/Sounds/Music Loops");
     music_player* mp = music_player_new(path);
 
-	void press(input_handler* ev, int key) {
-		// Actuar sobre mp según la tecla
-		// ...
-	}
-	void release(input_handler* ev, int key) {}	
+    void press(input_handler* ev, int key) {
+        // Actuar sobre mp según la tecla
+        // ...
+    }
+    void release(input_handler* ev, int key) {}    
     int keys[] = { NEXT, PREV, PLAY, PAUSE };
-	wiringPiSetupGpio();
-	input_handler* ih = input_handler_new(keys, sizeof(keys),
-		                                  press, release)
+    wiringPiSetupGpio();
+    input_handler* ih = input_handler_new(keys, sizeof(keys),
+                                          press, release)
 
     reactor* r = reactor_new();
     reactor_add(r, (event_handler*)mp);

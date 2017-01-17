@@ -339,10 +339,10 @@ int escribir_datos(int fd, const tipo_datos* datos)
         int n = write(fd, buf, size);
         if (n < 0)
             return -1;
-		buf += n;
-		size -= n;	
-	}
-	return 0;	
+        buf += n;
+        size -= n;
+    }
+    return 0;
 }
 ```
 
@@ -369,7 +369,7 @@ void escribir_datos(int fd, const tipo_datos* datos)
 {
     const void *buf = datos, *end = buf + sizeof(tipo_datos);
     while ((buf += write_ex(fd, buf, end - buf)) < end)
-	    ;
+        ;
 }
 ```
 

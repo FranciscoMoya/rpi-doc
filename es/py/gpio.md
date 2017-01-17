@@ -157,7 +157,7 @@ class DigitalOutputDevice(OutputDevice):
         self._write(False)
 
     def blink(self, on_time=1, off_time=1, n=None, background=True):
-    	# ...
+        # ...
 ```
 
 Tiene métodos `on`, `off` y `blink` (parpadear), así como una
@@ -332,7 +332,7 @@ Por otro lado `DigitalInputDevice` es una combinación de `EventsMixin`
 ``` Python
 class DigitalInputDevice(EventsMixin, InputDevice):
     def __init__(self, pin=None, pull_up=False, bounce_time=None):
-    	...
+        ...
 ```
 
 En cuanto a `InputDevice` lo único que añade a un `GPIODevice` es la
@@ -341,7 +341,7 @@ propiedad `pull_up` para configurar un *pull-up* o un *pull-down*.
 ``` Python
 class InputDevice(GPIODevice):
     def __init__(self, pin=None, pull_up=False):
-    	...
+        ...
 
     @property
     def pull_up(self):
